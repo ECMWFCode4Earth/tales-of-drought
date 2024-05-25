@@ -2,8 +2,23 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: intro
-chapters:
-- file: markdown
-- file: notebooks
-- file: markdown-notebooks
+root: index
+
+parts:
+- caption: "Climate toolkit for beginners"
+  chapters:
+  - file: chapters/01-climate-toolkit-for-beginners/what-is-climate
+    title: "What is climate?"
+  - file: chapters/01-climate-toolkit-for-beginners/grid-model
+    title: "What is grid model?"
+
+- caption: "The time machine"
+  chapters:
+  - file: chapters/02-notebook-time-machine/index
+    title: "Welcome to notebook 1..."
+
+
+- caption: "Appendix"
+  chapters:
+  - file: chapters/credits-license
+    title: "Credits and license"
