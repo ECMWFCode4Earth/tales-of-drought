@@ -32,6 +32,9 @@
 [//]: # ([![LinkedIn][linkedin-shield]][linkedin-url])
 
 
+<div align="center">
+<img src="images/under-construction.png" alt="Logo" width="100%">
+</div>
 
 <!-- PROJECT LOGO -->
 <br />
