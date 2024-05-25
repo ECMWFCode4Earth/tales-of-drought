@@ -8,9 +8,13 @@ parts:
 - caption: "Climate toolkit for beginners"
   chapters:
   - file: chapters/01-climate-toolkit-for-beginners/what-is-climate
-    title: "What is climate?"
-  - file: chapters/01-climate-toolkit-for-beginners/grid-model
-    title: "What is grid model?"
+    title: "What is the climate?"
+  - file: chapters/01-climate-toolkit-for-beginners/coordinate-system
+    title: "The Earth's coordinate system"
+  - file: chapters/01-climate-toolkit-for-beginners/model-grid
+    title: "The model grid"
+  - file: chapters/01-climate-toolkit-for-beginners/netCDF-file
+    title: "The netCDF files"
 
 - caption: "The time machine"
   chapters:
