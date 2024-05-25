@@ -14,6 +14,7 @@ We hope to provide not just knowledge, but also inspiration as you delve into th
 Are you new to studying climate data? If so, we recommend starting with the [Climate toolkit for beginners](chapters/01-climate-toolkit-for-beginners/what-is-climate), which will provide you with all the general knowledge you need to embark on this journey. 
 Or do you already feel confident about these topics? Dive right into the [Drought focus](chapters/03-notebook-time-machine/index) chapter and start your analysis.
 
+<p class="sign">The Tales of Dry Lands Team</p>
 
 
 ```{tableofcontents}

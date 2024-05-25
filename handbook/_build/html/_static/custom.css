@@ -23,3 +23,9 @@ p.credits {
     font-size: .8rem;
     opacity: .6;
 }
+
+p.sign {
+    width: 100%;
+    font-style: italic;
+    text-align: right;
+}
