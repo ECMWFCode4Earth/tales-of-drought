@@ -16,10 +16,15 @@ parts:
   - file: chapters/01-climate-toolkit-for-beginners/netCDF-file
     title: "The netCDF files"
 
-- caption: "The time machine"
+- caption: "Droughts focus"
   chapters:
-  - file: chapters/02-notebook-time-machine/index
-    title: "Welcome to notebook 1..."
+  - file: chapters/02-drought-focus/index
+    title: "title..."
+
+- caption: "First exploration"
+  chapters:
+  - file: chapters/03-notebook-time-machine/index
+    title: "The Time Machine notebook"
 
 
 - caption: "Appendix"
