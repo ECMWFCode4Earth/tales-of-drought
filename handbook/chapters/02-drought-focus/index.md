@@ -8,7 +8,7 @@ These phenomena disrupt agricultural productivity, threaten food security, exace
 
 Furthermore, drought-induced water scarcity has profound implications for ecosystems, leading to biodiversity loss, habitat degradation, and ecosystem instability. 
 
-![](../../images/yoda-adaman-8wuOLdN77A4-unsplash.jpg)
+![](../../images/drought-boats.jpg)
 <p class="credits">Photo by <a href="https://unsplash.com/@adam_yod?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">YODA Adaman</a> on <a href="https://unsplash.com/photos/brown-wooden-boat-on-brown-sand-during-daytime-8wuOLdN77A4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a></p>
 
 

@@ -32,10 +32,10 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=e0a43387" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
@@ -378,7 +378,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -394,6 +396,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meridians-and-longitude">Meridians and longitude</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#paralles-and-latitude">Paralles and latitude</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -405,7 +416,23 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="the-earth-s-coordinate-system">
 <h1>The Earth’s coordinate system<a class="headerlink" href="#the-earth-s-coordinate-system" title="Link to this heading">#</a></h1>
-<p>Egestas tellus rutrum tellus pellentesque eu tincidunt tortor aliquam nulla. Arcu ac tortor dignissim convallis aenean et tortor at. Tellus molestie nunc non blandit massa enim. Pellentesque id nibh tortor id.</p>
+<p>Understanding climate data requires familiarity with how our planet is geographically mapped. Let’s visualize the Earth as a sphere. To pinpoint any location in a universally accepted way, we use a system of coordinates.</p>
+<section id="meridians-and-longitude">
+<h2>Meridians and longitude<a class="headerlink" href="#meridians-and-longitude" title="Link to this heading">#</a></h2>
+<p>Imagine drawing invisible lines vertically from the North Pole to the South Pole at regular intervals. These lines, called <strong>meridians</strong>, connect the poles. Each meridian has an associated constant value known as <strong>longitude</strong>, which is measured in degrees.</p>
+<p>By convention, the <strong>Prime Meridian</strong>, which is set at 0° longitude, runs through the <a class="reference external" href="https://www.rmg.co.uk/royal-observatory">Royal Observatory in Greenwich</a>, United Kingdom.</p>
+<p>Longitude values on Earth are marked from the Prime Meridian. They decrease westward up to -180° and increase eastward up to 180°.</p>
+<p><img alt="" src="../../_images/longitude-BW.svg" /></p>
+</section>
+<section id="paralles-and-latitude">
+<h2>Paralles and latitude<a class="headerlink" href="#paralles-and-latitude" title="Link to this heading">#</a></h2>
+<p>Now that we’ve established a universal method for determining the east-west position on Earth, let’s explore how we define positions from north to south. Imagine drawing a line around the Earth that is equidistant from both poles, stretching from east to west. This line is called the <strong>Equator</strong>. Lines running parallel to the Equator are known as <strong>parallels</strong>.</p>
+<p>The position of these parallels is determined by their angle relative to the horizontal plane passing through the Equator. This angle is referred to as <strong>latitude</strong>, which is also measured in degrees. Latitude values increase from the Equator northward up to 90° and decrease southward down to -90°.</p>
+<p><img alt="" src="../../_images/latitude-BW.svg" /></p>
+<p>This system allows us to specify any location on Earth using a universally understood method.</p>
+<p><img alt="" src="../../_images/earth-coord-BW.svg" /></p>
+<p>However, when dealing with climate data, it’s crucial to remember that climate is influenced not only by the Earth surface, but also by atmospheric conditions. Therefore, to gain a comprehensive understanding of our planet’s climate, we must consider a more complex representation. We will explore this further in the next chapter.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -463,7 +490,21 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meridians-and-longitude">Meridians and longitude</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#paralles-and-latitude">Paralles and latitude</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
@@ -474,7 +515,7 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By Akis Karagiannis, Marina Caporlingua, George Begkas, Lucy Colley, Madiha Abbas, Syed Akhtar
+By Madiha Abbas, Syed Akhtar, Christopher Barnard, George Begkas, Marina Caporlingua, Lucy Colley, Francesca Di Giuseppe, Akis Karagiannis, Jessica Keune
 </p>
 
   </div>

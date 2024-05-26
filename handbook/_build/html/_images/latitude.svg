@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   width="352.90067"
+   height="310.15091"
+   viewBox="0 0 352.90121 310.15092"
+   xml:lang="mul"
+   id="svg350"
+   sodipodi:docname="Latitude_of_the_Earth fr ok modif.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <defs
+     id="defs354" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1019"
+     id="namedview352"
+     showgrid="false"
+     inkscape:zoom="1.362028"
+     inkscape:cx="322.28342"
+     inkscape:cy="208.64042"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g198"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <title
+     id="title2">Latitude and Longitude of the Earth</title>
+  <desc
+     id="desc4">Illustration of geographic latitude and longitude of the earth.</desc>
+  <metadata
+     id="metadata6">
+    <rdf:RDF>
+      <rdf:Description
+         rdf:about="">
+        <dc:title
+           xml:lang="ja">地球の緯度及び経度</dc:title>
+        <dc:title
+           xml:lang="x-default">Latitude and Longitude of the Earth</dc:title>
+        <dc:creator
+           rdf:resource="https://meta.wikimedia.org/?curid=10484470" />
+        <dc:subject
+           rdf:resource="https://www.wikidata.org/wiki/Q2" />
+        <dc:subject
+           rdf:resource="https://www.wikidata.org/wiki/Q34027" />
+        <dc:subject
+           rdf:resource="https://www.wikidata.org/wiki/Q36477" />
+        <dc:description
+           xml:lang="x-default"
+           rdf:parseType="Resource">
+          <dc:format
+             rdf:datatype="http://purl.org/dc/terms/IMT">text/x-wiki</dc:format>
+          <rdf:value><![CDATA[
+Illustration of geographic [[w:latitude|]] and [[w:longitude|]] of the [[w:earth|]].
+]]><!--  -->
+</rdf:value>
+        </dc:description>
+        <dc:contributor
+           rdf:resource="https://commons.wikimedia.org/?curid=13862827" />
+        <dc:contributor
+           rdf:resource="https://meta.wikimedia.org/?curid=7936822" />
+        <dc:date
+           rdf:datatype="http://www.w3.org/2001/XMLSchemadate">2011-05-30</dc:date>
+        <dc:type
+           rdf:datatype="http://purl.org/dc/terms/DCMIType">StillImage</dc:type>
+        <dc:format
+           rdf:datatype="http://purl.org/dc/terms/IMT">image/svg+xml</dc:format>
+        <dc:language
+           rdf:datatype="http://purl.org/dc/terms/ISO639-2">mul</dc:language>
+        <dc:rights
+           rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/deed" />
+      </rdf:Description>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Latitude and Longitude of the Earth</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="g348"
+     style="font-family:'Liberation Sans', Dyuthi, 'VL PGothic', sans-serif"
+     transform="translate(-2.2164358,-10.771219)">
+    <path
+       d="m 162.1,41.566 c 69.218,0 125.351,55.633 125.351,124.233 0,68.6 -56.133,124.234 -125.351,124.234 -69.217,0 -125.35,-55.634 -125.35,-124.234 0,-68.6 56.133,-124.233 125.35,-124.233 z"
+       id="path8"
+       inkscape:connector-curvature="0"
+       style="clip-rule:evenodd;fill:#00aeef;fill-rule:evenodd" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 162.1,41.566 c 69.218,0 125.351,55.633 125.351,124.233 0,68.6 -56.133,124.234 -125.351,124.234 -69.217,0 -125.35,-55.634 -125.35,-124.234 0,-68.6 56.133,-124.233 125.35,-124.233 z"
+       id="path10"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:0.56690001;stroke-miterlimit:22.92560005" />
+    <path
+       d="m 181.928,145.782 c 6.577,-1.561 6.142,-4.189 10.443,-6.9 5.167,-3.257 0.255,9.172 6.843,5.084 4.705,-2.92 13.896,-4.477 21.247,1.453 8.219,6.631 25.168,22.105 31.69,24.696 34.876,13.854 -12.544,50.396 -17.285,62.829 -5.054,13.248 -32.364,22.105 -42.855,32.686 -3.934,3.967 -7.707,13.438 -8.643,13.438 -22.722,0 28.005,-58.963 7.202,-70.819 -14.559,-8.298 -17.646,-19.605 -17.646,-34.864 0,-5.652 6.842,-10.747 6.842,-15.254 0.001,-2.407 0.829,-20.016 2.162,-12.349 z"
+       id="path12"
+       inkscape:connector-curvature="0"
+       style="clip-rule:evenodd;fill:#fff200;fill-rule:evenodd" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 181.928,145.782 c 6.577,-1.561 6.142,-4.189 10.443,-6.9 5.167,-3.257 0.255,9.172 6.843,5.084 4.705,-2.92 13.896,-4.477 21.247,1.453 8.219,6.631 25.168,22.105 31.69,24.696 34.876,13.854 -12.544,50.396 -17.285,62.829 -5.054,13.248 -32.364,22.105 -42.855,32.686 -3.934,3.967 -7.707,13.438 -8.643,13.438 -22.722,0 28.005,-58.963 7.202,-70.819 -14.559,-8.298 -17.646,-19.605 -17.646,-34.864 0,-5.652 6.842,-10.747 6.842,-15.254 0.001,-2.407 0.829,-20.016 2.162,-12.349 z"
+       id="path14"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:0.56690001;stroke-miterlimit:22.92560005" />
+    <path
+       d="m 177.247,145.418 c -6.57,-4.587 -12.604,0.239 -12.604,-9.442 0,-5.634 -2.625,-7.99 -8.283,-7.99 -1.73,0 -5.1,-23.672 -10.804,-8.716 -3.719,9.751 -13.348,-3.398 -12.244,-14.164 2.067,-20.173 24.869,-2.645 35.652,-9.442 6.559,-4.134 18.12,-26.875 23.408,-26.875 11.479,0 8.227,1.006 17.646,-3.995 0.684,-0.363 -8.969,-3.43 -11.524,-7.989 -4.466,-7.969 5.021,-4.28 -7.203,-11.985 -11.891,-7.496 -55.253,-1.435 -66.622,3.269 -6.04,2.499 -20.806,5.109 -25.208,8.716 -2.42,1.982 12.198,8.637 4.321,14.163 -19.556,13.72 8.637,43.298 18.727,52.298 2.6,2.319 25.872,7.523 29.89,7.99 3.234,0.376 8.959,9.398 11.164,11.622 2.005,2.021 12.458,9.517 13.684,2.54 z"
+       id="path16"
+       inkscape:connector-curvature="0"
+       style="clip-rule:evenodd;fill:#fff200;fill-rule:evenodd" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 177.247,145.418 c -6.57,-4.587 -12.604,0.239 -12.604,-9.442 0,-5.634 -2.625,-7.99 -8.283,-7.99 -1.73,0 -5.1,-23.672 -10.804,-8.716 -3.719,9.751 -13.348,-3.398 -12.244,-14.164 2.067,-20.173 24.869,-2.645 35.652,-9.442 6.559,-4.134 18.12,-26.875 23.408,-26.875 11.479,0 8.227,1.006 17.646,-3.995 0.684,-0.363 -8.969,-3.43 -11.524,-7.989 -4.466,-7.969 5.021,-4.28 -7.203,-11.985 -11.891,-7.496 -55.253,-1.435 -66.622,3.269 -6.04,2.499 -20.806,5.109 -25.208,8.716 -2.42,1.982 12.198,8.637 4.321,14.163 -19.556,13.72 8.637,43.298 18.727,52.298 2.6,2.319 25.872,7.523 29.89,7.99 3.234,0.376 8.959,9.398 11.164,11.622 2.005,2.021 12.458,9.517 13.684,2.54 z"
+       id="path18"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:0.56690001;stroke-miterlimit:22.92560005" />
+    <path
+       d="m 161.042,113.459 c 3.959,0 7.501,-0.363 11.524,-0.363 3.577,0 5.439,3.581 9.002,3.995 3.164,0.367 5.11,2.886 7.563,3.995 3.14,1.419 15.617,0.476 10.443,-1.09 -6.374,-1.928 -14.062,-3.096 -20.167,-6.173 -3.326,-1.677 -6.858,-3.09 -11.524,-3.632 -1.882,-0.219 -4.375,-0.126 -6.122,0.364 -3.323,0.93 -3.137,-0.414 -0.719,2.904 z"
+       id="path20"
+       inkscape:connector-curvature="0"
+       style="clip-rule:evenodd;fill:#fff200;fill-rule:evenodd" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 161.042,113.459 c 3.959,0 7.501,-0.363 11.524,-0.363 3.577,0 5.439,3.581 9.002,3.995 3.164,0.367 5.11,2.886 7.563,3.995 3.14,1.419 15.617,0.476 10.443,-1.09 -6.374,-1.928 -14.062,-3.096 -20.167,-6.173 -3.326,-1.677 -6.858,-3.09 -11.524,-3.632 -1.882,-0.219 -4.375,-0.126 -6.122,0.364 -3.323,0.93 -3.137,-0.414 -0.719,2.904 z"
+       id="path22"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:0.56690001;stroke-miterlimit:22.92560005" />
+    <path
+       d="m 165.362,97.843 c 1.348,2.174 1.9,2.829 2.521,5.084 0.283,1.026 -0.021,1.406 1.081,2.179 0.403,0.283 1.359,0.727 2.16,0.727 1.194,0 1.081,0.115 1.081,-1.09 v -1.815 c 0,-1.011 -0.987,-2.182 -1.081,-2.905 -0.043,-0.333 0,-0.75 0,-1.09 0,-1.583 -0.824,-2.905 -2.521,-2.905 h -2.161 c -1.516,-0.001 -1.08,0.458 -1.08,1.815 z"
+       id="path24"
+       inkscape:connector-curvature="0"
+       style="clip-rule:evenodd;fill:#fff200;fill-rule:evenodd" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 165.362,97.843 c 1.348,2.174 1.9,2.829 2.521,5.084 0.283,1.026 -0.021,1.406 1.081,2.179 0.403,0.283 1.359,0.727 2.16,0.727 1.194,0 1.081,0.115 1.081,-1.09 v -1.815 c 0,-1.011 -0.987,-2.182 -1.081,-2.905 -0.043,-0.333 0,-0.75 0,-1.09 0,-1.583 -0.824,-2.905 -2.521,-2.905 h -2.161 c -1.516,-0.001 -1.08,0.458 -1.08,1.815 z"
+       id="path26"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:0.56690001;stroke-miterlimit:22.92560005" />
+    <path
+       d="m 101.261,99.659 c -0.725,1.585 -1.8,3.494 -1.8,5.447 0,1.014 -0.194,2.815 0.36,3.269 0.952,0.78 2.161,0.975 2.161,2.18 0,0.785 0.038,0.401 0.36,0.727 0.509,0.513 0.215,1.191 1.08,1.452 1.343,0.406 3.003,0.278 3.241,-1.816 0.1,-0.869 -0.641,-2.835 -1.08,-3.632 -0.804,-1.46 -0.887,-3.758 -1.081,-5.448 -0.205,-1.791 -2.277,-2.461 -3.241,-2.179 z"
+       id="path28"
+       inkscape:connector-curvature="0"
+       style="clip-rule:evenodd;fill:#fff200;fill-rule:evenodd" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 101.261,99.659 c -0.725,1.585 -1.8,3.494 -1.8,5.447 0,1.014 -0.194,2.815 0.36,3.269 0.952,0.78 2.161,0.975 2.161,2.18 0,0.785 0.038,0.401 0.36,0.727 0.509,0.513 0.215,1.191 1.08,1.452 1.343,0.406 3.003,0.278 3.241,-1.816 0.1,-0.869 -0.641,-2.835 -1.08,-3.632 -0.804,-1.46 -0.887,-3.758 -1.081,-5.448 -0.205,-1.791 -2.277,-2.461 -3.241,-2.179 z"
+       id="path30"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:0.56690001;stroke-miterlimit:22.92560005" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 281.839,195.922 c -85.182,3.785 -165.542,3.028 -241.082,-2.271"
+       id="path42"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:1.00010002;stroke-miterlimit:22.92560005" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 271.988,223.745 c -62.776,9.843 -137.337,10.6 -217.271,2.271"
+       id="path44"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:1.00010002;stroke-miterlimit:22.92560005" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="M 252.115,250.465 C 192.457,260.307 130.766,260.842 73.455,251"
+       id="path46"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:1.00010002;stroke-miterlimit:22.92560005" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 233.11,266.164 c -37.75,9.274 -89.292,11.713 -135.39,3.574"
+       id="path48"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:1.00010002;stroke-miterlimit:22.92560005" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 280.718,128.921 c -126.916,-6.772 -206.603,-6.772 -239.06,0"
+       id="path50"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:1.00010002;stroke-miterlimit:22.92560005" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 264.807,97.691 c -93.922,-6.814 -163.006,-6.814 -207.25,0"
+       id="path52"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:1.00010002;stroke-miterlimit:22.92560005" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 242.662,72.14 c -62.585,-9.788 -117.284,-9.788 -164.097,0"
+       id="path54"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:1.00010002;stroke-miterlimit:22.92560005" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 211.433,51.699 c -46.121,-4.084 -78.487,-4.084 -97.095,0"
+       id="path56"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:1.00010002;stroke-miterlimit:22.92560005" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 286.383,164.111 c -119.771,0 -202.689,0 -248.755,0"
+       id="path58"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:2.9999001;stroke-miterlimit:22.92560005;stroke-dasharray:6, 3" />
+    <path
+       stroke-miterlimit="22.9256"
+       d="m 162.033,41.479 c 68.979,0 124.917,55.431 124.917,123.782 0,68.351 -55.938,123.783 -124.917,123.783 -68.979,0 -124.918,-55.432 -124.918,-123.783 0,-68.352 55.939,-123.782 124.918,-123.782 z"
+       id="path60"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:2.9999001;stroke-miterlimit:22.92560005" />
+    <g
+       font-size="16"
+       id="g198"
+       style="font-size:16px">
+      <switch
+         transform="translate(133.2925,320.7661)"
+         id="switch160">
+        <text
+           systemLanguage="en"
+           id="trsvg44">
+          <tspan
+             id="trsvg1">South Pole</tspan>
+        </text>
+        <text
+           systemLanguage="ja"
+           dx="25"
+           id="trsvg45">
+          <tspan
+             id="trsvg2">南極</tspan>
+        </text>
+        <text
+           systemLanguage="ml"
+           id="trsvg46">
+          <tspan
+             id="trsvg3">ദക്ഷിണധ്രുവം</tspan>
+        </text>
+        <text
+           id="trsvg47-ar"
+           systemLanguage="ar">
+          <tspan
+             id="trsvg4-ar">القطب الجنوبي</tspan>
+        </text>
+        <text
+           id="trsvg47"
+           systemLanguage="fr"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:'Liberation Sans', Dyuthi, 'VL PGothic', sans-serif;-inkscape-font-specification:'Liberation Sans, Dyuthi, VL PGothic, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start">
+          <tspan
+             sodipodi:role="line"
+             id="tspan1258"
+             x="0"
+             y="0">Pôle Sud</tspan>
+        </text>
+      </switch>
+      <switch
+         transform="translate(125.6719,22.4194)"
+         id="switch172">
+        <text
+           systemLanguage="en"
+           id="trsvg48">
+          <tspan
+             id="trsvg5">North Pole</tspan>
+        </text>
+        <text
+           systemLanguage="ja"
+           dx="25"
+           id="trsvg49">
+          <tspan
+             id="trsvg6">北極</tspan>
+        </text>
+        <text
+           systemLanguage="ml"
+           id="trsvg50">
+          <tspan
+             id="trsvg7">ഉത്തരധ്രുവം</tspan>
+        </text>
+        <text
+           id="trsvg51-ar"
+           systemLanguage="ar">
+          <tspan
+             id="trsvg8-ar">القطب الشمالي</tspan>
+        </text>
+        <text
+           id="trsvg51"
+           systemLanguage="fr"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:'Liberation Sans', Dyuthi, 'VL PGothic', sans-serif;-inkscape-font-specification:'Liberation Sans, Dyuthi, VL PGothic, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start">
+          <tspan
+             sodipodi:role="line"
+             id="tspan1256"
+             x="0"
+             y="0">Pôle Nord</tspan>
+        </text>
+      </switch>
+      <switch
+         transform="translate(290.3989,170.5078)"
+         id="switch184">
+        <text
+           systemLanguage="en"
+           id="trsvg52">
+          <tspan
+             id="trsvg9">Equator</tspan>
+        </text>
+        <text
+           systemLanguage="ja"
+           id="trsvg53">
+          <tspan
+             id="trsvg10">赤道</tspan>
+        </text>
+        <text
+           systemLanguage="ml"
+           id="trsvg54">
+          <tspan
+             id="trsvg11">ഭൂമധ്യരേഖ</tspan>
+        </text>
+        <text
+           id="trsvg55-ar"
+           systemLanguage="ar">
+          <tspan
+             id="trsvg12-ar">خط الأستواء</tspan>
+        </text>
+        <text
+           systemLanguage="fr"
+           id="trsvg55">
+          <tspan
+             id="trsvg12">Équateur</tspan>
+        </text>
+      </switch>
+    </g>
+    <g
+       font-size="16"
+       id="g214"
+       style="font-size:16px"
+       transform="rotate(14.086123,161.01591,73.254989)">
+      <switch
+         transform="matrix(0.4962,-0.8682,0.8682,0.4962,14.4199,112.6182)"
+         id="switch210">
+        <text
+           systemLanguage="en"
+           id="trsvg60">
+          <tspan
+             id="trsvg17">Latitude</tspan>
+        </text>
+        <text
+           systemLanguage="ja"
+           dx="13"
+           dy="2"
+           id="trsvg61">
+          <tspan
+             id="trsvg18">緯度</tspan>
+        </text>
+        <text
+           systemLanguage="ml"
+           id="trsvg62">
+          <tspan
+             id="trsvg19">അക്ഷാംശം</tspan>
+        </text>
+        <text
+           id="trsvg63-ar"
+           systemLanguage="ar">
+          <tspan
+             id="trsvg20-ar">خط العرض</tspan>
+        </text>
+        <text
+           systemLanguage="fr"
+           id="trsvg63">
+          <tspan
+             id="trsvg20">Latitude</tspan>
+        </text>
+      </switch>
+      <path
+         d="m 57.508,60.361 -5.227,14.269 -0.148,-0.388 -0.156,-0.38 -0.164,-0.371 -0.172,-0.363 -0.18,-0.354 -0.188,-0.346 -0.196,-0.337 -0.204,-0.329 -0.212,-0.321 -0.22,-0.312 -0.228,-0.303 -0.236,-0.295 -0.244,-0.286 -0.252,-0.278 -0.26,-0.269 L 48.953,69.437 48.677,69.185 48.392,68.941 48.1,68.706 47.8,68.479 47.491,68.261 47.175,68.051 46.85,67.85 46.517,67.657 46.177,67.472 45.828,67.296 45.472,67.129 45.107,66.97 44.735,66.82 44.355,66.678 43.966,66.545 43.57,66.42 Z m -5.542,4.423 1.453,1.367 -1.149,1.239 -1.14,1.267 -1.122,1.292 -1.109,1.319 -1.1,1.346 -1.083,1.372 -1.073,1.399 -1.06,1.425 -1.047,1.452 -1.033,1.478 -1.02,1.505 -1.007,1.532 -0.994,1.558 -0.98,1.584 -0.967,1.611 -0.958,1.637 -0.941,1.665 -0.927,1.69 -0.918,1.721 -0.901,1.744 -0.892,1.77 -0.878,1.797 -0.865,1.827 -0.847,1.85 -0.839,1.88 -0.825,1.903 -0.813,1.929 -0.798,1.959 -0.785,1.983 -0.772,2.013 -0.759,2.04 -0.745,2.062 -1.883,-0.664 0.753,-2.086 0.767,-2.055 0.78,-2.029 0.793,-2.005 0.806,-1.976 0.82,-1.953 0.833,-1.926 0.846,-1.896 0.864,-1.874 0.873,-1.843 0.886,-1.82 0.899,-1.794 0.917,-1.767 0.926,-1.737 0.943,-1.714 0.956,-1.688 0.966,-1.661 0.983,-1.634 0.996,-1.608 1.009,-1.582 1.022,-1.555 1.036,-1.528 1.049,-1.502 1.063,-1.475 1.076,-1.449 1.088,-1.422 1.106,-1.396 1.115,-1.369 1.133,-1.343 1.146,-1.316 1.155,-1.29 z"
+         id="path212"
+         inkscape:connector-curvature="0" />
+    </g>
+    <switch
+       style="font-size:13.6619997px"
+       id="switch236"
+       transform="translate(150.6387,38.2476)">
+      <text
+         systemLanguage="ar"
+         id="trsvg68-ar">
+        <tspan
+           id="trsvg25-ar">90°</tspan>
+      </text>
+      <text
+         id="trsvg68">
+        <tspan
+           id="trsvg25">90°N</tspan>
+      </text>
+    </switch>
+    <switch
+       style="font-size:13.6619997px"
+       id="switch242"
+       transform="translate(76.9409,51.0352)">
+      <text
+         systemLanguage="ar"
+         id="trsvg69-ar">
+        <tspan
+           id="trsvg26-ar">60°</tspan>
+      </text>
+      <text
+         id="trsvg69">
+        <tspan
+           id="trsvg26">60°N</tspan>
+      </text>
+    </switch>
+    <switch
+       style="font-size:13.6619997px"
+       id="switch248"
+       transform="translate(19.4985,103.0835)">
+      <text
+         systemLanguage="ar"
+         id="trsvg70-ar">
+        <tspan
+           id="trsvg27-ar">30°</tspan>
+      </text>
+      <text
+         id="trsvg70">
+        <tspan
+           id="trsvg27">30°N</tspan>
+      </text>
+    </switch>
+    <switch
+       style="font-size:13.6619997px"
+       id="switch254"
+       transform="translate(22.624,169.0566)">
+      <text
+         systemLanguage="ar"
+         id="trsvg71-ar">
+        <tspan
+           id="trsvg28-ar">0°</tspan>
+      </text>
+      <text
+         id="trsvg71">
+        <tspan
+           id="trsvg28">0°</tspan>
+      </text>
+    </switch>
+    <switch
+       style="font-size:13.6619997px"
+       id="switch260"
+       transform="translate(17.2612,230.479)">
+      <text
+         systemLanguage="ar"
+         id="trsvg72-ar">
+        <tspan
+           id="trsvg29-ar">-30°</tspan>
+      </text>
+      <text
+         id="trsvg72">
+        <tspan
+           id="trsvg29">30°S</tspan>
+      </text>
+    </switch>
+    <switch
+       style="font-size:13.6619997px"
+       id="switch266"
+       transform="translate(56.21,276.8218)">
+      <text
+         systemLanguage="ar"
+         id="trsvg73-ar">
+        <tspan
+           id="trsvg30-ar">-60°</tspan>
+      </text>
+      <text
+         id="trsvg73">
+        <tspan
+           id="trsvg30">60°S</tspan>
+      </text>
+    </switch>
+    <switch
+       style="font-size:13.6619997px"
+       id="switch272"
+       transform="translate(154.1577,304.6401)">
+      <text
+         systemLanguage="ar"
+         id="trsvg74-ar">
+        <tspan
+           id="trsvg31-ar">-90°</tspan>
+      </text>
+      <text
+         id="trsvg74">
+        <tspan
+           id="trsvg31">90°S</tspan>
+      </text>
+    </switch>
+    <!--
+<switch transform="matrix(1.0765 0 0 1 501.9297 298.2935)"><text font-size="10.0821">o</text></switch>
+<switch transform="matrix(1.0765 0 0 1 508.9297 29.2935)"><text font-size="10.0821">o</text></switch>
+<switch transform="matrix(1.0765 0 0 1 368.4297 133.7935)"><text font-size="10.0821">o</text></switch>
+<switch transform="matrix(1.0765 0 0 1 640.4297 148.2935)"><text font-size="10.0821">o</text></switch>
+<switch transform="matrix(1.0765 0 0 1 170.4297 29.2935)"><text font-size="10.0821">o</text></switch>
+<switch transform="matrix(1.0765 0 0 1 28.4297 160.2935)"><text font-size="10.0821">o</text></switch>
+<switch transform="matrix(1.0765 0 0 1 172.4297 296.7935)"><text font-size="10.0821">o</text></switch>
+-->
+  </g>
+</svg>
