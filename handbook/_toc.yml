@@ -19,12 +19,14 @@ parts:
 - caption: "Droughts focus"
   chapters:
   - file: chapters/02-drought-focus/index
-    title: "title..."
+    title: "Droughts and their impacts"
+  - file: chapters/02-drought-focus/timeline
+    title: "Historic droughts timeline"
 
 - caption: "Get the data"
   chapters:
   - file: chapters/03-get-data/index
-    title: "title..."
+    title: "title 03..."
 
 - caption: "First exploration"
   chapters:

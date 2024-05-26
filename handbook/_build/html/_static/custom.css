@@ -28,18 +28,19 @@ p.message {
 }
 
 p.credits {
+    text-align: center;
     font-size: .6rem;
-    color: lightgray;
+    color: rgb(194, 194, 194);
 }
 
 p.credits a:link {
     text-decoration: none;
-    color: lightgray;
+    color: rgb(194, 194, 194);
 }
 
 p.credits a:visited {
     text-decoration: none;
-    color: lightgray;
+    color: rgb(194, 194, 194);
 }
 
 p.sign {
@@ -61,7 +62,21 @@ div.admonition.tip>.admonition-title {
 .admonition.tip>.admonition-title:after,
 div.admonition.tip>.admonition-title:after {
     color: #9eedff;
-    content: var(--pst-icon-admonition-tip);
+}
+
+.admonition.note,
+div.admonition.note {
+    border-color: #9eedff;
+}
+
+.admonition.note>.admonition-title,
+div.admonition.note>.admonition-title {
+    background-color: #40a2b7;
+}
+
+.admonition.note>.admonition-title:after,
+div.admonition.note>.admonition-title:after {
+    color: #9eedff;
 }
 
 a:active,
