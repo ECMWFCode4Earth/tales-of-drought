@@ -22,6 +22,8 @@ parts:
     title: "Droughts and their impacts"
   - file: chapters/02-drought-focus/timeline
     title: "Historic droughts timeline"
+  - file: chapters/02-drought-focus/indices
+    title: "Drought indices"
 
 - caption: "Get the data"
   chapters:
@@ -33,6 +35,11 @@ parts:
   - file: chapters/04-notebook-time-machine/index
     title: "The Time Machine notebook"
 
+
+- caption: "Glossary"
+  chapters:
+  - file: chapters/glossary/index
+    title: ""
 
 - caption: "Appendix"
   chapters:

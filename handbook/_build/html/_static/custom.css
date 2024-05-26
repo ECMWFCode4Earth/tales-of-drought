@@ -79,6 +79,7 @@ div.admonition.note>.admonition-title:after {
     color: #9eedff;
 }
 
+article a,
 a:active,
 a:visited {
     color: #AA6C43;

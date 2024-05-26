@@ -32,10 +32,10 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=0afc0792" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
@@ -188,6 +188,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Droughts and their impacts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timeline.html">Historic droughts timeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indices.html">Drought indices</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Get the data</span></p>
 <ul class="nav bd-sidenav">
@@ -196,6 +197,10 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">First exploration</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../04-notebook-time-machine/index.html">The Time Machine notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Glossary</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../glossary/index.html">Glossary</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -373,7 +378,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -389,6 +396,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-4-drought-stages">The 4 drought stages</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -407,6 +422,17 @@ document.write(`
 <p><img alt="" src="../../_images/yoda-adaman-8wuOLdN77A4-unsplash.jpg" /></p>
 <p class="credits">Photo by <a href="https://unsplash.com/@adam_yod?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">YODA Adaman</a> on <a href="https://unsplash.com/photos/brown-wooden-boat-on-brown-sand-during-daytime-8wuOLdN77A4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a></p>
 <p>In urban areas, water shortages can disrupt industries, compromise sanitation, and strain infrastructure resilience. Addressing the multifaceted impacts of drought in today’s world necessitates holistic approaches, encompassing sustainable water management strategies, climate resilience measures, and proactive community engagement to mitigate risks and build resilience against future drought events.</p>
+<section id="the-4-drought-stages">
+<h2>The 4 drought stages<a class="headerlink" href="#the-4-drought-stages" title="Link to this heading">#</a></h2>
+<div class="iframe_ctn">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/2jmj4w37Vos?si=5rqUGRKMcxcp4yuj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <p class="credits">World Meteorological Organization - WMO</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can learn more about drought’s impacts in the “<a class="reference external" href="https://wmo.int/about-us/world-meteorological-day/wmd-2020/drought">Atlas of Mortality and Economic Losses from Weather and Climate Extremes (1970-2012)</a>” by the World Meteorological Organization (WMO).</p>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -464,7 +490,20 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-4-drought-stages">The 4 drought stages</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

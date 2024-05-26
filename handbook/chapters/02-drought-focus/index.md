@@ -13,3 +13,15 @@ Furthermore, drought-induced water scarcity has profound implications for ecosys
 
 
 In urban areas, water shortages can disrupt industries, compromise sanitation, and strain infrastructure resilience. Addressing the multifaceted impacts of drought in today's world necessitates holistic approaches, encompassing sustainable water management strategies, climate resilience measures, and proactive community engagement to mitigate risks and build resilience against future drought events.
+
+
+## The 4 drought stages
+
+<div class="iframe_ctn">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/2jmj4w37Vos?si=5rqUGRKMcxcp4yuj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <p class="credits">World Meteorological Organization - WMO</p>
+</div>
+
+```{tip} 
+You can learn more about drought's impacts in the "[Atlas of Mortality and Economic Losses from Weather and Climate Extremes (1970-2012)](https://wmo.int/about-us/world-meteorological-day/wmd-2020/drought)" by the World Meteorological Organization (WMO).
+```
