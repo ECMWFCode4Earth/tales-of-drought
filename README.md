@@ -126,15 +126,19 @@
 ## About The Project
 
 [//]: # ([![Product Name Screen Shot][product-screenshot]]&#40;https://example.com&#41;)
-<div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+<div align="center">  
     <img src="images/vecteezy_42113602.jpg" alt="Logo" width="600">
-  </a>
+</div>
+<div align="center">  
+    <a href="https://www.vecteezy.com/photo/42113602-ai-generated-a-concept-of-water-crisis-and-climate-changes" style="font-size:12px;color:lightgrey;">Vecteezy/Aung Thu Yein Tun</a>
+    <br/>
+    <br/>
 </div>
 
 In a world increasingly challenged by erratic weather conditions, the 'Tales of Dry Lands' project, a series of Python notebooks, 
 offers a way to understand climate data concerning droughts. Whether you're a citizen, a student, or a passionate environmentalist, 
 this guide enables you to learn how to visualize trends and explore complex climatic patterns of droughts.
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
