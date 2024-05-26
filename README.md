@@ -126,7 +126,7 @@
 
 [//]: # ([![Product Name Screen Shot][product-screenshot]]&#40;https://example.com&#41;)
 <div align="center"> 
-<a href="https://www.vecteezy.com/photo/42113602-ai-generated-a-concept-of-water-crisis-and-climate-changes"> 
+<a href="https://www.vecteezy.com/photo/42113602-ai-generated-a-concept-of-water-crisis-and-climate-changes" target="_blank" rel="noopener noreferrer"> 
     <img src="images/vecteezy_42113602.png" alt="Logo" width="600">
     </a>
     <br/>
