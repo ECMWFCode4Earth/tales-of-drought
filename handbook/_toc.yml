@@ -8,7 +8,7 @@ parts:
 - caption: "Climate toolkit for beginners"
   chapters:
   - file: chapters/01-climate-toolkit-for-beginners/what-is-climate
-    title: "What is the climate?"
+    title: "What is climate?"
   - file: chapters/01-climate-toolkit-for-beginners/coordinate-system
     title: "The Earth's coordinate system"
   - file: chapters/01-climate-toolkit-for-beginners/model-grid
@@ -21,9 +21,14 @@ parts:
   - file: chapters/02-drought-focus/index
     title: "title..."
 
+- caption: "Get the data"
+  chapters:
+  - file: chapters/03-get-data/index
+    title: "title..."
+
 - caption: "First exploration"
   chapters:
-  - file: chapters/03-notebook-time-machine/index
+  - file: chapters/04-notebook-time-machine/index
     title: "The Time Machine notebook"
 
 

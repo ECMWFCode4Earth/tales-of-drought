@@ -13,6 +13,14 @@ h1 {
     font-weight: 800;
 }
 
+div.iframe_ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+}
+
 
 p.message {
     font-size: 1.6rem;
@@ -20,12 +28,53 @@ p.message {
 }
 
 p.credits {
-    font-size: .8rem;
-    opacity: .6;
+    font-size: .6rem;
+    color: lightgray;
+}
+
+p.credits a:link {
+    text-decoration: none;
+    color: lightgray;
+}
+
+p.credits a:visited {
+    text-decoration: none;
+    color: lightgray;
 }
 
 p.sign {
     width: 100%;
     font-style: italic;
     text-align: right;
+}
+
+.admonition.tip,
+div.admonition.tip {
+    border-color: #9eedff;
+}
+
+.admonition.tip>.admonition-title,
+div.admonition.tip>.admonition-title {
+    background-color: #40a2b7;
+}
+
+.admonition.tip>.admonition-title:after,
+div.admonition.tip>.admonition-title:after {
+    color: #9eedff;
+    content: var(--pst-icon-admonition-tip);
+}
+
+a:active,
+a:visited {
+    color: #AA6C43;
+    /* color: #c98520; */
+}
+
+.prev-next-area a:visited p.prev-next-title {
+    color: #AA6C43;
+}
+
+nav.bd-links .current>a {
+    box-shadow: inset max(3px, .1875rem, .12em) 0 0 #AA6C43;
+    color: #AA6C43;
 }

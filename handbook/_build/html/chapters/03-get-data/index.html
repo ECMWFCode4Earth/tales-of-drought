@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>The netCDF files &#8212; Tales of Dry Lands</title>
+  <title>The Climate Data Store or any other data source &#8212; Tales of Dry Lands</title>
 
 
 
@@ -62,11 +62,11 @@
   <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
   <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
   <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-  <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/01-climate-toolkit-for-beginners/netCDF-file';</script>
+  <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/03-get-data/index';</script>
   <link rel="index" title="Index" href="../../genindex.html" />
   <link rel="search" title="Search" href="../../search.html" />
-  <link rel="next" title="Droughts and their impacts" href="../02-drought-focus/index.html" />
-  <link rel="prev" title="The model grid" href="model-grid.html" />
+  <link rel="next" title="notebook 1" href="../04-notebook-time-machine/index.html" />
+  <link rel="prev" title="Droughts and their impacts" href="../02-drought-focus/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en" />
 </head>
@@ -173,23 +173,29 @@
                 </ul>
                 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Climate toolkit for
                     beginners</span></p>
-                <ul class="current nav bd-sidenav">
-                  <li class="toctree-l1"><a class="reference internal" href="what-is-climate.html">What is climate?</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="coordinate-system.html">The Earth's
-                      coordinate system</a></li>
-                  <li class="toctree-l1"><a class="reference internal" href="model-grid.html">The model grid</a></li>
-                  <li class="toctree-l1 current active"><a class="current reference internal" href="#">The netCDF
-                      files</a></li>
+                <ul class="nav bd-sidenav">
+                  <li class="toctree-l1"><a class="reference internal"
+                      href="../01-climate-toolkit-for-beginners/what-is-climate.html">What is climate?</a></li>
+                  <li class="toctree-l1"><a class="reference internal"
+                      href="../01-climate-toolkit-for-beginners/coordinate-system.html">The Earth's coordinate
+                      system</a></li>
+                  <li class="toctree-l1"><a class="reference internal"
+                      href="../01-climate-toolkit-for-beginners/model-grid.html">The model grid</a></li>
+                  <li class="toctree-l1"><a class="reference internal"
+                      href="../01-climate-toolkit-for-beginners/netCDF-file.html">The netCDF files</a></li>
                 </ul>
                 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Droughts focus</span></p>
                 <ul class="nav bd-sidenav">
                   <li class="toctree-l1"><a class="reference internal"
                       href="../02-drought-focus/index.html">title...</a></li>
                 </ul>
+                <p aria-level="2" class="caption" role="heading"><span class="caption-text">Get the data</span></p>
+                <ul class="current nav bd-sidenav">
+                  <li class="toctree-l1 current active"><a class="current reference internal" href="#">title...</a></li>
+                </ul>
                 <p aria-level="2" class="caption" role="heading"><span class="caption-text">First exploration</span></p>
                 <ul class="nav bd-sidenav">
-                  <li class="toctree-l1"><a class="reference internal" href="../03-notebook-time-machine/index.html">The
+                  <li class="toctree-l1"><a class="reference internal" href="../04-notebook-time-machine/index.html">The
                       Time Machine notebook</a></li>
                 </ul>
                 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
@@ -270,7 +276,7 @@
 
 
                           <li><a
-                              href="https://github.com/ECMWFCode4Earth/tales-of-drought/handbook/issues/new?title=Issue%20on%20page%20%2Fchapters/01-climate-toolkit-for-beginners/netCDF-file.html&body=Your%20issue%20content%20here."
+                              href="https://github.com/ECMWFCode4Earth/tales-of-drought/handbook/issues/new?title=Issue%20on%20page%20%2Fchapters/03-get-data/index.html&body=Your%20issue%20content%20here."
                               target="_blank" class="btn btn-sm btn-source-issues-button dropdown-item"
                               title="Open an issue" data-bs-placement="left" data-bs-toggle="tooltip">
 
@@ -299,9 +305,9 @@
 
 
 
-                          <li><a href="../../_sources/chapters/01-climate-toolkit-for-beginners/netCDF-file.md"
-                              target="_blank" class="btn btn-sm btn-download-source-button dropdown-item"
-                              title="Download source file" data-bs-placement="left" data-bs-toggle="tooltip">
+                          <li><a href="../../_sources/chapters/03-get-data/index.md" target="_blank"
+                              class="btn btn-sm btn-download-source-button dropdown-item" title="Download source file"
+                              data-bs-placement="left" data-bs-toggle="tooltip">
 
 
                               <span class="btn__icon-container">
@@ -374,7 +380,7 @@
 
 
             <div id="jb-print-docs-body" class="onlyprint">
-              <h1>The netCDF files</h1>
+              <h1>The Climate Data Store or any other data source</h1>
               <!-- Table of contents -->
               <div id="print-main-content">
                 <div id="jb-print-toc">
@@ -388,12 +394,10 @@
             <div id="searchbox"></div>
             <article class="bd-article">
 
-              <section class="tex2jax_ignore mathjax_ignore" id="the-netcdf-files">
-                <h1>The netCDF files<a class="headerlink" href="#the-netcdf-files" title="Link to this heading">#</a>
-                </h1>
-                <p>Egestas tellus rutrum tellus pellentesque eu tincidunt tortor aliquam nulla. Arcu ac tortor dignissim
-                  convallis aenean et tortor at. Tellus molestie nunc non blandit massa enim. Pellentesque id nibh
-                  tortor id.</p>
+              <section class="tex2jax_ignore mathjax_ignore" id="the-climate-data-store-or-any-other-data-source">
+                <h1>The Climate Data Store or any other data source<a class="headerlink"
+                    href="#the-climate-data-store-or-any-other-data-source" title="Link to this heading">#</a></h1>
+                <p>TO DO</p>
               </section>
 
               <script type="text/x-thebe-config">
@@ -409,7 +413,7 @@
         },
         kernelOptions: {
             name: "python3",
-            path: "./chapters/01-climate-toolkit-for-beginners"
+            path: "./chapters/03-get-data"
         },
         predefinedOutput: true
     }
@@ -426,17 +430,17 @@
             <footer class="prev-next-footer">
 
               <div class="prev-next-area">
-                <a class="left-prev" href="model-grid.html" title="previous page">
+                <a class="left-prev" href="../02-drought-focus/index.html" title="previous page">
                   <i class="fa-solid fa-angle-left"></i>
                   <div class="prev-next-info">
                     <p class="prev-next-subtitle">previous</p>
-                    <p class="prev-next-title">The model grid</p>
+                    <p class="prev-next-title">Droughts and their impacts</p>
                   </div>
                 </a>
-                <a class="right-next" href="../02-drought-focus/index.html" title="next page">
+                <a class="right-next" href="../04-notebook-time-machine/index.html" title="next page">
                   <div class="prev-next-info">
                     <p class="prev-next-subtitle">next</p>
-                    <p class="prev-next-title">Droughts and their impacts</p>
+                    <p class="prev-next-title">notebook 1</p>
                   </div>
                   <i class="fa-solid fa-angle-right"></i>
                 </a>
