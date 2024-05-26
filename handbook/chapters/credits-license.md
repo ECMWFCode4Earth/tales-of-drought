@@ -1,6 +1,6 @@
 # Credits
 
-- [Basket image via Giphy](https://giphy.com/gifs/drexeldragons-basketball-drexel-women-7T2OUItNevQ8PzJ2fz)
+- xxxxx
 
 
 <br />
