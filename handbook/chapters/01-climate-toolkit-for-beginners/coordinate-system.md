@@ -26,8 +26,10 @@ The position of these parallels is determined by their angle relative to the hor
 
 
 
-This system allows us to specify any location on Earth using a universally understood method.
+This system allows us to specify any location on Earth using a universally understood method. 
 
 ![](../../images/earth-coord-BW.svg)
 
-However, when dealing with climate data, it's crucial to remember that climate is influenced not only by the Earth surface, but also by atmospheric conditions. Therefore, to gain a comprehensive understanding of our planet's climate, we must consider a more complex representation. We will explore this further in the next chapter.
+In the analyses we will conduct, we will sometimes want to isolate areas, regions, or even continents, and to do this we will specifically use latitude and longitude to filter data relevant only to the areas of interest.
+
+However, when dealing with climate data, it's crucial to remember that climate is related not only to the Earth surface, but also to atmospheric conditions. Therefore, to gain a comprehensive understanding of our planet's climate, we must consider a more complex representation. We will explore this further in the next chapter.

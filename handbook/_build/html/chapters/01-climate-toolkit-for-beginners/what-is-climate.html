@@ -180,9 +180,9 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Climate toolkit for beginners</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">What is climate?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="coordinate-system.html">The Earth's coordinate system</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model-grid.html">The model grid</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netCDF-file.html">The netCDF files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinate-system.html">Earth's coordinate system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="climate-models.html">Climate models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="netCDF-file.html">netCDF files</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Droughts focus</span></p>
 <ul class="nav bd-sidenav">
@@ -196,7 +196,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">First exploration</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../04-notebook-time-machine/index.html">The Time Machine notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04-notebook-time-machine/index.html">The Time Machine</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Glossary</span></p>
 <ul class="nav bd-sidenav">
@@ -378,7 +378,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -394,6 +396,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#climate-variables-and-indicators">Climate variables and indicators</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -413,8 +423,23 @@ document.write(`
 <p>The choice of data — whether focusing on weather, climate or climate variability — depends on the specific research question being addressed. For our drought analysis, we will consider only climate and climate variability data.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If you’re interested in learning more about this topic, sign up for the free “<a class="reference external" href="https://learning.ecmwf.int/course/view.php?id=67">Climate Data Discovery – Introduction</a>” course on the ECMWF eLearning website.</p>
+<p>If you’re interested in this topic, sign up for the free “<a class="reference external" href="https://learning.ecmwf.int/course/view.php?id=67">Climate Data Discovery – Introduction</a>” course on the ECMWF eLearning website.</p>
 </div>
+<section id="climate-variables-and-indicators">
+<h2>Climate variables and indicators<a class="headerlink" href="#climate-variables-and-indicators" title="Link to this heading">#</a></h2>
+<p>What factors allow us to understand the climate and recognize changes in it?</p>
+<p>A panel of meteorologists and climate scientists from around the world has identified 55 <strong>Essential Climate Variables</strong> (ECVs). These variables are consistently monitored to capture a detailed picture of Earth’s climate.</p>
+<p><img alt="Essential Climate Variables" src="../../_images/essential-climate-variables.png" /></p>
+<p>Additionally to these variables, there is a select number of <strong>Climate Indicators</strong>. These indicators offer crucial insights into the most significant aspects of climate change, helping us understand its impact across various domains.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<ul class="simple">
+<li><p>To learn all about the ECVs and understand their purposes, visit the <a class="reference external" href="https://gcos.wmo.int/en/essential-climate-variables/">Global Climate Observing System (GCOS) website</a>.</p></li>
+<li><p>To know more about the Climate Indicators, have a look at the <a class="reference external" href="https://climate.copernicus.eu/climate-indicators">Copernicus/ECMWF page</a></p></li>
+</ul>
+</div>
+<p><img alt="Climate Indicators" src="../../_images/Climate-Indicators-Copernicus.png" /></p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -472,7 +497,20 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#climate-variables-and-indicators">Climate variables and indicators</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

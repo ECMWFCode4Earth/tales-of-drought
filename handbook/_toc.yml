@@ -10,11 +10,11 @@ parts:
   - file: chapters/01-climate-toolkit-for-beginners/what-is-climate
     title: "What is climate?"
   - file: chapters/01-climate-toolkit-for-beginners/coordinate-system
-    title: "The Earth's coordinate system"
-  - file: chapters/01-climate-toolkit-for-beginners/model-grid
-    title: "The model grid"
+    title: "Earth's coordinate system"
+  - file: chapters/01-climate-toolkit-for-beginners/climate-models
+    title: "Climate models"
   - file: chapters/01-climate-toolkit-for-beginners/netCDF-file
-    title: "The netCDF files"
+    title: "netCDF files"
 
 - caption: "Droughts focus"
   chapters:
@@ -33,7 +33,7 @@ parts:
 - caption: "First exploration"
   chapters:
   - file: chapters/04-notebook-time-machine/index
-    title: "The Time Machine notebook"
+    title: "The Time Machine"
 
 
 - caption: "Glossary"

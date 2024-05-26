@@ -1,4 +1,22 @@
-# Drought indices
+# Drought indicators and indices
+
+Indicators and indices are the tools that let us to understand the drought phenomenon.
+
+**Indicators** are variables or parameters used to describe drought conditions. They include precipitation, temperature, streamflow, groundwater and reservoir levels, soil moisture and snowpack.
+
+Drought **indices** are tools to measure how severe a drought is. They help us understand the current state of droughts by evaluating various climate conditions. These indices are helpful because they break down complex weather data into simpler terms, making it easier for everyone to understand. 
+
+They also indicate the severity, location, timing, and duration of droughts. For instance, severity is how much the current situation differs from normal weather patterns. The indices can also show us the specific area affected by the drought, when the drought started, and how long it might last. 
+
+This information is crucial for planning how to respond to droughts, especially in how they affect people, farms, and water supplies. The impact of a drought can vary; for example, a short drought during a critical time for crops can be more harmful than a longer, more severe drought at another time.
+
+There are various methods to monitor a drought: 
+- we can use a single indicator or index
+- we can use multiple indicators or indices
+- we can use composite or hybrid indicators
+
+For our analysis we will focus on two indices: **SPI** and **SPEI**.
+
 
 ## SPI index
 
@@ -10,7 +28,6 @@ This global **SPI** is calculated using data from the {ref}`era5-dataset`. This 
 ```{tip} 
 If you're interested in learning more about the **SPI** index, you can download the  "[Standardized Precipitation Index User Guide](https://library.wmo.int/records/item/39629-standardized-precipitation-index-user-guide)" from the World Meteorological Organization (WMO).
 ```
-
 
 
 ## SPEI index
