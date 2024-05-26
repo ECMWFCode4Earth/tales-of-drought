@@ -39,9 +39,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="images/logo-no-bg.png" alt="Logo" width="300">
-  </a>
+
 
   <h3 align="center">Tales Of Dry Lands</h3>
 
