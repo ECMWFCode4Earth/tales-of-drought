@@ -28,11 +28,16 @@ parts:
 - caption: "Get the data"
   chapters:
   - file: chapters/03-get-data/index
-    title: "title 03..."
+    title: "Copernicus Data Store"
+
+- caption: "Setting up the environment"
+  chapters:
+  - file: chapters/04-set-up-env/index
+    title: "title xxx"
 
 - caption: "First exploration"
   chapters:
-  - file: chapters/04-notebook-time-machine/index
+  - file: chapters/05-notebook-time-machine/index
     title: "The Time Machine"
 
 
