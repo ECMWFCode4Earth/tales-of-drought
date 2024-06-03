@@ -10,11 +10,14 @@ Explain the objective of the notebook, which is to recognize drought events arou
 
 
 ## Data loading and preprocessing
-- Get the data
+- Getting the data
 - Loading data
 - Data inspection: show how to inspect the structure of the dataset, including dimensions, variables, and metadata.
 - Preprocessing steps: detail any necessary steps to clean or manipulate the data for analysis.
 
+
+## Drought over time
+A line chart will display SPEI values over time to highlight trends, cycles, and anomalies in drought conditions, possibly with different lines for different locations or time scales.
 
 ## Selecting a year to explore
 This segment will be designed as an interactive feature within the notebook where the audience can choose a specific year from the dataset to analyze. A dropdown menu or slider will be used for year selection. This interactive element will allow users to personalize the data exploration to their interests or specific years they might be curious about, such as years of significant global events like El Niño.
