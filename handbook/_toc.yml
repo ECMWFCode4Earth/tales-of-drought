@@ -12,7 +12,7 @@ parts:
   - file: chapters/01-climate-toolkit-for-beginners/coordinate-system
     title: "Earth's coordinate system"
   - file: chapters/01-climate-toolkit-for-beginners/data-sources
-    title: "Dat sources"
+    title: "Data sources"
   - file: chapters/01-climate-toolkit-for-beginners/netCDF-file
     title: "netCDF files"
 

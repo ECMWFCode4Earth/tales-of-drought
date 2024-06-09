@@ -32,10 +32,10 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=e0a43387" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
@@ -61,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/01-climate-toolkit-for-beginners/coordinate-system';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="The climate data sources" href="data-sources.html" />
+    <link rel="next" title="Climate data sources" href="data-sources.html" />
     <link rel="prev" title="What is climate?" href="what-is-climate.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -181,7 +181,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="what-is-climate.html">What is climate?</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Earth's coordinate system</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data-sources.html">The climate data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-sources.html">Climate data sources</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="netCDF-file.html">netCDF files</a></li>
 </ul>
@@ -429,21 +429,21 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="the-earth-s-coordinate-system">
 <h1>The Earth’s coordinate system<a class="headerlink" href="#the-earth-s-coordinate-system" title="Link to this heading">#</a></h1>
-<p>Understanding climate data requires familiarity with how our planet is geographically mapped. Let’s visualize the Earth as a sphere. To pinpoint any location in a universally accepted way, we use a system of coordinates.</p>
+<p>Understanding climate data requires familiarity with how our planet is geographically mapped. So, if we visualize the Earth as a sphere, we can pinpoint any location in a universally accepted way using a system of coordinates.</p>
 <section id="meridians-and-longitude">
 <h2>Meridians and longitude<a class="headerlink" href="#meridians-and-longitude" title="Link to this heading">#</a></h2>
-<p>Imagine drawing invisible lines vertically from the North Pole to the South Pole at regular intervals. These lines, called <strong>meridians</strong>, connect the poles. Each meridian has an associated constant value known as <strong>longitude</strong>, which is measured in degrees.</p>
-<p>By convention, the <strong>Prime Meridian</strong>, which is set at 0° longitude, runs through the <a class="reference external" href="https://www.rmg.co.uk/royal-observatory">Royal Observatory in Greenwich</a>, United Kingdom.</p>
-<p>Longitude values on Earth are marked from the Prime Meridian. They decrease westward up to -180° and increase eastward up to 180°.</p>
+<p>We can draw lines vertically from the North Pole to the South Pole at regular intervals. These lines are called <strong>meridians</strong>. Each meridian has an associated constant value known as <strong>longitude</strong>, which is measured in degrees.<br />
+By convention, the Prime Meridian runs through the <a class="reference external" href="https://www.rmg.co.uk/royal-observatory">Royal Observatory in Greenwich</a>, United Kingdom and has longitude set at 0°.<br />
+Longitude values decrease westward up to -180° and increase eastward up to 180°.</p>
 <p><img alt="" src="../../_images/longitude-BW.svg" /></p>
 </section>
 <section id="parallels-and-latitude">
 <h2>Parallels and latitude<a class="headerlink" href="#parallels-and-latitude" title="Link to this heading">#</a></h2>
-<p>Now that we’ve established a universal method for determining the east-west position on Earth, let’s explore how we define positions from north to south. Imagine drawing a line around the Earth that is equidistant from both poles, stretching from east to west. This line is called the <strong>Equator</strong>. Lines running parallel to the Equator are known as <strong>parallels</strong>.</p>
-<p>The position of these parallels is determined by their angle relative to the horizontal plane passing through the Equator. This angle is referred to as <strong>latitude</strong>, which is also measured in degrees. Latitude values increase from the Equator northward up to 90° and decrease southward down to -90°.</p>
+<p>Now that we’ve established a universal method for determining the east-west position on Earth, let’s explore how we define positions from north to south.<br />
+Now we have to imagine drawing a line around the Earth that is equidistant from both poles, stretching from east to west. This line is called the <strong>Equator</strong>. Lines running parallel to the Equator are known as <strong>parallels</strong>.<br />
+The position of these parallels is determined by their angle relative to the horizontal plane passing through the Equator. This angle is referred to as <strong>latitude</strong>, which is also measured in degrees. Latitude values increase from the Equator northward up to 90° and decrease southward down to -90°.</p>
 <p><img alt="" src="../../_images/latitude-BW.svg" /></p>
 <p>This system allows us to specify any location on Earth using a universally understood method.</p>
-<p><img alt="" src="images/earth-coord-BW.svg" /></p>
 <p>In the analyses we will conduct, we will sometimes want to isolate areas, regions, or even continents, and to do this we will specifically use latitude and longitude to filter data relevant only to the areas of interest.</p>
 <p>However, when dealing with climate data, it’s crucial to remember that climate is related not only to the Earth surface, but also to atmospheric conditions. Therefore, to gain a comprehensive understanding of our planet’s climate, we must consider a more complex representation. We will explore this further in the next chapter.</p>
 </section>
@@ -493,7 +493,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">The climate data sources</p>
+        <p class="prev-next-title">Climate data sources</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

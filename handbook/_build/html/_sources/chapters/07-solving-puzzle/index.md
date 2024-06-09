@@ -1,4 +1,4 @@
-# Solving the puzzle: identify drivers of the drought
+# Solving the puzzle: determine drivers of the drought
 
 ## Purpose of the notebook
 Explain the objective of the notebook, which is identifying and exploring the primary drivers of drought conditions, specifically focusing on the roles of precipitation deficits and temperature extremes.

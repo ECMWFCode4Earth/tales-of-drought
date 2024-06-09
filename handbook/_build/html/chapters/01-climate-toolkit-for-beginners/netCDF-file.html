@@ -32,10 +32,10 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=e0a43387" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
@@ -62,7 +62,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Droughts and their impacts" href="../02-drought-focus/index.html" />
-    <link rel="prev" title="The climate models" href="climate-models.html" />
+    <link rel="prev" title="Climate data sources" href="data-sources.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -181,7 +181,8 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="what-is-climate.html">What is climate?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="coordinate-system.html">Earth's coordinate system</a></li>
-<li class="toctree-l1"><a class="reference internal" href="climate-models.html">Climate models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-sources.html">Climate data sources</a></li>
+
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">netCDF files</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Droughts focus</span></p>
@@ -417,7 +418,17 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="the-netcdf-files">
 <h1>The netCDF files<a class="headerlink" href="#the-netcdf-files" title="Link to this heading">#</a></h1>
-<p>Egestas tellus rutrum tellus pellentesque eu tincidunt tortor aliquam nulla. Arcu ac tortor dignissim convallis aenean et tortor at. Tellus molestie nunc non blandit massa enim. Pellentesque id nibh tortor id.</p>
+<p>Climate data often increase their size rapidly due to the need to analyze extensive periods and broad geographical regions. Consequently, it is impractical to store them in text-based formats like CSV or tabular files. Instead, climate data are typically stored in a binary format, which is not directly readable by humans.</p>
+<p>One prevalent binary format for climate data is <strong>netCDF</strong>, which uses the <strong>.nc</strong> file extension. Since it is a binary format, specific software or libraries are required to manage these files.</p>
+<p>Metadata can be stored using attributes within these files. For guidelines on what metadata to include.</p>
+<p><img alt="" src="../../_images/placeholder.svg" /></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<ul class="simple">
+<li><p>To learn more about netCDF data format read the <a class="reference external" href="https://confluence.ecmwf.int/display/CKB/What+are+NetCDF+files+and+how+can+I+read+them">What are NetCDF files and how can I read them</a> guide by ECMWF.</p></li>
+<li><p>The <a class="reference external" href="https://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/cf-conventions.html#_description_of_the_data">CF Conventions</a> serve as a valuable reference for climate data metadata.</p></li>
+</ul>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -451,12 +462,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="climate-models.html"
+       href="data-sources.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">The climate models</p>
+        <p class="prev-next-title">Climate data sources</p>
       </div>
     </a>
     <a class="right-next"

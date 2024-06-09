@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>The climate data sources &#8212; Tales of Dry Lands</title>
+    <title>Climate data sources &#8212; Tales of Dry Lands</title>
   
   
   
@@ -32,10 +32,10 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=e0a43387" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
@@ -181,7 +181,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="what-is-climate.html">What is climate?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="coordinate-system.html">Earth's coordinate system</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">The climate data sources</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Climate data sources</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="netCDF-file.html">netCDF files</a></li>
 </ul>
@@ -404,7 +404,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>The climate data sources</h1>
+    <h1>Climate data sources</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -414,12 +414,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The climate data sources</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Climate data sources</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#observations">Observations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#climate-models">Climate models</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-climate-model-grid">The climate model grid</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-grid">The model grid</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reanalyses">Reanalyses</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#todo-add-information-about-drought-data">TODO: add information about drought data.</a></li>
@@ -435,8 +436,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="the-climate-data-sources">
-<h1>The climate data sources<a class="headerlink" href="#the-climate-data-sources" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="climate-data-sources">
+<h1>Climate data sources<a class="headerlink" href="#climate-data-sources" title="Link to this heading">#</a></h1>
 <p>Working with climate data, we will encounter the following definitions: observations, reanalyses, and climate models. What do they mean, and what are the differences?<br />
 These represent three major categories of data sources, and the choice of which one to use depends on the time period we are interested in.</p>
 <p><img alt="" src="../../_images/data-sources.svg" /></p>
@@ -453,13 +454,21 @@ The observations are defined <strong>direct</strong> when the variables are meas
 With the advancement of computing capabilities over recent decades, these models have also grown more complex.
 These models don’t predict specific events at particular times or locations, but are used for assessing how average and extreme climate conditions are expected to shift.</p>
 <p><img alt="" src="../../_images/placeholder.svg" /></p>
-<section id="the-climate-model-grid">
-<h3>The climate model grid<a class="headerlink" href="#the-climate-model-grid" title="Link to this heading">#</a></h3>
-<p>Even if the computing power has dramatically increased, it is however impossible to compute the climate state of every possible points on the planet. What the model do is to compute the climate state of regularly spaced points, creating <em>de facto</em> a grid with each point at the center of its cell. The value is considered to be an average of the grid cell.</p>
+<section id="the-model-grid">
+<h3>The model grid<a class="headerlink" href="#the-model-grid" title="Link to this heading">#</a></h3>
+<p>Even if the computing power has increased, it is however impossible to compute the climate state of every possible points on the planet. What the models do is to compute the climate state of regularly spaced points, creating <em>de facto</em> a grid with each point at the center of its cell. The value is considered to be an average of the grid cell.</p>
 <p>When dealing with climate data, we have to consider that climate is related not only to the Earth surface (that we have already seen how it can be represented through a system of coordinates), but also to atmospheric conditions. So we have to add a third dimension to our system, named ‘height’ or ‘pressure’ and also divided into cells.</p>
 <p>However, climate evolves over time, so we must consider it as a fourth dimension.</p>
 <p><img alt="" src="../../_images/placeholder.svg" /></p>
+<p>The effectiveness of a climate model is influenced by its resolution, which includes both spatial and temporal aspects. <strong>Spatial resolution</strong> determines the dimensions of the grid cells within the model, measurable in degrees of latitude and longitude or kilometers. <strong>Temporal resolution</strong>, on the other hand, defines the frequency of computations for various quantities within the model. Frequently, a single model can operate at varying resolutions, and the selection of resolution depends on the particular issue being investigated.</p>
 </section>
+</section>
+<section id="reanalyses">
+<h2>Reanalyses<a class="headerlink" href="#reanalyses" title="Link to this heading">#</a></h2>
+<p>Climate reanalyses combine historical observations with models to create time series for various climate variables. Reanalyses are highly utilized in the geophysical sciences since they offer a detailed account of the climate as observed over recent decades.<br />
+The quality of a reanalysis depends on the resolution of its model as well as the quality of observations.<br />
+ERA5 is the latest climate reanalysis produced by ECMWF. It is available from 1940 and continues to be extended forward in time.</p>
+<p><img alt="" src="../../_images/reanalysis-stages.png" /></p>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="todo-add-information-about-drought-data">
@@ -472,7 +481,12 @@ These models don’t predict specific events at particular times or locations, b
 <li><p><a class="reference external" href="https://learning.ecmwf.int/course/view.php?id=63">Data Resources - Reanalyses</a></p></li>
 <li><p><a class="reference external" href="https://learning.ecmwf.int/course/view.php?id=62">Data Resources - Climate Models</a></p></li>
 </ul>
-<p>Or you can visit the “<a class="reference external" href="https://community.wmo.int/en/observation-components-global-observing-system">Observation components of the Global Observing System</a>” page of the World Meteorological Organization (WMO).</p>
+<p>Or you can visit the webpages:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://community.wmo.int/en/observation-components-global-observing-system">Observation components of the Global Observing System</a> of the World Meteorological Organization (WMO).</p></li>
+<li><p><a class="reference external" href="https://www.climatehubs.usda.gov/hubs/northwest/topic/basics-global-climate-models">Basics of Global Climate Models</a> of the USDA Climate Hubs</p></li>
+<li><p><a class="reference external" href="https://climate.copernicus.eu/climate-reanalysis">Climate reanalysis</a> of Copernicus</p></li>
+</ul>
 </div>
 </section>
 
@@ -540,12 +554,13 @@ These models don’t predict specific events at particular times or locations, b
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The climate data sources</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Climate data sources</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#observations">Observations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#climate-models">Climate models</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-climate-model-grid">The climate model grid</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-grid">The model grid</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reanalyses">Reanalyses</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#todo-add-information-about-drought-data">TODO: add information about drought data.</a></li>
