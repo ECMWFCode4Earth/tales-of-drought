@@ -20,11 +20,14 @@ If you're interested in this topic, sign up for the free "[Climate Data Discover
 
 What factors allow us to understand the climate and recognize changes in it?
 
-A panel of meteorologists and climate scientists from around the world has identified 55 **Essential Climate Variables** (ECVs). These variables are consistently monitored to capture a detailed picture of Earth's climate.
+An international panel of climate scientists has identified the 55 **Essential Climate Variables** (ECVs) grouped by components of the Earth system: atmosphere, land and oceans. Inside them we can find, for example, temperature, precipitation, greenhouse gases and fire.
+All these variables are constantly monitored to capture a detailed picture of Earth’s climate. 
+
 
 ![Essential Climate Variables](../../images/essential-climate-variables.png)
 
-In addition to these variables, there is also a selection of what are called **Climate Indicators**. Climate indicators show the long-term evolution of several key variables which are used to assess the global and regional trends of a changing climate. They are updated at least once a year.
+In addition to the essential variables, there are **Climate Indicators**, that show the long-term evolution of several key variables and are used to evaluate the global and regional trends of the climate. They are updated at least once a year.
+
 
 ```{tip}
 - To learn all about the ECVs and understand their purposes, visit the [Global Climate Observing System (GCOS) website](https://gcos.wmo.int/en/essential-climate-variables/).

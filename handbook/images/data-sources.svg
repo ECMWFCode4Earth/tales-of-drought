@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 454 182" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <g transform="matrix(1, 0, 0, 1, -2.721031, -100.558304)" style="">
+    <path d="M 155.485 223.227 H 416.901 L 416.901 216.227 L 437.901 233.227 L 416.901 250.227 L 416.901 243.227 H 155.485 V 223.227 Z" style="fill: rgb(64, 162, 183); stroke: rgb(0, 0, 0); stroke-width: 0px;" bx:shape="arrow 155.485 216.227 282.416 34 20 21 0 1@9b374dd1"/>
+    <path d="M -295.627 223.227 H -34.211 L -34.211 216.227 L -13.211 233.227 L -34.211 250.227 L -34.211 243.227 H -295.627 V 223.227 Z" style="fill: rgb(64, 162, 183); stroke: rgb(0, 0, 0); stroke-width: 0px;" transform="matrix(-1, 0, 0, 1, 0, 0)" bx:shape="arrow -295.627 216.227 282.416 34 20 21 0 1@c2a71024"/>
+  </g>
+  <path d="M -229.732 74.784 H -72.65 L -72.65 67.784 L -60.031 84.784 L -72.65 101.784 L -72.65 94.784 H -229.732 V 74.784 Z" style="fill: rgb(64, 162, 183); stroke: rgb(0, 0, 0); stroke-width: 0px;" transform="matrix(-1, 0, 0, 1, 0, 0)" bx:shape="arrow -229.732 67.784 169.701 34 20 12.619 0 1@dff25d00"/>
+  <path d="M -229.864 26.754 H -105.069 L -105.069 19.754 L -95.044 36.754 L -105.069 53.754 L -105.069 46.754 H -229.864 V 26.754 Z" style="fill: rgb(64, 162, 183); stroke: rgb(0, 0, 0); stroke-width: 0px;" transform="matrix(-1, 0, 0, 1, 0, 0)" bx:shape="arrow -229.864 19.754 134.82 34 20 10.025 0 1@8a10988a"/>
+  <line style="fill: rgb(216, 216, 216); stroke-linecap: round; stroke-dasharray: 4; transform-box: fill-box; transform-origin: 50% 50%; stroke: rgb(0, 0, 0);" x1="228.765" y1="147.915" x2="229.502" y2="14.915" transform="matrix(-1, 0, 0, -1, -0.000011, -0.000012)"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.8px; font-weight: 700; white-space: pre;" x="200.38" y="163.052">PRESENT</text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.8px; font-weight: 700; white-space: pre;" x="387.606" y="163.263">FUTURE</text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.8px; font-weight: 700; white-space: pre;" x="9.217" y="163.263">PAST</text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.8px; font-weight: 700; white-space: pre;" x="180.896" y="137.114">Climate   models</text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.8px; font-weight: 700; white-space: pre;" x="147.9" y="88.613">Observations</text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.8px; font-weight: 700; white-space: pre;" x="159.099" y="40.113">Reanalyses</text>
+</svg>

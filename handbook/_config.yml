@@ -2,7 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: Tales of Dry Lands
-author: Madiha Abbas, Syed Akhtar, Christopher Barnard, George Begkas, Marina Caporlingua, Lucy Colley, Francesca Di Giuseppe, Akis Karagiannis, Jessica Keune
+author: Madiha Abbas, Syed Akhtar, George Begkas, Marina Caporlingua, Lucy Colley, Akis Karagiannis, (thanks to ECMWF mentors Christopher Barnard, Francesca Di Giuseppe, Jessica Keune)
 logo: ../images/logo-no-bg.png
 
 # Force re-execution of notebooks on each build.

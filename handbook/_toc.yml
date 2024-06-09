@@ -11,8 +11,8 @@ parts:
     title: "What is climate?"
   - file: chapters/01-climate-toolkit-for-beginners/coordinate-system
     title: "Earth's coordinate system"
-  - file: chapters/01-climate-toolkit-for-beginners/climate-models
-    title: "Climate models"
+  - file: chapters/01-climate-toolkit-for-beginners/data-sources
+    title: "Dat sources"
   - file: chapters/01-climate-toolkit-for-beginners/netCDF-file
     title: "netCDF files"
 
@@ -39,6 +39,19 @@ parts:
   chapters:
   - file: chapters/05-notebook-time-machine/index
     title: "The Time Machine"
+
+
+- caption: "Second exploration"
+  chapters:
+  - file: chapters/06-quantum-of-drought/index
+    title: "Quantum of Drought"
+
+
+
+- caption: "Third exploration"
+  chapters:
+  - file: chapters/07-solving-puzzle/index
+    title: "Solving the puzzle"
 
 
 - caption: "Glossary"

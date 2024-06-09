@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>notebook 1 &#8212; Tales of Dry Lands</title>
+    <title>The time machine: identify drought events &#8212; Tales of Dry Lands</title>
   
   
   
@@ -35,7 +35,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=e0a43387" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
@@ -61,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/05-notebook-time-machine/index';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Glossary" href="../glossary/index.html" />
+    <link rel="next" title="Quantum of drought: evaluating drought anomalies" href="../06-quantum-of-drought/index.html" />
     <link rel="prev" title="Setting up the environment" href="../04-set-up-env/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -201,6 +201,14 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">First exploration</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">The Time Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Second exploration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../06-quantum-of-drought/index.html">Quantum of Drought</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Third exploration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../07-solving-puzzle/index.html">Solving the puzzle</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Glossary</span></p>
 <ul class="nav bd-sidenav">
@@ -395,7 +403,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>notebook 1</h1>
+    <h1>The time machine: identify drought events</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -408,23 +416,24 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#purpose-of-the-notebook">Purpose of the notebook</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indicators-of-interest">Indicators of interest</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-loading-and-preprocessing">Data loading and preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#drought-over-time">Drought over time</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-a-year-to-explore">Selecting a year to explore</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#technical-implementation">Technical implementation</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-drought-conditions">Distribution of drought conditions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Technical implementation:</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-drought-globally">Mapping drought globally</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Technical implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Technical implementation</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-dive-into-specific-regions">Deep dive into specific regions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Technical implementation:</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-over-time">Comparison over time</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Technical implementation:</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-drought-conditions">Distribution of drought conditions</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-over-time">Comparison over time</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Technical implementation:</a></li>
 </ul>
 </li>
@@ -432,6 +441,8 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Technical Implementation:</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preview-of-whats-coming-in-notebook-2">Preview of what’s coming in Notebook 2</a></li>
 </ul>
             </nav>
         </div>
@@ -443,27 +454,28 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="notebook-1">
-<h1>notebook 1<a class="headerlink" href="#notebook-1" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="the-time-machine-identify-drought-events">
+<h1>The time machine: identify drought events<a class="headerlink" href="#the-time-machine-identify-drought-events" title="Link to this heading">#</a></h1>
 <section id="purpose-of-the-notebook">
 <h2>Purpose of the notebook<a class="headerlink" href="#purpose-of-the-notebook" title="Link to this heading">#</a></h2>
 <p>Explain the objective of the notebook, which is to recognize drought events around the world and over time.</p>
 </section>
 <section id="indicators-of-interest">
 <h2>Indicators of interest<a class="headerlink" href="#indicators-of-interest" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>brief description of the specific variables in the dataset that will be used for analysis.</p></li>
-<li><p>Data quality and limits (if there are any).</p></li>
-</ul>
+<p>We will concentrate on the SPI and SPEI values from our dataset, covering the period from 1940 to the present. The data quality will be assessed, noting any limitations such as missing data or measurement errors that could influence our analysis.</p>
 </section>
 <section id="data-loading-and-preprocessing">
 <h2>Data loading and preprocessing<a class="headerlink" href="#data-loading-and-preprocessing" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Get the data</p></li>
-<li><p>Loading data</p></li>
-<li><p>Data inspection: show how to inspect the structure of the dataset, including dimensions, variables, and metadata.</p></li>
-<li><p>Preprocessing steps: detail any necessary steps to clean or manipulate the data for analysis.</p></li>
+<li><p>Getting the data: we will describe the source of our dataset, primarily focusing on the distribution of SPI and SPEI values in NetCDF format.</p></li>
+<li><p>Loading data: instructions on how to load these indices using Python libraries like xarray for handling multidimensional arrays.</p></li>
+<li><p>Data inspection: a walkthrough of the dataset’s structure, highlighting important variables, their dimensions, and accessing metadata.</p></li>
+<li><p>Preprocessing steps: necessary steps such as handling missing values, aligning time series data, and normalizing the indices will be covered.</p></li>
 </ul>
+</section>
+<section id="drought-over-time">
+<h2>Drought over time<a class="headerlink" href="#drought-over-time" title="Link to this heading">#</a></h2>
+<p>A line chart will display SPEI values over time to highlight trends, cycles, and anomalies in drought conditions, possibly with different lines for different locations or time scales.</p>
 </section>
 <section id="selecting-a-year-to-explore">
 <h2>Selecting a year to explore<a class="headerlink" href="#selecting-a-year-to-explore" title="Link to this heading">#</a></h2>
@@ -474,51 +486,61 @@ document.write(`
 Upon selection, the notebook will dynamically load and process SPEI data for that particular year, preparing it for visualization and further analysis in subsequent sections.</p>
 </section>
 </section>
+<section id="distribution-of-drought-conditions">
+<h2>Distribution of drought conditions<a class="headerlink" href="#distribution-of-drought-conditions" title="Link to this heading">#</a></h2>
+<p>Histograms will be used to show the distribution of SPEI scores across different regions or globally in the selected year. This will help illustrate how widespread severe drought conditions were and identify the most commonly occurring drought severity levels.</p>
+<section id="id1">
+<h3>Technical implementation:<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Calculate the frequency of different SPEI categories (e.g., mild, moderate, severe, extreme) and plot these as a histogram.
+Compare distributions between selected regions or years to highlight differences.</p>
+</section>
+</section>
 <section id="mapping-drought-globally">
 <h2>Mapping drought globally<a class="headerlink" href="#mapping-drought-globally" title="Link to this heading">#</a></h2>
 <p>Once a year is selected, this section will generate a visual representation—typically a global map—illustrating the SPEI values across different regions. The map will use a color gradient to show varying degrees of drought severity; for instance, deep red will indicate extreme drought, while blue might indicate normal or wet conditions. The purpose here is to provide a clear, at-a-glance understanding of how different parts of the world were affected by drought in the selected year.</p>
-<section id="id1">
-<h3>Technical implementation<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="id2">
+<h3>Technical implementation<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>Use mapping libraries to create the global map.
 Overlay SPEI data onto the map, using color coding to represent different drought intensities.</p>
 </section>
 </section>
 <section id="deep-dive-into-specific-regions">
 <h2>Deep dive into specific regions<a class="headerlink" href="#deep-dive-into-specific-regions" title="Link to this heading">#</a></h2>
-<p>In this segment, the notebook will offer a closer look at specific regions that either experienced significant drought conditions or where drought had notable impacts on human or ecological systems during the selected year. This will involve a comparative analysis of regions with severe drought versus those with mild or no drought. The narrative might explore factors contributing to the drought, such as lack of rainfall, high temperatures, and the consequent effects on local agriculture, water supply, and socio-economic conditions.</p>
-<section id="id2">
-<h3>Technical implementation:<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>In this segment, the notebook will offer a closer look at specific regions that either experienced significant drought conditions or where drought had notable impacts on human or ecological systems during the selected year. This will involve a comparative analysis of regions with severe drought versus those with mild or no drought.</p>
+<section id="id3">
+<h3>Technical implementation:<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>Allow users to select regions on the global map for a more detailed analysis.
-Display localized SPEI data and possibly integrate other data types (e.g., agricultural yield or water reservoir levels) to paint a fuller picture of impacts.</p>
+Display localized SPEI data and possibly integrate other data types.</p>
 </section>
 </section>
 <section id="comparison-over-time">
 <h2>Comparison over time<a class="headerlink" href="#comparison-over-time" title="Link to this heading">#</a></h2>
-<p>This feature will enable users to understand how drought conditions have changed over time by comparing SPEI data between different years. Users will select another year to compare side-by-side with the initially selected year. This comparison will help illustrate trends such as the increasing frequency of droughts or shifts in drought-prone areas, potentially linking these patterns to broader climatic changes like global warming.</p>
-<section id="id3">
-<h3>Technical implementation:<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>This feature will enable users to understand how drought conditions have changed over time by comparing SPEI data between different years. Users will select another year to compare side-by-side with the initially selected year. This comparison will help illustrate trends such as the increasing frequency of droughts or shifts in drought-prone areas.</p>
+<section id="id4">
+<h3>Technical implementation:<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>Implement additional interactive controls to select a second year for comparison.
 Use side-by-side or overlaid maps to visually compare drought conditions across the two selected years.
 Optionally, statistical analysis will be performed to quantitatively describe changes in drought severity and coverage.</p>
 </section>
 </section>
-<section id="distribution-of-drought-conditions">
-<h2>Distribution of drought conditions<a class="headerlink" href="#distribution-of-drought-conditions" title="Link to this heading">#</a></h2>
-<p>Histograms will be used to show the distribution of SPEI scores across different regions or globally in the selected year. This will help illustrate how widespread severe drought conditions were and identify the most commonly occurring drought severity levels.</p>
-<section id="id4">
-<h3>Technical implementation:<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
-<p>Calculate the frequency of different SPEI categories (e.g., mild, moderate, severe, extreme) and plot these as a histogram.
-Compare distributions between selected regions or years to highlight differences.</p>
-</section>
-</section>
 <section id="monthly-and-seasonal-drought-patterns">
 <h2>Monthly and seasonal drought patterns<a class="headerlink" href="#monthly-and-seasonal-drought-patterns" title="Link to this heading">#</a></h2>
-<p>Heat maps can visualize how drought conditions vary by month or season within a selected year. This is particularly useful for showing how drought develops or recedes over time, which can be crucial for understanding seasonal impacts on agriculture and water resources.</p>
+<p>Heatmaps can visualize how drought conditions vary by month or season within a selected year. This is particularly useful for showing how drought develops or recedes over time, which can be crucial for understanding seasonal impacts on agriculture and water resources.</p>
 <section id="id5">
 <h3>Technical Implementation:<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>Organize SPEI data into a matrix format representing months or seasons.
 Use color intensity to show the severity of drought conditions through the year.</p>
 </section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Summarize key findings.</p></li>
+<li><p>How can this information help?</p></li>
+</ul>
+</section>
+<section id="preview-of-whats-coming-in-notebook-2">
+<h2>Preview of what’s coming in Notebook 2<a class="headerlink" href="#preview-of-whats-coming-in-notebook-2" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -562,11 +584,11 @@ Use color intensity to show the severity of drought conditions through the year.
       </div>
     </a>
     <a class="right-next"
-       href="../glossary/index.html"
+       href="../06-quantum-of-drought/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Glossary</p>
+        <p class="prev-next-title">Quantum of drought: evaluating drought anomalies</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -589,23 +611,24 @@ Use color intensity to show the severity of drought conditions through the year.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#purpose-of-the-notebook">Purpose of the notebook</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indicators-of-interest">Indicators of interest</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-loading-and-preprocessing">Data loading and preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#drought-over-time">Drought over time</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-a-year-to-explore">Selecting a year to explore</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#technical-implementation">Technical implementation</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-drought-conditions">Distribution of drought conditions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Technical implementation:</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-drought-globally">Mapping drought globally</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Technical implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Technical implementation</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-dive-into-specific-regions">Deep dive into specific regions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Technical implementation:</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-over-time">Comparison over time</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Technical implementation:</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-drought-conditions">Distribution of drought conditions</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-over-time">Comparison over time</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Technical implementation:</a></li>
 </ul>
 </li>
@@ -613,6 +636,8 @@ Use color intensity to show the severity of drought conditions through the year.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Technical Implementation:</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preview-of-whats-coming-in-notebook-2">Preview of what’s coming in Notebook 2</a></li>
 </ul>
   </nav></div>
 
@@ -627,7 +652,7 @@ Use color intensity to show the severity of drought conditions through the year.
   <div class="footer-item">
     
 <p class="component-author">
-By Madiha Abbas, Syed Akhtar, Christopher Barnard, George Begkas, Marina Caporlingua, Lucy Colley, Francesca Di Giuseppe, Akis Karagiannis, Jessica Keune
+By Madiha Abbas, Syed Akhtar, George Begkas, Marina Caporlingua, Lucy Colley, Akis Karagiannis, (thanks to ECMWF mentors Christopher Barnard, Francesca Di Giuseppe, Jessica Keune)
 </p>
 
   </div>

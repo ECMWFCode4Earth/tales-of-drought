@@ -1,19 +1,17 @@
-# notebook 1
+# The time machine: identify drought events
 
 ## Purpose of the notebook
 Explain the objective of the notebook, which is to recognize drought events around the world and over time.
 
 
 ## Indicators of interest
-- brief description of the specific variables in the dataset that will be used for analysis.
-- Data quality and limits (if there are any).
-
+We will concentrate on the SPI and SPEI values from our dataset, covering the period from 1940 to the present. The data quality will be assessed, noting any limitations such as missing data or measurement errors that could influence our analysis.
 
 ## Data loading and preprocessing
-- Getting the data
-- Loading data
-- Data inspection: show how to inspect the structure of the dataset, including dimensions, variables, and metadata.
-- Preprocessing steps: detail any necessary steps to clean or manipulate the data for analysis.
+- Getting the data: we will describe the source of our dataset, primarily focusing on the distribution of SPI and SPEI values in NetCDF format.
+- Loading data: instructions on how to load these indices using Python libraries like xarray for handling multidimensional arrays.
+- Data inspection: a walkthrough of the dataset’s structure, highlighting important variables, their dimensions, and accessing metadata.
+- Preprocessing steps: necessary steps such as handling missing values, aligning time series data, and normalizing the indices will be covered.
 
 
 ## Drought over time
@@ -64,3 +62,11 @@ Heatmaps can visualize how drought conditions vary by month or season within a s
 ### Technical Implementation:
 Organize SPEI data into a matrix format representing months or seasons.
 Use color intensity to show the severity of drought conditions through the year.
+
+## Conclusion
+
+- Summarize key findings.
+- How can this information help?
+
+
+## Preview of what’s coming in Notebook 2
