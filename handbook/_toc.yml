@@ -43,14 +43,14 @@ parts:
 
 - caption: "Second exploration"
   chapters:
-  - file: chapters/06-quantum-of-drought/index
+  - file: chapters/06-notebook-quantum-of-drought/index
     title: "Quantum of Drought"
 
 
 
 - caption: "Third exploration"
   chapters:
-  - file: chapters/07-solving-puzzle/index
+  - file: chapters/07-notebook-solving-puzzle/index
     title: "Solving the puzzle"
 
 
