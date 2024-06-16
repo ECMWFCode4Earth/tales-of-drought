@@ -38,7 +38,7 @@ jobs:
       # Build the book
       - name: Build the book
         run: |
-          jupyter-book build notebooks/tales_of_drought
+          jupyter-book build notebooks/tales_of_drought/tales_of_drought
 
       # Upload the book's HTML as an artifact
       - name: Upload artifact
