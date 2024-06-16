@@ -6,3 +6,4 @@ matplotlib
 tqdm
 jupyterlab
 geopandas
+jupyter-book
