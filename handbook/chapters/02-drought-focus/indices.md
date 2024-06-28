@@ -22,7 +22,7 @@ For our analysis we will focus on two indices: **SPI** and **SPEI**.
 
 The **Standardized Precipitation Index** (**SPI**) is an index used to measure drought intensity. It works by comparing the amount of rainfall in a specific period to the historical average for that same period. This helps determine how much more, or less, it has rained compared to usual conditions. 
 
-This global **SPI** is calculated using data from the {ref}`era5-dataset`. This **SPI** can examine rainfall over various timescales, including 1, 2, 3, 6, 12, 24, 36 and 48 months, allowing for a detailed analysis of short-term fluctuations and long-term trends in precipitation.
+This global **SPI** is calculated using data from the {ref}`era5-dataset`. This **SPI** can examine rainfall over various timescales, including 1, 3, 6, 12, 24, 36 and 48 months, allowing for a detailed analysis of short-term fluctuations and long-term trends in precipitation.
 
 
 ```{tip} 
