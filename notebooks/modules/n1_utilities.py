@@ -7,6 +7,7 @@ import glob
 import os
 import cftime
 import folium
+from IPython.display import display, IFrame
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 import time
@@ -108,6 +109,22 @@ def display_map(bounds):
 
 
 
+def display_map_in_iframe(folium_map):
+    """
+    Embeds a Folium map in an iframe for controlled size display in Jupyter Notebooks.
+
+    Parameters:
+    folium_map (folium.Map): The Folium map object to be displayed.
+
+    Returns:
+    IPython.display.IFrame: An iframe containing the HTML representation of the Folium map with specified width and height.
+    """
+    map_html = 'map.html'
+    folium_map.save(map_html)
+    return IFrame(map_html, width=500, height=500)
+
+
+
 def preprocess(ds, bounds):
     """
     Subset the dataset to the specified geographic bounds.
@@ -200,7 +217,7 @@ def handle_area_change(bounds, selected_month, selected_timescale):
         parallel=True,
         preprocess=lambda ds: preprocess(ds, bounds)  # Ensure preprocess function is defined to handle bounds
     )
-    print("Data loaded and processed for the selected area and month.")
+    # print("Data loaded and processed for the selected area and month.")
     return data
 
 
@@ -300,12 +317,55 @@ def update_display(country_selector, subarea_selector, month_selector, timescale
         selected_timescale = timescales.get(timescale_selector.value, "12")  # Default to 12 months if not properly selected
         area_subset_data = handle_area_change(bounds, selected_month, selected_timescale)
         if area_subset_data is not None:
-            print("Data updated for selected area and month")
+            pass
         else:
-            print("No data available for the selected area and month.")
+            print("No data available for the selected area, month and timescale")
         return area_subset_data
 
+
+def replace_invalid_values(data: pd.DataFrame, invalid_value: float = -9999.0) -> pd.DataFrame:
+    """
+    Replaces invalid values in the dataset with NaN.
+
+    Parameters:
+    data (pd.DataFrame): The DataFrame to process.
+    invalid_value (float): The value to replace with NaN. Default is -9999.0.
+
+    Returns:
+    pd.DataFrame: The DataFrame with invalid values replaced by NaN.
+    """
+    return data.where(data != invalid_value, np.nan)
+
+
+
+def compute_mean_spei_and_extract_values(data: xr.DataArray) -> tuple:
+    """
+    Computes the mean SPEI (Standardized Precipitation Evapotranspiration Index) over latitude and longitude,
+    and extracts the times and values for plotting. Also assigns colors based on the SPEI values.
+
+    Parameters:
+    data (xr.DataArray): The DataArray containing the SPEI data with dimensions including 'lat', 'lon', and 'time'.
+
+    Returns:
+    tuple: A tuple containing:
+        - times (np.ndarray): The array of time values.
+        - values (np.ndarray): The array of mean SPEI values over the specified dimensions.
+        - colors (np.ndarray): The array of colors assigned based on the SPEI values.
+    """
+    mean_spei = data.mean(dim=['lat', 'lon'])
+    mean_spei_computed = mean_spei.compute()
     
+    # Extract times and values for plotting
+    times = mean_spei_computed['time'].values
+    values = mean_spei_computed.values
+    colors = assign_color_spei(values)
+    
+    return times, values, colors
+
+
+
+
+
     
 def assign_color_spei(spei_values):
     """
@@ -327,13 +387,16 @@ def assign_color_spei(spei_values):
 
     Returns:
     list of str: A list of color codes corresponding to the SPEI values.
+    
+    Note: 
+    neutral: #B89A7D - axes: #D3D3D3
     """
     colors = []
     for spei in spei_values:
         if spei > 2.0:
             colors.append('#064A78')  # extremely wet
         elif 1.5 < spei <= 2.0:
-            colors.append('#49AEFF')  # severely wet
+            colors.append('#3c8fc3')  # severely wet
         elif 1.0 < spei <= 1.5:
             colors.append('#61A5CE')  # moderately wet
         elif 0 < spei <= 1.0:
