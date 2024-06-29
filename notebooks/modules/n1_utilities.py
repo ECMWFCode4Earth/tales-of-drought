@@ -8,9 +8,11 @@ import os
 import cftime
 import folium
 from IPython.display import display, IFrame
+import plotly.graph_objects as go
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 import time
+from datetime import datetime
 import json
 
 
@@ -109,19 +111,21 @@ def display_map(bounds):
 
 
 
-def display_map_in_iframe(folium_map):
+def display_map_in_iframe(folium_map, width=500, height=500):
     """
     Embeds a Folium map in an iframe for controlled size display in Jupyter Notebooks.
-
+    
     Parameters:
     folium_map (folium.Map): The Folium map object to be displayed.
-
+    width (int): Width of the iframe.
+    height (int): Height of the iframe.
+    
     Returns:
-    IPython.display.IFrame: An iframe containing the HTML representation of the Folium map with specified width and height.
+    IPython.display.IFrame: An iframe containing the HTML representation of the Folium map.
     """
     map_html = 'map.html'
     folium_map.save(map_html)
-    return IFrame(map_html, width=500, height=500)
+    return IFrame(map_html, width=width, height=height)
 
 
 
@@ -223,7 +227,6 @@ def handle_area_change(bounds, selected_month, selected_timescale):
 
 
 
-
 def get_country_bounds(country):
     """
     Retrieve the bounding box coordinates for a given country.
@@ -254,6 +257,7 @@ def get_country_bounds(country):
         return get_country_bounds(country)  # Retry for this country
     except Exception as e:
         return f"Error retrieving data for {country}: {e}"
+    
 
     
     
@@ -292,7 +296,7 @@ def update_subarea_selector(change, placeholder_country, placeholder_subarea, su
 
 
 
-def update_display(country_selector, subarea_selector, month_selector, timescale_selector, months, timescales, placeholder_country, placeholder_subarea, placeholder_month, placeholder_timescale):
+def update_display(country_selector, subarea_selector, month_selector, timescale_selector, months, timescales, placeholders):
     """
     Update the area subset data based on selected values from country, month, and subarea selectors.
 
@@ -301,17 +305,20 @@ def update_display(country_selector, subarea_selector, month_selector, timescale
     subarea_selector (ipywidgets.Widget): Widget for selecting a subarea.
     month_selector (ipywidgets.Widget): Widget for selecting a month.
     months (dict): Dictionary of months mapping month names to values.
-    placeholder_country (str): Placeholder text for no country selection.
-    placeholder_month (str): Placeholder text for no month selection.
-    placeholder_subarea (str): Placeholder text for no subarea selection.
-    placeholder_timescale (str): Placeholder text for no timescale selection.
+    placeholder['country'] (str): Placeholder text for no country selection.
+    placeholder['subarea'] (str): Placeholder text for no subarea selection.
+    placeholder['month'] (str): Placeholder text for no month selection.
+    placeholder['timescale'] (str): Placeholder text for no timescale selection.
     Returns:
     xarray.Dataset or None: The dataset containing climate data for a specific area and month, or None if no data is available.
     """
     global area_subset_data  # Make sure to declare this if it's supposed to be global
-    if country_selector.value != placeholder_country and subarea_selector.value != placeholder_subarea and month_selector.value != placeholder_month and timescale_selector.value != placeholder_timescale:
+    if all([country_selector.value != placeholders['country'], 
+        subarea_selector.value != placeholders['subarea'], 
+        month_selector.value != placeholders['month'], 
+        timescale_selector.value != placeholders['timescale']]):
         bounds = get_country_bounds(country_selector.value)
-        if subarea_selector.value != placeholder_subarea:
+        if subarea_selector.value != placeholders['subarea']:
             bounds = get_country_bounds(subarea_selector.value)
         selected_month = months.get(month_selector.value, "01")  # Default to January if not properly selected
         selected_timescale = timescales.get(timescale_selector.value, "12")  # Default to 12 months if not properly selected
@@ -338,7 +345,7 @@ def replace_invalid_values(data: pd.DataFrame, invalid_value: float = -9999.0) -
 
 
 
-def compute_mean_spei_and_extract_values(data: xr.DataArray) -> tuple:
+def compute_means(data: xr.DataArray) -> dict:
     """
     Computes the mean SPEI (Standardized Precipitation Evapotranspiration Index) over latitude and longitude,
     and extracts the times and values for plotting. Also assigns colors based on the SPEI values.
@@ -347,7 +354,7 @@ def compute_mean_spei_and_extract_values(data: xr.DataArray) -> tuple:
     data (xr.DataArray): The DataArray containing the SPEI data with dimensions including 'lat', 'lon', and 'time'.
 
     Returns:
-    tuple: A tuple containing:
+    dict: A dict containing:
         - times (np.ndarray): The array of time values.
         - values (np.ndarray): The array of mean SPEI values over the specified dimensions.
         - colors (np.ndarray): The array of colors assigned based on the SPEI values.
@@ -357,15 +364,185 @@ def compute_mean_spei_and_extract_values(data: xr.DataArray) -> tuple:
     
     # Extract times and values for plotting
     times = mean_spei_computed['time'].values
-    values = mean_spei_computed.values
-    colors = assign_color_spei(values)
+    means = mean_spei_computed.values
+    colors = assign_color_spei(means)
     
-    return times, values, colors
+    return {
+        'times': times,
+        'means': means,
+        'colors': colors,
+    }
+
+
+def create_scatterplot(values: dict, timescales: dict, selected: dict):
+    times = values['times']
+    means = values['means']
+    colors = values['colors']
+    
+    # Define the scatter plot (trace)
+    trace = go.Scatter(
+        x=times,
+        y=means,
+        mode='markers',
+        name='Mean SPEI12',
+        marker=dict(
+            size=10,
+            color=colors,
+            line=dict(width=0, color='#717BFA')
+        )
+    )
+    
+    timescale = selected['timescale']
+    country = selected['country']
+    subarea = selected['subarea']
+    month = selected['month']
+    
+    # Initialize and update the figure
+    fig = go.Figure([trace])
+    fig.update_layout(
+        title=f"Mean {timescale} SPEI Index, trends over time in {country}'s {subarea} area for the month of {month}",
+        xaxis_title='Years',
+        yaxis_title=f"Mean SPEI{timescales[timescale]}",
+        height=500,
+        plot_bgcolor='white',   # Sets the plotting area background color
+        paper_bgcolor='white',  # Sets the overall background color of the chart
+        xaxis=dict(
+            showgrid=True,  # Enable grid (default)
+            gridcolor='#D3D3D3',  # Set grid color
+            linecolor='#D3D3D3',  # Set axis line color
+        ),
+        yaxis=dict(
+            showgrid=True,
+            gridcolor='#D3D3D3',
+            linecolor='#D3D3D3',
+            zeroline=True,  # Ensure the zero line is visible
+            zerolinewidth=1,
+            zerolinecolor='black'  # Change zero line color to blue
+        )
+    )
+
+    # Display the figure
+    fig.show()
 
 
 
+def compute_boxplot_values(data: xr.DataArray) -> dict:
+    """
+    Computes the statistics needed to create a boxplot from the SPEI data over latitude and longitude.
+    These statistics include the median, lower and upper quantiles (25th and 75th percentiles), minimum, and maximum values.
+
+    Parameters:
+    data (xr.DataArray): The DataArray containing the SPEI data with dimensions including 'lat', 'lon', and 'time'.
+
+    Returns:
+    dict: A dictionary containing:
+        - times (np.ndarray): The array of time values.
+        - medians (np.ndarray): The array of median values over the specified dimensions.
+        - q1s (np.ndarray): The array of 25th percentile values.
+        - q3s (np.ndarray): The array of 75th percentile values.
+        - mins (np.ndarray): The array of minimum values.
+        - maxs (np.ndarray): The array of maximum values.
+    """
+    # Compute the required statistics
+    median = data.median(dim=['lat', 'lon'])
+    q1 = data.quantile(0.25, dim=['lat', 'lon'])
+    q3 = data.quantile(0.75, dim=['lat', 'lon'])
+    min_val = data.min(dim=['lat', 'lon'])
+    max_val = data.max(dim=['lat', 'lon'])
+
+    # Compute the values
+    median_computed = median.compute()
+    q1_computed = q1.compute()
+    q3_computed = q3.compute()
+    min_computed = min_val.compute()
+    max_computed = max_val.compute()
+
+    # Extract times and values
+    times = median_computed['time'].values
+    medians = median_computed.values
+    q1s = q1_computed.values
+    q3s = q3_computed.values
+    mins = min_computed.values
+    maxs = max_computed.values
+
+    return {
+        'times': times,
+        'medians': medians,
+        'q1s': q1s,
+        'q3s': q3s,
+        'mins': mins,
+        'maxs': maxs
+    }
 
 
+
+def create_boxplot(values: dict, timescales, selected):
+    """
+    Creates a boxplot chart using the provided boxplot statistics and colors the boxes based on SPEI index values.
+
+    Parameters:
+    values (dict): A dictionary containing 'times', 'medians', 'q1s', 'q3s', 'mins', 'maxs'.
+    timescales (dict): A dictionary mapping timescale codes to their descriptions.
+    selected (dict): A dictionary containing the 'timescale', 'country', 'subarea', and 'month'.
+    spei_values (list of float): SPEI values corresponding to each time in `values['times']`.
+    """
+    times = values['times']
+    medians = values['medians']
+    q1s = values['q1s']
+    q3s = values['q3s']
+    mins = values['mins']
+    maxs = values['maxs']
+    
+    times = pd.to_datetime(times).to_list()
+    colors = assign_color_spei(medians)
+    
+    timescale = selected['timescale']
+    country = selected['country']
+    subarea = selected['subarea']
+    month = selected['month']
+
+    fig = go.Figure()
+
+    for i, time in enumerate(times):
+        fig.add_trace(go.Box(
+            x=[time],  # Directly use datetime object for x-axis
+            q1=[q1s[i]],  # Lower quartile (25th percentile)
+            median=[medians[i]],  # Median
+            q3=[q3s[i]],  # Upper quartile (75th percentile)
+            lowerfence=[mins[i]],  # Minimum
+            upperfence=[maxs[i]],  # Maximum
+            name=str(time),  # Label with time value
+            marker_color=colors[i],  # Color of the box based on SPEI
+            whiskerwidth=0.2,  # Width of the whiskers
+        ))
+
+    fig.update_layout(
+        title=f"Boxplot of {timescale} SPEI Index, trends over time in {country}'s {subarea} area for the month of {month}",
+        xaxis_title='Years',
+        yaxis_title=f"SPEI{timescales[timescale]}",
+        height=500,
+        plot_bgcolor='white',   # Sets the plotting area background color
+        paper_bgcolor='white',  # Sets the overall background color of the chart
+        xaxis=dict(
+            showgrid=True,  # Enable grid (default)
+            gridcolor='#D3D3D3',  # Set grid color
+            linecolor='#D3D3D3',  # Set axis line color
+        ),
+        yaxis=dict(
+            showgrid=True,
+            gridcolor='#D3D3D3',
+            linecolor='#D3D3D3',
+            zeroline=True,  # Ensure the zero line is visible
+            zerolinewidth=1,
+            zerolinecolor='black'  # Change zero line color to blue
+        ),
+        showlegend=False
+    )
+
+    fig.show()
+
+
+    
     
 def assign_color_spei(spei_values):
     """
@@ -410,4 +587,3 @@ def assign_color_spei(spei_values):
         else:
             colors.append('#681824')  # extremely dry
     return colors
-
