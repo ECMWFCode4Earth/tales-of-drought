@@ -16,6 +16,21 @@ from datetime import datetime
 import json
 
 
+def save_selection(selection):
+    """
+    Save the current selection to a JSON file.
+
+    Parameters:
+    selection (dict): A dictionary containing the current selections of country, subarea, month, year, and timescale.
+    """
+    # Construct the file path relative to the current script's directory
+    current_dir = os.path.dirname(__file__)
+    file_path = os.path.join(current_dir, '..', 'data', 'previous_selection.json')
+    with open(file_path, 'w') as file:
+        json.dump(selection, file)
+        
+
+
 def read_json_to_dict(file_name, sort=False):
     """
     Reads a JSON file from a directory relative to the script's location, sorts its keys (countries) 
@@ -32,16 +47,18 @@ def read_json_to_dict(file_name, sort=False):
     current_dir = os.path.dirname(__file__)
     file_path = os.path.join(current_dir, '..', 'data', file_name)
     
-    # Load the data from the JSON file
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-    
-    # Sort the countries and subareas alphabetically if sorting is enabled
-    if sort:
-        sorted_data = {country: sorted(subareas) for country, subareas in sorted(data.items())}
-        return sorted_data
-    
-    return data
+    try:
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+        if sort:
+            sorted_data = {country: sorted(subareas) for country, subareas in sorted(data.items())}
+            return sorted_data    
+        return data
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+
+
 
 
 
@@ -144,6 +161,11 @@ def preprocess(ds, bounds):
     min_lon, min_lat, max_lon, max_lat = bounds
     latitude_list = generate_coordinate_values(min_lat, max_lat)
     longitude_list = generate_coordinate_values(min_lon, max_lon)
+    # Ensure only existing coordinates are used for subsetting
+    latitude_list = [lat for lat in latitude_list if lat in ds.lat.values]
+    longitude_list = [lon for lon in longitude_list if lon in ds.lon.values]
+    if not latitude_list or not longitude_list:
+        raise ValueError("Generated coordinates do not match any available in the dataset.")    
     ds_subset = ds.sel(lat=latitude_list, lon=longitude_list)
     return ds_subset
 
@@ -175,64 +197,14 @@ def is_readable_nc(file_path):
         print(f"Warning: Skipping unreadable NetCDF file: {file_path}")
         return False
 
-    
-
-            
-def handle_area_change(bounds, selected_month, selected_timescale):
-    """
-    Load and process a dataset of climate data for a specified month and geographic area.
-
-    This function constructs a file path to locate NetCDF files corresponding to a specific month, 
-    filters these files to include only those that are readable, and then loads them as an xarray 
-    dataset. The dataset is processed to focus on the geographical bounds specified.
-
-    Parameters:
-    bounds (tuple): A tuple representing the geographic boundary coordinates, where the expected 
-                    format is (min_longitude, min_latitude, max_longitude, max_latitude).
-    selected_month (str): A string representing the month for which the data is to be loaded, in two-digit format (e.g., "01" for January).
-    selected_timescale (str): A string representing the timescale for which the data is to be loaded.
-    
-    Returns:
-    xarray.Dataset or None: The processed dataset containing climate data for the specified area and month, 
-                            or None if no readable files are found.
-
-    Raises:
-    FileNotFoundError: If no files match the expected pattern for the specified month in the data directory.
-
-    Notes:
-    - Assumes the presence of the function `is_readable_nc(file)` that checks the readability of each NetCDF file.
-    - Utilizes the `preprocess` function to apply additional data processing for the specified bounds
-    - The dataset loading is parallelized to enhance performance.
-    """
-    data_path = f'/data1/drought_dataset/spei/spei{selected_timescale}/'
-    file_pattern = f'SPEI{selected_timescale}_*{selected_month}.nc'
-    file_list = sorted(glob.glob(os.path.join(data_path, file_pattern)))
-    # Filter files to include only those that are readable
-    valid_files = [file for file in file_list if is_readable_nc(file)]
-    if not valid_files:
-        print("No readable NetCDF files found.")
-        return None
-
-    # Load and process the dataset
-    data = xr.open_mfdataset(
-        valid_files,
-        concat_dim='time',
-        combine='nested',
-        parallel=True,
-        preprocess=lambda ds: preprocess(ds, bounds)  # Ensure preprocess function is defined to handle bounds
-    )
-    # print("Data loaded and processed for the selected area and month.")
-    return data
 
 
-
-
-def get_country_bounds(country):
+def get_bounds(area):
     """
     Retrieve the bounding box coordinates for a given country.
 
     Parameters:
-    country (str): The name of the country for which to retrieve the bounding box.
+    area (str): The name of the country or its subarea for which to retrieve the bounding box.
 
     Returns:
     tuple or str: A tuple containing the bounding box coordinates in the format 
@@ -242,7 +214,7 @@ def get_country_bounds(country):
     geolocator = Nominatim(user_agent="talesofdrought")     # Initialize the Nominatim client
     try:
         # Use geocode to query the country with the parameter for getting bounding box
-        location = geolocator.geocode(country, exactly_one=True, timeout=10)
+        location = geolocator.geocode(area, exactly_one=True, timeout=10)
         if location:
             # Extract the bounding box
             bounding_box = location.raw['boundingbox']
@@ -252,18 +224,18 @@ def get_country_bounds(country):
         else:
             return "No data found."
     except GeocoderTimedOut:
-        print(f"Geocoding timed out for {country}; retrying...")
+        print(f"Geocoding timed out for {area}; retrying...")
         time.sleep(1)
-        return get_country_bounds(country)  # Retry for this country
+        return get_bounds(country)  # Retry for this area
     except Exception as e:
-        return f"Error retrieving data for {country}: {e}"
+        return f"Error retrieving data for {area}: {e}"
     
 
     
     
 def update_subarea_selector(change, placeholder_country, placeholder_subarea, subarea_selector, country_to_subareas):
     """
-    Update the options of a subarea selector widget based on the selected country from a related selector widget.
+    Update the options of a subarea selector widget based on the selected country from thr related selector widget.
 
     This function is bound to the country selector widget to handle its change events. It updates the subarea
     selector's options dynamically based on the country selected. If the default placeholder country is selected, 
@@ -294,40 +266,92 @@ def update_subarea_selector(change, placeholder_country, placeholder_subarea, su
             print("Reset subarea selector due to country placeholder selection")  # Debug: Resetting subarea selector
 
 
-
-
-def update_display(country_selector, subarea_selector, month_selector, timescale_selector, months, timescales, placeholders):
+          
+           
+def handle_area_change(bounds, selected_month, selected_year, selected_timescale):
     """
-    Update the area subset data based on selected values from country, month, and subarea selectors.
+    Load and process a dataset of climate data for a specified month, year, and geographic area.
 
     Parameters:
-    country_selector (ipywidgets.Widget): Widget for selecting a country.
-    subarea_selector (ipywidgets.Widget): Widget for selecting a subarea.
-    month_selector (ipywidgets.Widget): Widget for selecting a month.
-    months (dict): Dictionary of months mapping month names to values.
-    placeholder['country'] (str): Placeholder text for no country selection.
-    placeholder['subarea'] (str): Placeholder text for no subarea selection.
-    placeholder['month'] (str): Placeholder text for no month selection.
-    placeholder['timescale'] (str): Placeholder text for no timescale selection.
+    bounds (tuple): Geographic boundary coordinates.
+    selected_month (str or None): Month for which data is to be loaded, in two-digit format (e.g., "01").
+    selected_year (str or None): Year for which data is to be loaded, in four-digit format (e.g., "1990").
+    selected_timescale (str): Timescale for the SPEI index.
+
     Returns:
-    xarray.Dataset or None: The dataset containing climate data for a specific area and month, or None if no data is available.
+    xarray.Dataset or None: The processed dataset or None if no readable files are found.
     """
-    global area_subset_data  # Make sure to declare this if it's supposed to be global
-    if all([country_selector.value != placeholders['country'], 
-        subarea_selector.value != placeholders['subarea'], 
-        month_selector.value != placeholders['month'], 
-        timescale_selector.value != placeholders['timescale']]):
-        bounds = get_country_bounds(country_selector.value)
-        if subarea_selector.value != placeholders['subarea']:
-            bounds = get_country_bounds(subarea_selector.value)
-        selected_month = months.get(month_selector.value, "01")  # Default to January if not properly selected
-        selected_timescale = timescales.get(timescale_selector.value, "12")  # Default to 12 months if not properly selected
-        area_subset_data = handle_area_change(bounds, selected_month, selected_timescale)
-        if area_subset_data is not None:
-            pass
+    data_path = f'/data1/drought_dataset/spei/spei{selected_timescale}/'
+    # Flexible pattern to match both 'era5' and 'era5t'
+    middle_pattern = '*global_era5*_moda_ref1991to2020_'
+    file_pattern = f'SPEI{selected_timescale}{middle_pattern}'
+    file_pattern += f'{selected_year if selected_year else "????"}{selected_month if selected_month else "??"}*.nc'
+    try:
+        file_list = sorted(glob.glob(os.path.join(data_path, file_pattern)))
+        valid_files = [file for file in file_list if is_readable_nc(file)]
+        if not valid_files:
+            print("No readable NetCDF files found.")
+            return None
+
+        data = xr.open_mfdataset(
+            valid_files,
+            concat_dim='time',
+            combine='nested',
+            parallel=True,
+            preprocess=lambda ds: preprocess(ds, bounds)  # Ensure preprocess function is defined to handle bounds
+        )
+        return data
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+
+
+
+def update_display(country_selector, subarea_selector, month_selector, year_selector, timescale_selector, months, timescales, placeholders):
+    """
+    Updates the area subset data based on user selections from the dropdown widgets. The function dynamically 
+    adjusts the displayed data depending on the selected country, subarea, month, year, and timescale. 
+
+    Parameters:
+    - country_selector (Widget): Widget for selecting a country.
+    - subarea_selector (Widget): Widget for selecting a subarea within a country.
+    - month_selector (Widget): Widget for selecting a month.
+    - year_selector (Widget): Widget for selecting a year.
+    - timescale_selector (Widget): Widget for selecting a timescale for data aggregation.
+    - months (dict): Dictionary mapping month names to their respective numerical representations.
+    - timescales (dict): Dictionary mapping timescale identifiers to their descriptive strings.
+    - placeholders (dict): Dictionary containing placeholder values used as defaults in the selectors to handle cases where no selection is made.
+
+    The function checks for valid selections and retrieves corresponding bounds based on the geographical selections.
+    It then fetches or recalculates the data for the specified area, time frame, and timescale, updating the global 
+    `area_subset_data` accordingly.
+
+    If valid data is available based on the selections, it outputs the updated data scope. If selections are incomplete 
+    or data is unavailable, it provides feedback via printed messages.
+
+    Returns:
+    - Returns the updated `area_subset_data` if the selections are complete and valid data is available, 
+      otherwise returns None.
+    """
+    global area_subset_data
+    bounds = get_bounds(subarea_selector.value if subarea_selector.value != placeholders['subarea'] else country_selector.value)
+    selected_month = months.get(month_selector.value) if month_selector.value != placeholders['month'] else None
+    selected_year = year_selector.value if year_selector.value != placeholders['year'] else None
+    selected_timescale = timescales.get(timescale_selector.value, placeholders['timescale'])
+        
+    if bounds and (selected_month or selected_year) and selected_timescale != placeholders['timescale']:
+        area_subset_data = handle_area_change(bounds, selected_month, selected_year, selected_timescale)
+        if area_subset_data and selected_month:
+            print(f"Data updated for: Area={bounds}, Month={selected_month}, Timescale={selected_timescale}")
+        elif area_subset_data and selected_year:
+            print(f"Data updated for: Area={bounds}, Year={selected_year}, Timescale={selected_timescale}")
         else:
-            print("No data available for the selected area, month and timescale")
+            print("No data available for the selected area, month/year, and timescale")
         return area_subset_data
+    else:
+        print("Selection incomplete. Please select all required options.")
+
 
 
 def replace_invalid_values(data: pd.DataFrame, invalid_value: float = -9999.0) -> pd.DataFrame:
@@ -347,7 +371,7 @@ def replace_invalid_values(data: pd.DataFrame, invalid_value: float = -9999.0) -
 
 def compute_means(data: xr.DataArray) -> dict:
     """
-    Computes the mean SPEI (Standardized Precipitation Evapotranspiration Index) over latitude and longitude,
+    Computes the mean SPEI over latitude and longitude,
     and extracts the times and values for plotting. Also assigns colors based on the SPEI values.
 
     Parameters:
@@ -375,6 +399,15 @@ def compute_means(data: xr.DataArray) -> dict:
 
 
 def create_scatterplot(values: dict, timescales: dict, selected: dict):
+    """
+    Creates and displays a scatterplot representing the mean SPEI over time, using provided data and user selections.
+
+    Parameters:
+    - values (dict): Contains time series data necessary for the plot, with keys 'times', 'means', and 'colors' that
+                     list the years, mean SPEI values, and colors for each data point, respectively.
+    - timescales (dict): Maps timescale identifiers to their string representations, used for labeling in the plot.
+    - selected (dict): User-selected filters for the plot, including 'timescale', 'country', 'subarea', and 'month'.
+    """
     times = values['times']
     means = values['means']
     colors = values['colors']
@@ -384,7 +417,7 @@ def create_scatterplot(values: dict, timescales: dict, selected: dict):
         x=times,
         y=means,
         mode='markers',
-        name='Mean SPEI12',
+        name=f"Mean SPEI",
         marker=dict(
             size=10,
             color=colors,
@@ -426,7 +459,7 @@ def create_scatterplot(values: dict, timescales: dict, selected: dict):
 
 
 
-def compute_boxplot_values(data: xr.DataArray) -> dict:
+def compute_boxplot_stats(data: xr.DataArray) -> dict:
     """
     Computes the statistics needed to create a boxplot from the SPEI data over latitude and longitude.
     These statistics include the median, lower and upper quantiles (25th and 75th percentiles), minimum, and maximum values.
@@ -541,6 +574,77 @@ def create_boxplot(values: dict, timescales, selected):
 
     fig.show()
 
+
+    
+    
+def create_linechart(values: dict, timescales: dict, selected: dict):
+    """
+    Creates and displays a line chart with markers showing the Mean SPEI trends over time based on the provided data and user selections. 
+    This chart is specifically designed to depict how the SPEI changes over the months of a specific year within a selected region and subarea.
+
+    Parameters:
+    - values (dict): Contains time series data for the plot with keys:
+        - 'times': A list of months or other time units.
+        - 'means': Corresponding mean SPEI values for each time unit.
+        - 'colors': Colors for the markers; can be a single color or a list of colors that matches the length of 'times' and 'means'.
+    - timescales (dict): Maps timescale identifiers to their string representations, which are used in the y-axis label of the chart.
+    - selected (dict): Contains user-selected filters for the chart, including:
+        - 'timescale': The SPEI timescale being displayed.
+        - 'country': The country of interest.
+        - 'subarea': The specific subarea within the country.
+        - 'year': The year for which the data is plotted.
+    """
+    times = values['times']
+    means = values['means']
+    colors = values['colors']  # This should be a single color or a list of colors matching the length of times and means
+
+    # Define the line plot (trace) with markers
+    trace = go.Scatter(
+        x=times,
+        y=means,
+        mode='lines+markers',  # Combine lines and markers
+        name='Mean SPEI',
+        line=dict(
+            color='#B89A7D',  # Define line color
+            width=2           # Set line width
+        ),
+        marker=dict(
+            color=colors,  # Colors for each marker
+            size=20,        # Set marker size
+        )
+    )
+
+    timescale = selected['timescale']
+    country = selected['country']
+    subarea = selected['subarea']
+    year = selected['year']
+    
+    # Initialize and update the figure
+    fig = go.Figure([trace])
+    fig.update_layout(
+        title=f"Mean {timescale} SPEI Index, trends over time in {country}'s {subarea} area in {year}",
+        xaxis_title='Months',
+        yaxis_title=f"Mean SPEI{timescales[timescale]}",
+        height=500,
+        plot_bgcolor='white',   # Sets the plotting area background color
+        paper_bgcolor='white',  # Sets the overall background color of the chart
+        xaxis=dict(
+            showgrid=True,  # Enable grid (default)
+            gridcolor='#D3D3D3',  # Set grid color
+            linecolor='#D3D3D3',  # Set axis line color
+        ),
+        yaxis=dict(
+            showgrid=True,
+            gridcolor='#D3D3D3',
+            linecolor='#D3D3D3',
+            zeroline=True,  # Ensure the zero line is visible
+            zerolinewidth=1,
+            zerolinecolor='black'  # Change zero line color
+        )
+    )
+
+    # Display the figure
+    fig.show()
 
     
     
