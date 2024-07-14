@@ -1,6 +1,7 @@
 import netCDF4 as nc
 import xarray as xr
 import dask
+import math
 import numpy as np
 import pandas as pd
 import glob
@@ -14,7 +15,10 @@ from geopy.exc import GeocoderTimedOut
 import time
 from datetime import datetime
 import json
+import pycountry
 
+SPEI_DATA_PATH = '/data1/drought_dataset/spei/'
+MIDDLE_PATTERN = '*global_era5*_moda_ref1991to2020_'
 
 def save_selection(selection):
     """
@@ -57,10 +61,8 @@ def read_json_to_dict(file_name, sort=False):
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
 
-
-
-
-
+  
+    
 
 def adjust_to_nearest_025(coord):
     """
@@ -197,24 +199,25 @@ def is_readable_nc(file_path):
         print(f"Warning: Skipping unreadable NetCDF file: {file_path}")
         return False
 
+    
 
-
-def get_bounds(area):
+def get_bounds(area, country_code):
     """
-    Retrieve the bounding box coordinates for a given country.
+    Retrieve the bounding box coordinates for a given area within a specified country.
 
     Parameters:
-    area (str): The name of the country or its subarea for which to retrieve the bounding box.
+    area (str): The name of the area (country or subarea) for which to retrieve the bounding box.
+    country_code (str): The ISO two-letter country code to refine the search within a specific country.
 
     Returns:
     tuple or str: A tuple containing the bounding box coordinates in the format 
                   (min_lat, max_lat, min_lon, max_lon) if successful, 
-                  or an error message if not.
+                  or an error message if not found or in case of an error.
     """
-    geolocator = Nominatim(user_agent="talesofdrought")     # Initialize the Nominatim client
+    geolocator = Nominatim(user_agent="talesofdrought")  # Initialize the Nominatim client
     try:
-        # Use geocode to query the country with the parameter for getting bounding box
-        location = geolocator.geocode(area, exactly_one=True, timeout=10)
+        # Use geocode to query the area within the specific country, using the country_codes parameter
+        location = geolocator.geocode(f'{area}, {country_code}', exactly_one=True, country_codes=country_code, timeout=10)
         if location:
             # Extract the bounding box
             bounding_box = location.raw['boundingbox']
@@ -226,45 +229,59 @@ def get_bounds(area):
     except GeocoderTimedOut:
         print(f"Geocoding timed out for {area}; retrying...")
         time.sleep(1)
-        return get_bounds(country)  # Retry for this area
+        return get_bounds(area, country_code)  # Retry for this area with the country code
     except Exception as e:
-        return f"Error retrieving data for {area}: {e}"
+        return f"Error retrieving data for {area}: {e}"    
     
+                
 
-    
-    
-def update_subarea_selector(change, placeholder_country, placeholder_subarea, subarea_selector, country_to_subareas):
+def find_valid_files(year, timescale):
     """
-    Update the options of a subarea selector widget based on the selected country from thr related selector widget.
-
-    This function is bound to the country selector widget to handle its change events. It updates the subarea
-    selector's options dynamically based on the country selected. If the default placeholder country is selected, 
-    it resets the subarea selector to its placeholder state.
-
-    Parameters:
-    change (dict): A dictionary containing details of the change event, with keys 'type', 'name', and 'new', where 
-                   'new' is the newly selected country value.
-    placeholder_country (str): The placeholder text or value for the country selector, indicating no country selected.
-    placeholder_subarea (str): The placeholder text or value for the subarea selector, indicating no subarea selected.
-    subarea_selector (widget): The widget instance of the subarea selector to be updated.
-    country_to_subareas (dict): A dictionary mapping country names to a list of their respective subareas.
-
-    Notes:
-    - The function expects to be triggered by a change event from a widget where
-      the 'type' of the event is 'change' and the 'name' is 'value'.
-    - Debug statements are used to log the currently selected country and subareas, aiding in troubleshooting.
+    Find valid NetCDF files for a given year and timescale.
     """
-    if change['type'] == 'change' and change['name'] == 'value':
-        new_country = change['new']
-        print("Country selected:", new_country)  # Debug: Check selected country
-        if new_country != placeholder_country:
-            subareas = country_to_subareas.get(new_country, [])
-            print("Subareas found:", subareas)  # Debug: List subareas found
-            subarea_selector.options = [placeholder_subarea] + subareas
-        else:
-            subarea_selector.options = [placeholder_subarea]
-            print("Reset subarea selector due to country placeholder selection")  # Debug: Resetting subarea selector
+    file_pattern = f'SPEI{timescale}{MIDDLE_PATTERN}{year}*.nc'
+    file_list = glob.glob(os.path.join(SPEI_DATA_PATH, f'spei{timescale}/', file_pattern))
+    return [file for file in file_list if os.path.isfile(file) and os.access(file, os.R_OK)]
 
+
+def load_climate_datasets(files, bounds):
+    """
+    Load and preprocess climate datasets from a list of file paths.
+    """
+    if files:
+        return xr.open_mfdataset(
+            files,
+            concat_dim='time',
+            combine='nested',
+            parallel=True,
+            preprocess=lambda ds: preprocess(ds, bounds)
+        )
+    return None
+
+
+def handle_area_change_year_range(bounds, start_year, end_year, selected_timescale):
+    """
+    Load and process a dataset of climate data for all months from a starting year to an ending year, and geographic area.
+    """
+    valid_files = []
+    errors = []
+
+    for year in range(start_year, end_year + 1):
+        try:
+            year_files = find_valid_files(year, selected_timescale)
+            valid_files.extend(year_files)
+        except Exception as e:
+            errors.append(f"An error occurred processing data for {year}: {e}")
+
+    data = load_climate_datasets(valid_files, bounds)
+
+    if not data:
+        error_message = "No readable NetCDF files found for any year in the range."
+        if errors:
+            error_message += " Errors encountered: " + "; ".join(errors)
+        print(error_message)
+
+    return data
 
           
            
@@ -305,7 +322,10 @@ def handle_area_change(bounds, selected_month, selected_year, selected_timescale
         print(f"An error occurred: {e}")
         return None
 
-
+    
+def get_country_code(country_name):
+    country = pycountry.countries.get(name=country_name)
+    return country.alpha_2 if country else None
 
 
 def update_display(country_selector, subarea_selector, month_selector, year_selector, timescale_selector, months, timescales, placeholders):
@@ -325,141 +345,235 @@ def update_display(country_selector, subarea_selector, month_selector, year_sele
 
     The function checks for valid selections and retrieves corresponding bounds based on the geographical selections.
     It then fetches or recalculates the data for the specified area, time frame, and timescale, updating the global 
-    `area_subset_data` accordingly.
+    `subset` accordingly.
 
     If valid data is available based on the selections, it outputs the updated data scope. If selections are incomplete 
     or data is unavailable, it provides feedback via printed messages.
 
     Returns:
-    - Returns the updated `area_subset_data` if the selections are complete and valid data is available, 
+    - Returns the updated `subset` if the selections are complete and valid data is available, 
       otherwise returns None.
-    """
-    global area_subset_data
-    bounds = get_bounds(subarea_selector.value if subarea_selector.value != placeholders['subarea'] else country_selector.value)
-    selected_month = months.get(month_selector.value) if month_selector.value != placeholders['month'] else None
-    selected_year = year_selector.value if year_selector.value != placeholders['year'] else None
-    selected_timescale = timescales.get(timescale_selector.value, placeholders['timescale'])
-        
-    if bounds and (selected_month or selected_year) and selected_timescale != placeholders['timescale']:
-        area_subset_data = handle_area_change(bounds, selected_month, selected_year, selected_timescale)
-        if area_subset_data and selected_month:
-            print(f"Data updated for: Area={bounds}, Month={selected_month}, Timescale={selected_timescale}")
-        elif area_subset_data and selected_year:
-            print(f"Data updated for: Area={bounds}, Year={selected_year}, Timescale={selected_timescale}")
-        else:
-            print("No data available for the selected area, month/year, and timescale")
-        return area_subset_data
+    """       
+    global subset
+    missing_selections = []
+
+    # Check each selector for a valid selection and update accordingly
+    country_code = get_country_code(country_selector.value) if country_selector.value != placeholders['country'] else missing_selections.append('country')
+    subarea = subarea_selector.value if subarea_selector.value != placeholders['subarea'] else missing_selections.append('subarea')
+    selected_timescale = timescales.get(timescale_selector.value) if timescale_selector.value != placeholders['timescale'] else missing_selections.append('timescale')
+    
+    # Check for month or year, since they are mutually exclusive
+    if month_selector.value != placeholders['month']:
+        selected_month = months.get(month_selector.value)
+        selected_year = None       
+    elif year_selector.value != placeholders['year']:
+        selected_year = year_selector.value
+        selected_month = None
     else:
-        print("Selection incomplete. Please select all required options.")
+        missing_selections.append('time period')
+    
+    if not missing_selections:
+        bounds = get_bounds(subarea, country_code)
+        if bounds and (selected_month is not None or selected_year is not None) and selected_timescale:
+            subset = handle_area_change(bounds, selected_month, selected_year, selected_timescale)
+            if subset:
+                if selected_month:
+                    print(f"Data updated for: Area={bounds}, Month={selected_month}, Timescale={selected_timescale}")
+                elif selected_year:
+                    print(f"Data updated for: Area={bounds}, Year={selected_year}, Timescale={selected_timescale}")
+                return subset
+            else:
+                print("No data available for the selected area, month/year, and timescale")
+    else:
+        # Join all missing selections into a string and display the message
+        missing = ", ".join(missing_selections)
+        print(f"Selection incomplete. Please select all required options: {missing}")
 
 
+        
+        
 
-def replace_invalid_values(data: pd.DataFrame, invalid_value: float = -9999.0) -> pd.DataFrame:
+def update_yr_display(country_selector, subarea_selector, year_range_selector, timescale_selector, months, timescales, placeholders):   
+    global subset
+    missing_selections = []
+
+    # Check each selector for a valid selection and update accordingly
+    country_code = get_country_code(country_selector.value) if country_selector.value != placeholders['country'] else missing_selections.append('country')
+    subarea = subarea_selector.value if subarea_selector.value != placeholders['subarea'] else missing_selections.append('subarea')
+    selected_timescale = timescales.get(timescale_selector.value) if timescale_selector.value != placeholders['timescale'] else missing_selections.append('timescale')
+    selected_year_range = year_range_selector.value
+    
+    if not missing_selections:
+        bounds = get_bounds(subarea, country_code)
+        if bounds and selected_timescale:
+            subset = handle_area_change_year_range(bounds, int(selected_year_range[0]), int(selected_year_range[1]), selected_timescale)
+            if subset:
+                print(f"Data updated for: Area={bounds}, Year range={selected_year_range[0]}-{selected_year_range[1]}, Timescale={selected_timescale}")
+                return subset
+            else:
+                print("No data available for the selected area, year range, and timescale")
+    else:
+        # Join all missing selections into a string and display the message
+        missing = ", ".join(missing_selections)
+        print(f"Selection incomplete. Please select all required options: {missing}")
+
+        
+def display_data_details(selected, subset):
     """
-    Replaces invalid values in the dataset with NaN.
+    Displays details of the selected data and subset based on the specified index.
 
     Parameters:
-    data (pd.DataFrame): The DataFrame to process.
-    invalid_value (float): The value to replace with NaN. Default is -9999.0.
+    selected (dict): A dictionary containing selection attributes such as country, subarea, month, year, and timescale.
+    subset (list of xr.DataArray): A list of xarray DataArrays containing the subset data.
 
     Returns:
-    pd.DataFrame: The DataFrame with invalid values replaced by NaN.
+    None: This function only prints details to the console.
     """
-    return data.where(data != invalid_value, np.nan)
+    print("Country: ", selected['country'])
+    print("Subarea: ", selected['subarea'])
+    print("Month: ", selected['month'])
+    print("Year: ", selected['year'])
+    print("Year range: ", selected['year_range'])
+    print("Timescale: ", selected['timescale'], '\n')
 
+    print("Time values in the subset:", subset.time.values.shape[0])
+    print("Latitude values in the subset:", subset.lat.values.shape[0])
+    print("Longitude values in the subset:", subset.lon.values.shape[0], '\n')
 
+    # This prints a sample of the data for the first time point and the first 5 latitudes and longitudes
+    print("Data sample: ", subset.isel(time=0, lat=slice(0, 5), lon=slice(0, 5)).values)
 
-def compute_means(data: xr.DataArray) -> dict:
+    # Optional: Uncomment these if more detailed outputs are needed
+    # print(subset[index].values)
+    # print(subset[index].time)
+
+   
+            
+            
+
+def replace_invalid_values(data: pd.DataFrame, invalid_value: float = -9999.0) -> (pd.DataFrame, int, float):
     """
-    Computes the mean SPEI over latitude and longitude,
-    and extracts the times and values for plotting. Also assigns colors based on the SPEI values.
+    Replaces specified invalid values in a pandas DataFrame with NaN (Not a Number), counts the number of replacements,
+    and calculates the ratio of invalid values over the total number of values.
 
     Parameters:
-    data (xr.DataArray): The DataArray containing the SPEI data with dimensions including 'lat', 'lon', and 'time'.
+    - data (pd.DataFrame): The input DataFrame containing possibly invalid values.
+    - invalid_value (float, optional): The value to be considered as invalid and replaced. 
+      Defaults to -9999.0.
 
     Returns:
-    dict: A dict containing:
-        - times (np.ndarray): The array of time values.
-        - values (np.ndarray): The array of mean SPEI values over the specified dimensions.
-        - colors (np.ndarray): The array of colors assigned based on the SPEI values.
+    - pd.DataFrame: A DataFrame with invalid values replaced by NaN.
+    - int: The number of invalid values replaced.
+    - float: Ratio of invalid values to total values in the DataFrame.
     """
-    mean_spei = data.mean(dim=['lat', 'lon'])
-    mean_spei_computed = mean_spei.compute()
+    # Create a mask to identify invalid values
+    mask = data == invalid_value
+    # Count invalid entries across all columns, using compute() if necessary
+    if 'dask' in str(type(data)):  # Check if the DataFrame is a Dask DataFrame
+        invalid_count = mask.sum().compute()  # Use Dask's compute() for Dask DataFrames
+    else:
+        invalid_count = mask.sum().sum()  # Sum all true values in the mask for Pandas DataFrame
+
+    # Calculate total number of values in the DataFrame
+    total_values = data.size
+
+    # Calculate the ratio of invalid values
+    invalid_ratio = invalid_count / total_values
+
+    # Replace invalid values with NaN using where()
+    clean_data = data.where(~mask, np.nan)  # Replace where mask is not True
     
-    # Extract times and values for plotting
-    times = mean_spei_computed['time'].values
-    means = mean_spei_computed.values
-    colors = assign_color_spei(means)
+    return clean_data, int(invalid_count), float(invalid_ratio)
+
+
+
+def remove_time_duplicates(dataset: xr.DataArray) -> (xr.DataArray, int):
+    """
+    Removes duplicate time entries from an xarray DataArray by keeping the first occurrence
+    of each time point and discarding the subsequent duplicates. Also returns the number of duplicates removed.
+
+    Parameters:
+    - dataset (xr.DataArray): The input DataArray that contains a time dimension with potentially duplicated entries.
+
+    Returns:
+    - xr.DataArray: A new DataArray with the same data as the input but with duplicate time entries removed.
+    - int: The number of duplicate time entries removed.
     
-    return {
-        'times': times,
-        'means': means,
-        'colors': colors,
+    Note:
+    - This function is needed because the value of the variable 'time' of January 2024 is duplicated
+    """
+    time_series = pd.Series(dataset.time.values)
+    original_count = len(time_series)
+    unique_indices = time_series.drop_duplicates(keep='first').index
+    new_dataset = dataset.isel(time=unique_indices)
+    removed_count = original_count - len(unique_indices)
+    
+    return new_dataset, removed_count
+
+
+
+def convert_cftime_to_datetime64(dataset: xr.DataArray, time_dim='time') -> (xr.DataArray, int):
+    """
+    Converts cftime.DatetimeGregorian objects within the specified time dimension of an xarray
+    DataArray to numpy.datetime64 data types, and returns the number of conversions made.
+    This conversion standardizes time representations for compatibility with broader numpy and pandas
+    operations which may not support cftime types.
+
+    Parameters:
+    - dataset (xr.DataArray): The input DataArray containing time data potentially in cftime.DatetimeGregorian format.
+    - time_dim (str): The name of the dimension in the DataArray that contains the time data. Default is 'time'.
+
+    Returns:
+    - xr.DataArray: A new DataArray with the time coordinates converted from cftime.DatetimeGregorian to numpy.datetime64.
+    - int: The number of conversions from cftime.DatetimeGregorian to numpy.datetime64.
+    
+    Note:
+    - This function is necessary because the values of the 'time' variable for January 2024 and Febraury 2024 are in cftime.DatetimeGregorian format.
+    """
+    times = dataset[time_dim].values
+    conversion_count = 0
+    new_times = []
+    
+    for t in times:
+        if isinstance(t, cftime.DatetimeGregorian):
+            new_times.append(np.datetime64(t.isoformat()))
+            conversion_count += 1
+        else:
+            new_times.append(np.datetime64(t))
+    
+    new_data_array = dataset.assign_coords({time_dim: ('time', np.array(new_times, dtype='datetime64[ns]'))})
+    
+    return new_data_array, conversion_count
+
+
+
+def process_datarray(data_array: xr.DataArray) -> (xr.DataArray, dict):
+    """
+    Processes an xarray DataArray through a sequence of data cleaning and transformation steps
+    to ensure its usability in further analysis or modeling. This function standardizes the DataArray
+    and returns the counts of cleaned, removed, and converted values.
+
+    Parameters:
+    - data_array (xr.DataArray): The input DataArray that will undergo processing.
+
+    Returns:
+    - xr.DataArray: The processed DataArray with standardized data formatting and cleaned values.
+    - dict: Dictionary containing counts of cleaned, removed, and converted entries.
+    """
+    data_array, invalid_replaced_count, invalid_ratio = replace_invalid_values(data_array)
+    data_array, duplicate_removed_count = remove_time_duplicates(data_array)
+    data_array, conversion_count = convert_cftime_to_datetime64(data_array)
+
+    return data_array, {
+        'invalid_values_replaced': invalid_replaced_count,
+        'invalid_ratio': invalid_ratio,
+        'duplicates_removed': duplicate_removed_count,
+        'cftime_conversions': conversion_count
     }
 
 
-def create_scatterplot(values: dict, timescales: dict, selected: dict):
-    """
-    Creates and displays a scatterplot representing the mean SPEI over time, using provided data and user selections.
 
-    Parameters:
-    - values (dict): Contains time series data necessary for the plot, with keys 'times', 'means', and 'colors' that
-                     list the years, mean SPEI values, and colors for each data point, respectively.
-    - timescales (dict): Maps timescale identifiers to their string representations, used for labeling in the plot.
-    - selected (dict): User-selected filters for the plot, including 'timescale', 'country', 'subarea', and 'month'.
-    """
-    times = values['times']
-    means = values['means']
-    colors = values['colors']
-    
-    # Define the scatter plot (trace)
-    trace = go.Scatter(
-        x=times,
-        y=means,
-        mode='markers',
-        name=f"Mean SPEI",
-        marker=dict(
-            size=10,
-            color=colors,
-            line=dict(width=0, color='#717BFA')
-        )
-    )
-    
-    timescale = selected['timescale']
-    country = selected['country']
-    subarea = selected['subarea']
-    month = selected['month']
-    
-    # Initialize and update the figure
-    fig = go.Figure([trace])
-    fig.update_layout(
-        title=f"Mean {timescale} SPEI Index, trends over time in {country}'s {subarea} area for the month of {month}",
-        xaxis_title='Years',
-        yaxis_title=f"Mean SPEI{timescales[timescale]}",
-        height=500,
-        plot_bgcolor='white',   # Sets the plotting area background color
-        paper_bgcolor='white',  # Sets the overall background color of the chart
-        xaxis=dict(
-            showgrid=True,  # Enable grid (default)
-            gridcolor='#D3D3D3',  # Set grid color
-            linecolor='#D3D3D3',  # Set axis line color
-        ),
-        yaxis=dict(
-            showgrid=True,
-            gridcolor='#D3D3D3',
-            linecolor='#D3D3D3',
-            zeroline=True,  # Ensure the zero line is visible
-            zerolinewidth=1,
-            zerolinecolor='black'  # Change zero line color to blue
-        )
-    )
-
-    # Display the figure
-    fig.show()
-
-
-
-def compute_boxplot_stats(data: xr.DataArray) -> dict:
+def compute_stats(data: xr.DataArray) -> dict:
     """
     Computes the statistics needed to create a boxplot from the SPEI data over latitude and longitude.
     These statistics include the median, lower and upper quantiles (25th and 75th percentiles), minimum, and maximum values.
@@ -470,20 +584,26 @@ def compute_boxplot_stats(data: xr.DataArray) -> dict:
     Returns:
     dict: A dictionary containing:
         - times (np.ndarray): The array of time values.
+        - means (np.ndarray): The array of mean values over the specified dimensions.
         - medians (np.ndarray): The array of median values over the specified dimensions.
         - q1s (np.ndarray): The array of 25th percentile values.
         - q3s (np.ndarray): The array of 75th percentile values.
         - mins (np.ndarray): The array of minimum values.
         - maxs (np.ndarray): The array of maximum values.
     """
-    # Compute the required statistics
-    median = data.median(dim=['lat', 'lon'])
-    q1 = data.quantile(0.25, dim=['lat', 'lon'])
-    q3 = data.quantile(0.75, dim=['lat', 'lon'])
-    min_val = data.min(dim=['lat', 'lon'])
-    max_val = data.max(dim=['lat', 'lon'])
+    # Remove NaN values across lat and lon dimensions for more robust stats
+    valid_data = data.dropna(dim='lat', how='all').dropna(dim='lon', how='all')
+    
+    # Compute the statistics using data with removed all-NaN slices, skipping NaN values if any residual 
+    mean = valid_data.mean(dim=['lat', 'lon'], skipna=True)
+    median = valid_data.median(dim=['lat', 'lon'], skipna=True)
+    q1 = valid_data.quantile(0.25, dim=['lat', 'lon'], skipna=True)
+    q3 = valid_data.quantile(0.75, dim=['lat', 'lon'], skipna=True)
+    min_val = valid_data.min(dim=['lat', 'lon'], skipna=True)
+    max_val = valid_data.max(dim=['lat', 'lon'], skipna=True)
 
     # Compute the values
+    mean_computed = mean.compute()
     median_computed = median.compute()
     q1_computed = q1.compute()
     q3_computed = q3.compute()
@@ -491,7 +611,8 @@ def compute_boxplot_stats(data: xr.DataArray) -> dict:
     max_computed = max_val.compute()
 
     # Extract times and values
-    times = median_computed['time'].values
+    times = median_computed['time'].values if 'time' in median_computed.dims else None
+    means = mean_computed.values
     medians = median_computed.values
     q1s = q1_computed.values
     q3s = q3_computed.values
@@ -500,12 +621,144 @@ def compute_boxplot_stats(data: xr.DataArray) -> dict:
 
     return {
         'times': times,
+        'means': means,
         'medians': medians,
         'q1s': q1s,
         'q3s': q3s,
         'mins': mins,
         'maxs': maxs
     }
+
+
+
+def assign_color_spei(spei_values):
+    """
+    Assigns colors based on the Standardized Precipitation-Evapotranspiration Index (SPEI) values.
+    This function takes a list of SPEI values and assigns a color code to each value based on the degree of wetness or dryness.
+    The colors are assigned as follows:
+    - Extremely wet: SPEI > 2.0 (color: '#064A78')
+    - Severely wet: 1.5 < SPEI <= 2.0 (color: '#49AEFF')
+    - Moderately wet: 1.0 < SPEI <= 1.5 (color: '#61A5CE')
+    - Near-normal / mildly wet: 0 < SPEI <= 1.0 (color: '#ACD1E5')
+    - Near-normal / mildly dry: -1.0 < SPEI <= 0 (color: '#F7BB9F')
+    - Moderately dry: -1.5 < SPEI <= -1.0 (color: '#D96C59')
+    - Severely dry: -2.0 < SPEI <= -1.5 (color: '#AF2331')
+    - Extremely dry: SPEI <= -2.0 (color: '#681824')
+    If the SPEI value is NaN, the color will be transparent (color: 'rgba(0,0,0,0)').
+    
+    Parameters:
+    spei_values (list of float): A list of SPEI values to be evaluated.
+
+    Returns:
+    list of str: A list of color codes corresponding to the SPEI values.
+    
+    Note: 
+    neutral: #B89A7D - axes: #D3D3D3
+    """
+    colors = []
+    for spei in spei_values:
+        if math.isnan(spei):
+            colors.append('rgba(0,0,0,0)')  # transparent for NaN values
+        elif spei > 2.0:
+            colors.append('#064A78')  # extremely wet
+        elif 1.5 < spei <= 2.0:
+            colors.append('#49AEFF')  # severely wet
+        elif 1.0 < spei <= 1.5:
+            colors.append('#61A5CE')  # moderately wet
+        elif 0 < spei <= 1.0:
+            colors.append('#ACD1E5')  # near-normal / mildly wet
+        elif -1.0 < spei <= 0:
+            colors.append('#F7BB9F')  # near-normal / mildly dry
+        elif -1.5 < spei <= -1.0:
+            colors.append('#D96C59')  # moderately dry
+        elif -2.0 < spei <= -1.5:
+            colors.append('#AF2331')  # severely dry
+        elif spei <= -2.0:
+            colors.append('#681824')  # extremely dry
+    return colors
+
+
+
+def create_scatterplot(values: dict, timescales: dict, selected: dict):
+    """
+    Creates and displays a scatterplot representing the SPEI over time, using provided data and user selections.
+    It plots both mean (marked with dots) and median (marked with diamonds) SPEI values, each colored based on their respective values.
+
+    Parameters:
+    - values (dict): Contains time series data necessary for the plot, with keys 'times', 'means', and 'medians' that
+                     list the years, mean SPEI values, and median SPEI values respectively.
+    - timescales (dict): Maps timescale identifiers to their string representations, used for labeling in the plot.
+    - selected (dict): User-selected filters for the plot, including 'timescale', 'country', 'subarea', and 'month'.
+    """
+    times = values['times']
+    means = values['means']
+    medians = values['medians']
+    
+    # Assign colors to means and medians based on their SPEI values
+    mean_colors = assign_color_spei(means)
+    median_colors = assign_color_spei(medians)
+    
+    # Prepare the text for the tooltips
+    # Convert numpy.datetime64 for formatting
+    mean_tooltip_texts = [f"{np.datetime64(time, 'D').astype('datetime64[M]').astype(object).strftime('%B %Y')}, mean: {mean:.2f}" for time, mean in zip(times, means)]
+    median_tooltip_texts = [f"{np.datetime64(time, 'D').astype('datetime64[M]').astype(object).strftime('%B %Y')}, median: {median:.2f}" for time, median in zip(times, medians)]
+        
+    # Define the scatter plot for means
+    mean_trace = go.Scatter(
+        x=times,
+        y=means,
+        mode='markers',
+        name='Mean SPEI',
+        marker=dict(
+            size=10,
+            symbol='circle',
+            color=mean_colors,
+            line=dict(width=1, color='black')  # Border
+        ),
+        text=mean_tooltip_texts,  # Custom tooltip text
+        hoverinfo='text'
+    )
+    
+    # Define the scatter plot for medians
+    median_trace = go.Scatter(
+        x=times,
+        y=medians,
+        mode='markers',
+        name='Median SPEI',
+        marker=dict(
+            size=10,
+            symbol='diamond',
+            color=median_colors,
+            line=dict(width=1, color='black')  # Border
+        ),
+        text=median_tooltip_texts,  # Custom tooltip text
+        hoverinfo='text'
+    )
+    
+    timescale = selected['timescale']
+    country = selected['country']
+    subarea = selected['subarea']
+    month = selected['month']
+    
+    # Initialize and update the figure
+    fig = go.Figure([mean_trace, median_trace])
+    fig.update_layout(
+        title=f"{timescale} SPEI Index Trends Over Time in {country}'s {subarea} for {month}",
+        xaxis_title='Year',
+        yaxis_title=f"SPEI{timescales[timescale]} Value",
+        height=500,
+        template='plotly_white',
+        plot_bgcolor='rgba(0,0,0,0)',
+        yaxis=dict(
+            zeroline=True,
+            zerolinewidth=1,
+            zerolinecolor='#D3D3D3'
+        )
+    )
+
+    # Display the figure
+    fig.show()
+
 
 
 
@@ -554,20 +807,12 @@ def create_boxplot(values: dict, timescales, selected):
         xaxis_title='Years',
         yaxis_title=f"SPEI{timescales[timescale]}",
         height=500,
-        plot_bgcolor='white',   # Sets the plotting area background color
-        paper_bgcolor='white',  # Sets the overall background color of the chart
-        xaxis=dict(
-            showgrid=True,  # Enable grid (default)
-            gridcolor='#D3D3D3',  # Set grid color
-            linecolor='#D3D3D3',  # Set axis line color
-        ),
+        template='plotly_white',
+        plot_bgcolor='rgba(0,0,0,0)',
         yaxis=dict(
-            showgrid=True,
-            gridcolor='#D3D3D3',
-            linecolor='#D3D3D3',
             zeroline=True,  # Ensure the zero line is visible
             zerolinewidth=1,
-            zerolinecolor='black'  # Change zero line color to blue
+            zerolinecolor='#D3D3D3'  # Change zero line color to blue
         ),
         showlegend=False
     )
@@ -579,13 +824,13 @@ def create_boxplot(values: dict, timescales, selected):
     
 def create_linechart(values: dict, timescales: dict, selected: dict):
     """
-    Creates and displays a line chart with markers showing the Mean SPEI trends over time based on the provided data and user selections. 
+    Creates and displays a line chart with markers showing the Median SPEI trends over time based on the provided data and user selections. 
     This chart is specifically designed to depict how the SPEI changes over the months of a specific year within a selected region and subarea.
 
     Parameters:
     - values (dict): Contains time series data for the plot with keys:
         - 'times': A list of months or other time units.
-        - 'means': Corresponding mean SPEI values for each time unit.
+        - 'medians': Corresponding medians SPEI values for each time unit.
         - 'colors': Colors for the markers; can be a single color or a list of colors that matches the length of 'times' and 'means'.
     - timescales (dict): Maps timescale identifiers to their string representations, which are used in the y-axis label of the chart.
     - selected (dict): Contains user-selected filters for the chart, including:
@@ -595,23 +840,33 @@ def create_linechart(values: dict, timescales: dict, selected: dict):
         - 'year': The year for which the data is plotted.
     """
     times = values['times']
-    means = values['means']
-    colors = values['colors']  # This should be a single color or a list of colors matching the length of times and means
+    medians = values['medians']
+    colors = assign_color_spei(medians)
+    
+    # Prepare the text for the tooltips
+    # Convert numpy.datetime64 for formatting
+    tooltip_texts = [f"{np.datetime64(time, 'D').astype('datetime64[M]').astype(object).strftime('%B %Y')}, median: {median:.2f}" for time, median in zip(times, medians)]
 
     # Define the line plot (trace) with markers
     trace = go.Scatter(
         x=times,
-        y=means,
+        y=medians,
         mode='lines+markers',  # Combine lines and markers
-        name='Mean SPEI',
+        name='Median SPEI',
         line=dict(
             color='#B89A7D',  # Define line color
             width=2           # Set line width
         ),
         marker=dict(
             color=colors,  # Colors for each marker
-            size=20,        # Set marker size
-        )
+            size=15,        # Set marker size
+            line = dict(
+                color = "#B89A7D",
+                width = 2
+          )
+        ),
+        text=tooltip_texts,  # Custom tooltip text
+        hoverinfo='text'
     )
 
     timescale = selected['timescale']
@@ -622,24 +877,16 @@ def create_linechart(values: dict, timescales: dict, selected: dict):
     # Initialize and update the figure
     fig = go.Figure([trace])
     fig.update_layout(
-        title=f"Mean {timescale} SPEI Index, trends over time in {country}'s {subarea} area in {year}",
+        title=f"Median {timescale} SPEI Index, trends over time in {country}'s {subarea} area in {year}",
         xaxis_title='Months',
-        yaxis_title=f"Mean SPEI{timescales[timescale]}",
+        yaxis_title=f"Median SPEI{timescales[timescale]}",
         height=500,
-        plot_bgcolor='white',   # Sets the plotting area background color
-        paper_bgcolor='white',  # Sets the overall background color of the chart
-        xaxis=dict(
-            showgrid=True,  # Enable grid (default)
-            gridcolor='#D3D3D3',  # Set grid color
-            linecolor='#D3D3D3',  # Set axis line color
-        ),
+        template='plotly_white',
+        plot_bgcolor='rgba(0,0,0,0)',
         yaxis=dict(
-            showgrid=True,
-            gridcolor='#D3D3D3',
-            linecolor='#D3D3D3',
             zeroline=True,  # Ensure the zero line is visible
             zerolinewidth=1,
-            zerolinecolor='black'  # Change zero line color
+            zerolinecolor='#D3D3D3'  # Change zero line color
         )
     )
 
@@ -648,46 +895,84 @@ def create_linechart(values: dict, timescales: dict, selected: dict):
 
     
     
-def assign_color_spei(spei_values):
+def create_stripechart(values: dict, timescales: dict, selected: dict, start_year: int, end_year: int, aggregate_by: str = 'month'):
     """
-    Assigns colors based on the Standardized Precipitation-Evapotranspiration Index (SPEI) values.
-
-    This function takes a list of SPEI values and assigns a color code to each value based on the degree of wetness or dryness.
-    The colors are assigned as follows:
-    - Extremely wet: SPEI > 2.0 (color: '#064A78')
-    - Severely wet: 1.5 < SPEI <= 2.0 (color: '#49AEFF')
-    - Moderately wet: 1.0 < SPEI <= 1.5 (color: '#61A5CE')
-    - Near-normal / mildly wet: 0 < SPEI <= 1.0 (color: '#ACD1E5')
-    - Near-normal / mildly dry: -1.0 < SPEI <= 0 (color: '#F7BB9F')
-    - Moderately dry: -1.5 < SPEI <= -1.0 (color: '#D96C59')
-    - Severely dry: -2.0 < SPEI <= -1.5 (color: '#AF2331')
-    - Extremely dry: SPEI <= -2.0 (color: '#681824')
+    Generates generated chart is a vertical bar (stripe) chart, where each bar's color represents the median SPEI value for a specific period.
 
     Parameters:
-    spei_values (list of float): A list of SPEI values to be evaluated.
-
-    Returns:
-    list of str: A list of color codes corresponding to the SPEI values.
-    
-    Note: 
-    neutral: #B89A7D - axes: #D3D3D3
+        values (dict): A dictionary containing the data arrays for time points (`times`) and their corresponding median SPEI values (`medians`).
+        timescales (dict): A dictionary that maps timescale identifiers to their SPEI calculation descriptions.
+        selected (dict): A dictionary with selections for the timescale, country, subarea, and year range.
+        start_year (int): The starting year for the visualization.
+        end_year (int): The ending year for the visualization.
+        aggregate_by (str): Determines the aggregation level of the data points in the visualization; default is 'month'. Other possible value is 'year'.
     """
-    colors = []
-    for spei in spei_values:
-        if spei > 2.0:
-            colors.append('#064A78')  # extremely wet
-        elif 1.5 < spei <= 2.0:
-            colors.append('#3c8fc3')  # severely wet
-        elif 1.0 < spei <= 1.5:
-            colors.append('#61A5CE')  # moderately wet
-        elif 0 < spei <= 1.0:
-            colors.append('#ACD1E5')  # near-normal / mildly wet
-        elif -1.0 < spei <= 0:
-            colors.append('#F7BB9F')  # near-normal / mildly dry
-        elif -1.5 < spei <= -1.0:
-            colors.append('#D96C59')  # moderately dry
-        elif -2.0 < spei <= -1.5:
-            colors.append('#AF2331')  # severely dry
-        else:
-            colors.append('#681824')  # extremely dry
-    return colors
+    times = values['times']
+    medians = values['medians']
+    colors = assign_color_spei(medians)
+    
+    # Convert numpy datetime64 to datetime64[M] for sorting
+    date_transform = [np.datetime64(time, 'M') for time in times]
+
+    # Pair date_transform, colors, and medians, then sort by date_transform
+    paired_data = sorted(zip(date_transform, colors, medians), key=lambda x: x[0])
+    sorted_dates = [date for date, _, _ in paired_data]
+    sorted_colors = [color for _, color, _ in paired_data]
+    sorted_medians = [median for _, _, median in paired_data]
+    
+    # Generate tooltip texts
+    if aggregate_by == 'month':
+        tooltip_texts = [f"{date.astype(object).strftime('%B %Y')}, median: {median:.2f}" for date, median in zip(sorted_dates, sorted_medians)]
+        sorted_dates = [str(date) for date in sorted_dates]  # Convert to string for plotting
+    else:
+        tooltip_texts = [f"{date.astype(object).strftime('%B %Y')}, median: {median:.2f}" for date, median in zip(sorted_dates, sorted_medians)]
+        sorted_dates = [date.astype('datetime64[Y]').astype(str)[:4] for date in sorted_dates]  # Show year on x-axis
+
+
+    # Filter dates to show only specific years in ten-year intervals
+    year_diff = end_year - start_year
+    if year_diff <= 15:
+        interval = (3, 1)
+    elif year_diff > 15 and year_diff <= 25:
+        interval = (5, 2)
+    else:
+        interval = (10, 10)
+    if aggregate_by == 'month':
+        target_years = [str(year) for year in range(start_year, end_year + 1, interval[0])]
+        display_dates = [date[:4] if (date[:4] in target_years and date[5:7] == '01') else '' for date in sorted_dates]
+    else:
+        target_years = [str(year) for year in range(start_year, end_year + 1, interval[1])]
+        display_dates = [year if year in target_years else '' for year in sorted_dates]
+
+    # Create the stripe chart
+    bar_width = 1.0 if aggregate_by == 'month' else 0.8
+    fig = go.Figure(data=[
+        go.Bar(
+            x=sorted_dates,
+            y=[1] * len(sorted_dates),
+            marker_color=sorted_colors,
+            hovertext=tooltip_texts,
+            hoverinfo='text',
+            orientation='v',
+            width=bar_width
+        )
+    ])
+
+    # Update layout
+    fig.update_layout(
+        title=f"Median {selected['timescale']} SPEI Index, trends over time in {selected['country']}'s {selected['subarea']} area from {selected['year_range'][0]} to {selected['year_range'][1]}",
+        xaxis_title='Years',
+        yaxis_title=f"Median SPEI{timescales[selected['timescale']]}",
+        height=500,
+        yaxis=dict(showticklabels=False, showgrid=False, zeroline=False),
+        xaxis={'type': 'category', 'tickmode': 'array', 'tickvals': sorted_dates, 'ticktext': display_dates, 'tickangle': 0},
+        template='plotly_white',
+        plot_bgcolor='rgba(0,0,0,0)',
+        showlegend=False,
+    )
+    fig.update_yaxes(visible=False)
+    fig.show()   
+        
+    
+    
+
