@@ -1,6 +1,6 @@
 # Tales of Dry Lands: Chronicles of Drought
 
-<p class="message">Welcome to our interactive journey into the world of climate data science! 🌡️💧<p>
+<p class="message">Welcome to our interactive journey into the world of drought data! 🌡️💧<p>
 
 We’re thrilled to have you embark on this adventure with us. Whether you’re a student, a curious newcomer or a passionate environmentalist, our mission is to make the complexities of drought data understandable and engaging for you. 
 
