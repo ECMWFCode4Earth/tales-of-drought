@@ -1,4 +1,4 @@
-# The time machine: identify drought events
+# Drought in Madagascar
 
 
 ## Purpose of the notebook
