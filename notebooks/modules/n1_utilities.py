@@ -859,16 +859,16 @@ def assign_color_spei(spei_values):
     Assigns colors based on the Standardized Precipitation-Evapotranspiration Index (SPEI) values.
     This function takes a list of SPEI values and assigns a color code to each value based on the degree of wetness or dryness.
     The colors are assigned as follows:
-    - Extremely wet: SPEI > 2.0 (color: '#006400')  # Dark Green
-    - Severely wet: 1.5 < SPEI <= 2.0 (color: '#228B22')  # Forest Green
-    - Moderately wet: 1.0 < SPEI <= 1.5 (color: '#32CD32')  # Lime Green
-    - Near-normal / mildly wet: 0 < SPEI <= 1.0 (color: '#ADFF2F')  # Green Yellow
-    - Near-normal / mildly dry: -1.0 < SPEI <= 0 (color: '#FFD700')  # Gold
-    - Moderately dry: -1.5 < SPEI <= -1.0 (color: '#DAA520')  # Goldenrod
-    - Severely dry: -2.0 < SPEI <= -1.5 (color: '#A0522D')  # Sienna
-    - Extremely dry: SPEI <= -2.0 (color: '#8B4513')  # Saddle Brown
+    - Extremely wet: SPEI > 2.0 (color: '#074B30')
+    - Severely wet: 1.5 < SPEI <= 2.0 (color: '#OD965f')
+    - Moderately wet: 1.0 < SPEI <= 1.5 (color: '#43EFAA')
+    - Near-normal / mildly wet: 0 < SPEI <= 1.0 (color: '#A1F7D5')
+    - Near-normal / mildly dry: -1.0 < SPEI <= 0 (color: '#FFBF69')
+    - Moderately dry: -1.5 < SPEI <= -1.0 (color: '#FF961F')
+    - Severely dry: -2.0 < SPEI <= -1.5 (color: '#8F5100')
+    - Extremely dry: SPEI <= -2.0 (color: '#291700')
     If the SPEI value is NaN, the color will be transparent (color: 'rgba(0,0,0,0)').
-    
+
     Parameters:
     spei_values (list of float): A list of SPEI values to be evaluated.
 
