@@ -12,7 +12,7 @@ The **observations** measure the variables at specific times and places. They ca
 The observations are defined **direct** when the variables are measured directly, and **indirect** when they are inferred from other observations.
 
 ![](../../images/obs_inputs.png)
-<p class="credits">Observation components of the Global Observing System - ECMWF</p>
+<p class="credits">Observation components of the Global Observing System - <a href="https://www.ecmwf.int/en/research/data-assimilation/observations" target="_blank">ECMWF</a></p>
 
 
 ## Climate models
@@ -21,7 +21,8 @@ The second category of data sources comprises climate models, which are mathemat
 With the advancement of computing capabilities over recent decades, these models have also grown more complex. 
 These models don't predict specific events at particular times or locations, but are used for assessing how average and extreme climate conditions are expected to shift.
 
-![](../../images/placeholder.svg)
+![](../../images/dev-climate-models.svg)
+<p class="credits">Elaboration from the original - <a href="https://climate.nasa.gov/news/830/climate-modelers-and-the-moth/" target="_blank">NASA's Goddard Space Flight Center</a></p>
 
 
 ### The model grid
@@ -32,7 +33,7 @@ When dealing with climate data, we have to consider that climate is related not 
 
 However, climate evolves over time, so we must consider it as a fourth dimension.
 
-![](../../images/placeholder.svg)
+![](../../images/grid.svg)
 
 
 The effectiveness of a climate model is influenced by its resolution, which includes both spatial and temporal aspects. **Spatial resolution** determines the dimensions of the grid cells within the model, measurable in degrees of latitude and longitude or kilometers. **Temporal resolution**, on the other hand, defines the frequency of computations for various quantities within the model. Frequently, a single model can operate at varying resolutions, and the selection of resolution depends on the particular issue being investigated.
@@ -45,6 +46,7 @@ The quality of a reanalysis depends on the resolution of its model as well as th
 ERA5 is the latest climate reanalysis produced by ECMWF. It is available from 1940 and continues to be extended forward in time. 
 
 ![](../../images/reanalysis-stages.png)
+<p class="credits">Three stages of reanalysis - <a href="https://climate.copernicus.eu/copernicus-regional-reanalysis-europe-cerra" target="_blank">Copernicus Climate Change Service</a></p>
 
 
  # TODO: add information about drought data.

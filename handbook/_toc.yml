@@ -54,10 +54,6 @@ parts:
     title: "Solving the puzzle"
 
 
-- caption: "Glossary"
-  chapters:
-  - file: chapters/glossary/index
-    title: ""
 
 - caption: "Appendix"
   chapters:

@@ -29,17 +29,17 @@ p.message {
 
 p.credits {
     text-align: center;
-    font-size: .6rem;
+    font-size: .7rem;
     color: rgb(194, 194, 194);
 }
 
 p.credits a:link {
-    text-decoration: none;
+    text-decoration: underline;
     color: rgb(194, 194, 194);
 }
 
 p.credits a:visited {
-    text-decoration: none;
+    text-decoration: underline;
     color: rgb(194, 194, 194);
 }
 

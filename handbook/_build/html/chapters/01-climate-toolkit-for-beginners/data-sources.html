@@ -35,7 +35,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=e0a43387" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=90a0d8e8" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
@@ -446,20 +446,21 @@ These represent three major categories of data sources, and the choice of which 
 <p>The <strong>observations</strong> measure the variables at specific times and places. They can be obtained with in-situ technologies, such as ground stations, or with remote technologies, such as satellite and radars.<br />
 The observations are defined <strong>direct</strong> when the variables are measured directly, and <strong>indirect</strong> when they are inferred from other observations.</p>
 <p><img alt="" src="../../_images/obs_inputs.png" /></p>
-<p class="credits">Observation components of the Global Observing System - ECMWF</p>
+<p class="credits">Observation components of the Global Observing System - <a href="https://www.ecmwf.int/en/research/data-assimilation/observations" target="_blank">ECMWF</a></p>
 </section>
 <section id="climate-models">
 <h2>Climate models<a class="headerlink" href="#climate-models" title="Link to this heading">#</a></h2>
 <p>The second category of data sources comprises climate models, which are mathematical representations used to comprehend and forecast climate systems. These models vary, each designed to examine distinct facets of the climate.<br />
 With the advancement of computing capabilities over recent decades, these models have also grown more complex.
 These models don’t predict specific events at particular times or locations, but are used for assessing how average and extreme climate conditions are expected to shift.</p>
-<p><img alt="" src="../../_images/placeholder.svg" /></p>
+<p><img alt="" src="../../_images/dev-climate-models.svg" /></p>
+<p class="credits">Elaboration from the original - <a href="https://climate.nasa.gov/news/830/climate-modelers-and-the-moth/" target="_blank">NASA's Goddard Space Flight Center</a></p>
 <section id="the-model-grid">
 <h3>The model grid<a class="headerlink" href="#the-model-grid" title="Link to this heading">#</a></h3>
 <p>Even if the computing power has increased, it is however impossible to compute the climate state of every possible points on the planet. What the models do is to compute the climate state of regularly spaced points, creating <em>de facto</em> a grid with each point at the center of its cell. The value is considered to be an average of the grid cell.</p>
 <p>When dealing with climate data, we have to consider that climate is related not only to the Earth surface (that we have already seen how it can be represented through a system of coordinates), but also to atmospheric conditions. So we have to add a third dimension to our system, named ‘height’ or ‘pressure’ and also divided into cells.</p>
 <p>However, climate evolves over time, so we must consider it as a fourth dimension.</p>
-<p><img alt="" src="../../_images/placeholder.svg" /></p>
+<p><img alt="" src="../../_images/grid.svg" /></p>
 <p>The effectiveness of a climate model is influenced by its resolution, which includes both spatial and temporal aspects. <strong>Spatial resolution</strong> determines the dimensions of the grid cells within the model, measurable in degrees of latitude and longitude or kilometers. <strong>Temporal resolution</strong>, on the other hand, defines the frequency of computations for various quantities within the model. Frequently, a single model can operate at varying resolutions, and the selection of resolution depends on the particular issue being investigated.</p>
 </section>
 </section>
@@ -469,6 +470,7 @@ These models don’t predict specific events at particular times or locations, b
 The quality of a reanalysis depends on the resolution of its model as well as the quality of observations.<br />
 ERA5 is the latest climate reanalysis produced by ECMWF. It is available from 1940 and continues to be extended forward in time.</p>
 <p><img alt="" src="../../_images/reanalysis-stages.png" /></p>
+<p class="credits">Three stages of reanalysis - <a href="https://climate.copernicus.eu/copernicus-regional-reanalysis-europe-cerra" target="_blank">Copernicus Climate Change Service</a></p>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="todo-add-information-about-drought-data">

@@ -22,7 +22,7 @@ For our analysis we will focus on two indices: **SPI** and **SPEI**.
 
 The **Standardized Precipitation Index** (**SPI**) is an index used to measure drought intensity. It works by comparing the amount of rainfall in a specific period to the historical average for that same period. This helps determine how much more, or less, it has rained compared to usual conditions. 
 
-This global **SPI** is calculated using data from the {ref}`era5-dataset`. This **SPI** can examine rainfall over various timescales, including 1, 3, 6, 12, 24, 36 and 48 months, allowing for a detailed analysis of short-term fluctuations and long-term trends in precipitation.
+This global **SPI** is calculated using data from the era5-dataset. This **SPI** can examine rainfall over various timescales, including 1, 3, 6, 12, 24, 36 and 48 months, allowing for a detailed analysis of short-term fluctuations and long-term trends in precipitation.
 
 
 ```{tip} 
@@ -33,9 +33,9 @@ If you're interested in learning more about the **SPI** index, you can download 
 ## SPEI index
 
 
-The **Standardized Precipitation Evapotranspiration Index** (**SPEI**) is a widely used meteorological index for measuring drought conditions. The **SPEI** quantifies the deficit of water on the land's surface over various time periods, typically spanning months. It is designed to take into account both precipitation and potential {ref}`PET` in determining drought.
+The **Standardized Precipitation Evapotranspiration Index** (**SPEI**) is a widely used meteorological index for measuring drought conditions. The **SPEI** quantifies the deficit of water on the land's surface over various time periods, typically spanning months. It is designed to take into account both precipitation and potential PET in determining drought.
 
-In simpler terms, the **SPEI** scores indicate how wet or dry a period is compared to normal conditions, using {ref}`standard-deviation` from the {ref}`mean`: negative values indicate drier than usual periods while positive values correspond to wetter than usual periods. The magnitude of the SPEI is an indicator of the severity of event.  
+In simpler terms, the **SPEI** scores indicate how wet or dry a period is compared to normal conditions, using standard-deviation from the mean: negative values indicate drier than usual periods while positive values correspond to wetter than usual periods. The magnitude of the SPEI is an indicator of the severity of event.  
 **SPEI** values ranging from -1 to 1 are generally viewed as normal. 
 
 

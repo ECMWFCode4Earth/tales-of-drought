@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" x="0px" y="0px" viewBox="0 0 1024 529" style="enable-background:new 0 0 1024 529;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <style type="text/css">
+	.st0{display:none;}
+	.st1{font-family:'SegoeUI-Bold';}
+	.st2{font-size:21px;}
+	.st3{fill:#29ABE2;stroke:#666666;stroke-miterlimit:10;}
+	.st4{font-family:'SegoeUI';}
+	.st5{font-size:17px;}
+	.st6{fill:#C69C6D;stroke:#666666;stroke-miterlimit:10;}
+	.st7{fill:#8CC63F;stroke:#666666;stroke-miterlimit:10;}
+	.st8{fill:#FCEE21;stroke:#666666;stroke-miterlimit:10;}
+	.st9{fill:#8D9C6D;stroke:#666666;stroke-miterlimit:10;}
+	.st10{fill:#C8C63F;stroke:#666666;stroke-miterlimit:10;}
+	.st11{fill:#FFB2FF;stroke:#666666;stroke-miterlimit:10;}
+	.st12{fill:#CCCCCC;stroke:#666666;stroke-miterlimit:10;}
+	.st13{fill:#22B573;stroke:#666666;stroke-miterlimit:10;}
+	.st14{fill:#FBB03B;stroke:#666666;stroke-miterlimit:10;}
+	.st15{font-size:30px;}
+</style>
+  <g id="fonte" class="st0">
+    <image style="display:inline;overflow:visible;" width="743" height="574" transform="matrix(1.3066 0 0 1.3066 0 0)" xlink:href="717E37D4.jpg"/>
+  </g>
+  <g id="labels">
+    <text transform="matrix(1 0 0 1 28.7729 101.264)" class="st1 st2" style="font-weight: 100; white-space: pre;">Mid 1970s</text>
+    <text transform="matrix(1 0 0 1 194.4923 101.2638)" class="st1 st2" style="font-weight: 100; white-space: pre;">Mid 1980s</text>
+    <text transform="matrix(1 0 0 1 350.4923 101.2638)" class="st1 st2" style="font-weight: 100; white-space: pre;">Early 1990s</text>
+    <text transform="matrix(1 0 0 1 530.4923 101.2638)" class="st1 st2" style="font-weight: 100; white-space: pre;">Late 1990s</text>
+    <text transform="matrix(1 0 0 1 706.4923 101.2638)" class="st1 st2" style="font-weight: 100; white-space: pre;">Early 2000s</text>
+    <text transform="matrix(1 0 0 1 873.4923 101.2638)" class="st1 st2" style="font-weight: 100; white-space: pre;">Early 2010s</text>
+  </g>
+  <g id="mid_1970">
+    <g>
+      <ellipse class="st3" cx="79.4" cy="139.5" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 33.4839 143.1871)" class="st4 st5" style="white-space: pre;">Atmosphere</text>
+    </g>
+  </g>
+  <g id="Mid_1980">
+    <g>
+      <ellipse class="st3" cx="239.2" cy="139" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 193.2428 142.7312)" class="st4 st5" style="white-space: pre;">Atmosphere</text>
+    </g>
+    <g>
+      <ellipse class="st6" cx="239.2" cy="185" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 193.2428 188.7312)" class="st4 st5" style="white-space: pre;">Land surface</text>
+    </g>
+    <g>
+      <ellipse class="st7" cx="239.2" cy="232" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 180.2428 235.7312)" class="st4 st5" style="white-space: pre;">Ocean &amp; sea ice</text>
+    </g>
+  </g>
+  <g id="Early_1990">
+    <g>
+      <ellipse class="st3" cx="405.5" cy="142" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 359.5761 145.7312)" class="st4 st5" style="white-space: pre;">Atmosphere</text>
+    </g>
+    <g>
+      <ellipse class="st6" cx="405.5" cy="188" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 359.5761 191.7312)" class="st4 st5" style="white-space: pre;">Land surface</text>
+    </g>
+    <g>
+      <ellipse class="st7" cx="405.5" cy="234" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 346.5761 237.7312)" class="st4 st5" style="white-space: pre;">Ocean &amp; sea ice</text>
+    </g>
+    <g>
+      <ellipse class="st8" cx="405.5" cy="280" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 359.5761 283.7312)" class="st4 st5" style="white-space: pre;">Sulfur cycle</text>
+    </g>
+    <g>
+      <ellipse class="st9" cx="405.5" cy="325" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 359.1127 324.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Land carbon </tspan><tspan x="28" y="15" class="st4 st5">cycle</tspan></text>
+    </g>
+    <g>
+      <ellipse class="st10" cx="405.5" cy="372" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 356.3393 371.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Ocean carbon</tspan><tspan x="33.8" y="16" class="st4 st5">cycle</tspan></text>
+    </g>
+    <g>
+      <ellipse class="st11" cx="405.5" cy="419" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 361.1122 418.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Atmospheric</tspan><tspan x="11.3" y="16" class="st4 st5">chemistry</tspan></text>
+    </g>
+  </g>
+  <g id="Late_1990">
+    <g>
+      <ellipse class="st3" cx="579.5" cy="141" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 533.5761 144.7312)" class="st4 st5" style="white-space: pre;">Atmosphere</text>
+    </g>
+    <g>
+      <ellipse class="st6" cx="579.5" cy="187" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 533.5761 190.7312)" class="st4 st5" style="white-space: pre;">Land surface</text>
+    </g>
+    <g>
+      <ellipse class="st7" cx="579.5" cy="234" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 520.576 237.7312)" class="st4 st5" style="white-space: pre;">Ocean &amp; sea ice</text>
+    </g>
+    <g>
+      <ellipse class="st8" cx="579.5" cy="278" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 524.2016 283.7312)" class="st4 st5" style="white-space: pre;">Sulfate aerosol</text>
+    </g>
+    <g>
+      <ellipse class="st12" cx="579.5" cy="324" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 535.2416 323.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Non-sulfate</tspan><tspan x="17" y="15" class="st4 st5">aerosol</tspan></text>
+    </g>
+    <g>
+      <ellipse class="st13" cx="579.5" cy="371" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 532.4482 375.7312)" class="st4 st5" style="white-space: pre;">Carbon cycle</text>
+    </g>
+    <g>
+      <ellipse class="st11" cx="579.5" cy="418" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 535.1122 417.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Atmospheric</tspan><tspan x="11.3" y="16" class="st4 st5">chemistry</tspan></text>
+    </g>
+    <g>
+      <ellipse class="st14" cx="582.5" cy="468" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 551.062 466.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Dynamic</tspan><tspan x="-7.4" y="16" class="st4 st5">vegetation</tspan></text>
+    </g>
+  </g>
+  <g id="Early_2000">
+    <g>
+      <ellipse class="st3" cx="757.5" cy="140" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 711.5761 143.7312)" class="st4 st5" style="white-space: pre;">Atmosphere</text>
+    </g>
+    <g>
+      <ellipse class="st6" cx="757.5" cy="186" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 711.5761 189.7312)" class="st4 st5" style="white-space: pre;">Land surface</text>
+    </g>
+    <g>
+      <ellipse class="st7" cx="757.5" cy="233" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 698.576 236.7312)" class="st4 st5" style="white-space: pre;">Ocean &amp; sea ice</text>
+    </g>
+    <g>
+      <ellipse class="st8" cx="757.5" cy="277" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 702.2016 282.7312)" class="st4 st5" style="white-space: pre;">Sulfate aerosol</text>
+    </g>
+    <g>
+      <ellipse class="st12" cx="757.5" cy="323" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 713.2416 322.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Non-sulfate</tspan><tspan x="17" y="15" class="st4 st5">aerosol</tspan></text>
+    </g>
+    <g>
+      <ellipse class="st13" cx="757.5" cy="370" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 710.4482 374.7312)" class="st4 st5" style="white-space: pre;">Carbon cycle</text>
+    </g>
+    <g>
+      <ellipse class="st11" cx="757.5" cy="417" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 713.1122 416.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Atmospheric</tspan><tspan x="11.3" y="16" class="st4 st5">chemistry</tspan></text>
+    </g>
+    <g>
+      <ellipse class="st14" cx="760.5" cy="467" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 729.062 465.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Dynamic</tspan><tspan x="-7.4" y="16" class="st4 st5">vegetation</tspan></text>
+    </g>
+  </g>
+  <g id="Early_2010">
+    <g>
+      <ellipse class="st3" cx="932.5" cy="141" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 886.5761 144.7312)" class="st4 st5" style="white-space: pre;">Atmosphere</text>
+    </g>
+    <g>
+      <ellipse class="st6" cx="932.5" cy="187" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 886.5761 190.7312)" class="st4 st5" style="white-space: pre;">Land surface</text>
+    </g>
+    <g>
+      <ellipse class="st7" cx="932.5" cy="234" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 873.576 237.7312)" class="st4 st5" style="white-space: pre;">Ocean &amp; sea ice</text>
+    </g>
+    <g>
+      <ellipse class="st8" cx="932.5" cy="278" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 877.2016 283.7312)" class="st4 st5" style="white-space: pre;">Sulfate aerosol</text>
+    </g>
+    <g>
+      <ellipse class="st12" cx="932.5" cy="324" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 888.2416 323.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Non-sulfate</tspan><tspan x="17" y="15" class="st4 st5">aerosol</tspan></text>
+    </g>
+    <g>
+      <ellipse class="st13" cx="932.5" cy="371" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 885.4482 375.7312)" class="st4 st5" style="white-space: pre;">Carbon cycle</text>
+    </g>
+    <g>
+      <ellipse class="st11" cx="932.5" cy="418" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 888.1122 417.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Atmospheric</tspan><tspan x="11.3" y="16" class="st4 st5">chemistry</tspan></text>
+    </g>
+    <g>
+      <ellipse class="st14" cx="935.5" cy="468" rx="72" ry="27.5"/>
+      <text transform="matrix(1 0 0 1 904.062 466.7312)" style="white-space: pre;"><tspan x="0" y="0" class="st4 st5">Dynamic</tspan><tspan x="-7.4" y="16" class="st4 st5">vegetation</tspan></text>
+    </g>
+  </g>
+  <g id="titolo" transform="matrix(1, 0, 0, 1, 32, 0)">
+    <text transform="matrix(1 0 0 1 252.7695 47.9414)" class="st1 st15" style="white-space: pre;">Development of climate models</text>
+  </g>
+</svg>
