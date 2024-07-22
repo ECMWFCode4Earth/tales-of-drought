@@ -11,16 +11,24 @@ import requests
 import time
 from datetime import datetime
 import cftime
-import folium
 from IPython.display import display, IFrame
 import plotly.graph_objects as go
-from geopy.geocoders import Nominatim
-from geopy.exc import GeocoderTimedOut
-from shapely.geometry import Point, Polygon
-import pycountry
 
-SPEI_DATA_PATH = '/data1/drought_dataset/spei/'
-MIDDLE_PATTERN = '*global_era5*_moda_ref1991to2020_'
+
+
+def get_file_path(file_name):
+    """
+    Get the file path for the given file name.
+
+    Args:
+    file_name (str): The name of the file.
+
+    Returns:
+    str: The file path for the given file name.
+    """
+    current_dir = os.path.dirname(__file__)
+    return os.path.join(current_dir, '..', 'data', file_name)
+
 
 
 def save_selection(selection):
@@ -30,9 +38,7 @@ def save_selection(selection):
     Parameters:
     selection (dict): A dictionary containing the current selections of country, subarea, month, year, and timescale.
     """
-    # Construct the file path relative to the current script's directory
-    current_dir = os.path.dirname(__file__)
-    file_path = os.path.join(current_dir, '..', 'data', 'selection.json')
+    file_path = get_file_path('selection.json')
     with open(file_path, 'w') as file:
         json.dump(selection, file)
         
@@ -43,13 +49,12 @@ def read_json_to_dict(file_name):
     Reads a JSON file and returns its content as a dictionary.
 
     Args:
-    file_name (str): The name the JSON file.
+    file_name (str): The name of the JSON file.
 
     Returns:
     dict: The content of the JSON file as a dictionary.
     """
-    current_dir = os.path.dirname(__file__)
-    file_path = os.path.join(current_dir, '..', 'data', file_name)
+    file_path = get_file_path(file_name)
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
@@ -62,6 +67,25 @@ def read_json_to_dict(file_name):
         print(f"An error occurred: {e}")
         
 
+        
+def sort_dict_list(lst):
+    """
+    Recursively sorts lists of dictionaries by the 'name' key and sorts nested levels.
+
+    Args:
+    lst (list): The list of dictionaries to be sorted.
+
+    Returns:
+    list: The sorted list of dictionaries.
+    """
+    sorted_list = sorted(lst, key=lambda x: x['name'])
+    for item in sorted_list:
+        for key, value in item.items():
+            if isinstance(value, list) and value and isinstance(value[0], dict):
+                item[key] = sort_dict_list(value)
+    return sorted_list
+
+
 
 def read_json_to_sorted_dict(file_name):
     """
@@ -69,27 +93,15 @@ def read_json_to_sorted_dict(file_name):
     and returns the content as a sorted list.
 
     Args:
-    file_path (str): The path to the JSON file.
+    file_name (str): The name of the JSON file.
 
     Returns:
     list: The sorted content of the JSON file.
     """
-    current_dir = os.path.dirname(__file__)
-    file_path = os.path.join(current_dir, '..', 'data', file_name)
+    file_path = get_file_path(file_name)
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
-        
-        def sort_dict_list(lst):
-            """
-            Recursively sorts lists of dictionaries by the 'name' key and sorts nested levels.
-            """
-            sorted_list = sorted(lst, key=lambda x: x['name'])
-            for item in sorted_list:
-                for key, value in item.items():
-                    if isinstance(value, list) and value and isinstance(value[0], dict):
-                        item[key] = sort_dict_list(value)
-            return sorted_list
         
         sorted_data = sort_dict_list(data)
         return sorted_data
@@ -98,13 +110,23 @@ def read_json_to_sorted_dict(file_name):
     except json.JSONDecodeError:
         print(f"Error decoding JSON in file: {file_path}")
     except Exception as e:
-        print(f"An error occurred: {e}")   
+        print(f"An error occurred: {e}")
 
 
 
-        
-# Helper function to find subareas
+
 def get_subareas_for_country(country_list, isocode, level='adm1_subareas'):
+    """
+    Retrieve the names of subareas for a given country identified by its ISO code.
+
+    Args:
+    country_list (list): A list of country dictionaries.
+    isocode (str): The ISO code of the country.
+    level (str, optional): The key in the country dictionary that contains the subareas. Default is 'adm1_subareas'.
+
+    Returns:
+    list: A list of subarea names. Returns an empty list if the country or subareas are not found.
+    """
     for country in country_list:
         if country['isocode'] == isocode:
             return [subarea['name'] for subarea in country.get(level, [])]
@@ -112,8 +134,18 @@ def get_subareas_for_country(country_list, isocode, level='adm1_subareas'):
 
 
 
-# Update function for subarea selectors
+
 def update_subareas(change, country_list, placeholders, adm1_subarea_selector, adm2_subarea_selector):
+    """
+    Update the subarea selectors based on the selected country.
+
+    Args:
+    change (dict): The change event dictionary containing the type and name of the change.
+    country_list (list): A list of country dictionaries.
+    placeholders (dict): A dictionary containing placeholder texts for the selectors.
+    adm1_subarea_selector (object): The selector object for adm1 subareas.
+    adm2_subarea_selector (object): The selector object for adm2 subareas.
+    """
     if change['type'] == 'change' and change['name'] == 'value':
         # Clear previous subarea selections
         selected_country = next((item for item in country_list if item["name"] == change['new']), None)
@@ -137,8 +169,19 @@ def update_subareas(change, country_list, placeholders, adm1_subarea_selector, a
 
 
             
-# Define the interaction function for month and year selectors
+
 def month_year_interaction(change, month_selector, year_selector, selected, placeholders):
+    """
+    Handle interactions between the month and year selectors, resetting the other selector
+    when one is changed, or resetting both if neither is explicitly changed.
+
+    Args:
+    change (dict): The change event dictionary containing the owner and new value of the change.
+    month_selector (object): The selector object for months.
+    year_selector (object): The selector object for years.
+    selected (dict): A dictionary storing the currently selected month and year.
+    placeholders (dict): A dictionary containing placeholder texts for the selectors.
+    """
     if change['owner'] == month_selector and change['new']:
         year_selector.value = placeholders['year']
         selected['year'] = placeholders['year']
@@ -153,46 +196,99 @@ def month_year_interaction(change, month_selector, year_selector, selected, plac
         
         
             
-def validate_selections(btn_name, selected, selectors, placeholders, output_area):
+def update_selected_values(selected, selectors, placeholders):
+    """
+    Update the selected dictionary with current values from the selectors.
+
+    Args:
+    selected (dict): A dictionary storing the currently selected values.
+    selectors (dict): A dictionary containing selector objects for various fields.
+    placeholders (dict): A dictionary containing placeholder texts for the selectors.
+    """
     selected.update({
-            'country': selectors['country'].value if selectors['country'].value != placeholders['country'] else placeholders['country'],        
-            'adm1_subarea': selectors['adm1_subarea'].value if (selectors['adm1_subarea'].value != placeholders['adm1_subarea']) and \
-            (selectors['adm1_subarea'].value != 'No adm1 subareas') else placeholders['adm1_subarea'],        
-            'adm2_subarea': selectors['adm2_subarea'].value if (selectors['adm2_subarea'].value != placeholders['adm2_subarea']) and \
-            (selectors['adm2_subarea'].value != 'No adm2 subareas') else placeholders['adm2_subarea'],        
-            'timescale': selectors['timescale'].value if selectors['timescale'].value != placeholders['timescale'] else placeholders['timescale'],
-            'month': selectors['month'].value if selectors['month'].value != placeholders['month'] else placeholders['month'],
-            'year': selectors['year'].value if selectors['year'].value != placeholders['year'] else placeholders['year'],
-            'year_range': selectors['year_range'].value        
+        'country': selectors['country'].value if selectors['country'].value != placeholders['country'] else placeholders['country'],
+        'adm1_subarea': selectors['adm1_subarea'].value if (selectors['adm1_subarea'].value != placeholders['adm1_subarea']) and \
+        (selectors['adm1_subarea'].value != 'No adm1 subareas') else placeholders['adm1_subarea'],
+        'adm2_subarea': selectors['adm2_subarea'].value if (selectors['adm2_subarea'].value != placeholders['adm2_subarea']) and \
+        (selectors['adm2_subarea'].value != 'No adm2 subareas') else placeholders['adm2_subarea'],
+        'timescale': selectors['timescale'].value if selectors['timescale'].value != placeholders['timescale'] else placeholders['timescale'],
+        'month': selectors['month'].value if selectors['month'].value != placeholders['month'] else placeholders['month'],
+        'year': selectors['year'].value if selectors['year'].value != placeholders['year'] else placeholders['year'],
+        'year_range': selectors['year_range'].value
     })
-    save_selection(selected)
+    
+
+
+
+def find_missing_selections(btn_name, selected, placeholders):
+    """
+    Find any missing selections based on the current state of the selected dictionary.
+
+    Args:
+    btn_name (str): The name of the button clicked to trigger the validation.
+    selected (dict): A dictionary storing the currently selected values.
+    placeholders (dict): A dictionary containing placeholder texts for the selectors.
+
+    Returns:
+    list: A list of missing selections.
+    """
     missing = []
-    # Validate country selection
     if selected['country'] == placeholders['country']:
         missing.append('country')
-    
-    # Validate timescale selection
     if selected['timescale'] == placeholders['timescale']:
         missing.append('timescale')
-    
-    # Validate the appropriate time period based on which button was clicked
-    if btn_name == 'month_widgets_btn':
-        if selected['month'] == placeholders['month']:
-            missing.append('month')
-    elif btn_name == 'year_widgets_btn':
-        if selected['year'] == placeholders['year']:
-            missing.append('year')
-    elif btn_name == 'year_range_widgets_btn':
-        if selected['year_range'] is None:
-            missing.append('year range')
+
+    if btn_name == 'month_widgets_btn' and selected['month'] == placeholders['month']:
+        missing.append('month')
+    elif btn_name == 'year_widgets_btn' and selected['year'] == placeholders['year']:
+        missing.append('year')
+    elif btn_name == 'year_range_widgets_btn' and selected['year_range'] is None:
+        missing.append('year range')
+
+    return missing
+
+
+def display_missing_alert(output_area, missing):
+    """
+    Display an alert in the output area for any missing selections.
+
+    Args:
+    output_area (object): The output area object for displaying messages.
+    missing (list): A list of missing selections.
+    """
+    with output_area:
+        output_area.clear_output()
+        alert = "Please select a value for " + ", ".join(missing)
+        print(alert)
+
+
+
+
+def validate_selections(btn_name, selected, selectors, placeholders, output_area):
+    """
+    Validate the current selections and update the selected dictionary.
+
+    Args:
+    btn_name (str): The name of the button clicked to trigger the validation.
+    selected (dict): A dictionary storing the currently selected values.
+    selectors (dict): A dictionary containing selector objects for various fields.
+    placeholders (dict): A dictionary containing placeholder texts for the selectors.
+    output_area (object): The output area object for displaying messages.
+
+    Returns:
+    bool: True if all required selections are made, False otherwise.
+    """
+    update_selected_values(selected, selectors, placeholders)
+    save_selection(selected)
+    missing = find_missing_selections(btn_name, selected, placeholders)
 
     if missing:
-        with output_area:
-            output_area.clear_output()
-            alert = "Please select a value for " + ", ".join(missing)
-            print(alert)
+        display_missing_alert(output_area, missing)
         return False
-    return True            
+    return True
+
+
+
 
 
 def get_period_of_time(btn_name, selected, placeholders):
@@ -220,8 +316,17 @@ def get_period_of_time(btn_name, selected, placeholders):
 
 
 def get_adm_level_and_area_name(selected, placeholders):
+    """
+    Determine the appropriate administrative level to query and the selected area name.
+
+    Parameters:
+    selected (dict): Dictionary containing selected values for various parameters.
+    placeholders (dict): Placeholder values to check against when selections are default or empty.
+
+    Returns:
+    tuple: A tuple containing the administrative level (str) and the selected area name (str).
+    """
     adm_level = None
-    # Determine the appropriate administrative level to query
     if selected['adm2_subarea'] and selected['adm2_subarea'] != placeholders['adm2_subarea']:
         adm_level = 'ADM2'
         selected_area = selected['adm2_subarea']
@@ -235,44 +340,116 @@ def get_adm_level_and_area_name(selected, placeholders):
 
 
 
+def get_isocode_for_country(country_list, country_name):
+    """
+    Retrieve the ISO code for a given country name.
+
+    Parameters:
+    country_list (list): List of country dictionaries.
+    country_name (str): Name of the country.
+
+    Returns:
+    str: ISO code of the country or None if not found.
+    """
+    return next((item['isocode'] for item in country_list if item["name"] == country_name), None)
+
+def fetch_geojson_data(base_url, isocode, adm_level, selected, selected_area):
+    """
+    Fetch the GeoJSON data from the geoboundaries API.
+
+    Parameters:
+    base_url (str): The base URL of the geoboundaries API.
+    isocode (str): ISO code of the country.
+    adm_level (str): The administrative level.
+    selected (dict): Dictionary containing selected values for various parameters.
+    selected_area (str): Name of the selected area.
+
+    Returns:
+    dict: GeoJSON data for the selected area.
+    """
+    api_url = f"{base_url}/{isocode}/{adm_level}/"
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        data = response.json()
+        geojson_url = data['simplifiedGeometryGeoJSON']
+        return download_geojson_data(geojson_url)
+    else:
+        print(f"No data available for {selected_area} at {adm_level}, checking lower administrative levels.")
+        return handle_fallbacks(adm_level, selected)
+
+    
+
+def download_geojson_data(geojson_url):
+    """
+    Download the GeoJSON data from the provided URL.
+
+    Parameters:
+    geojson_url (str): URL of the GeoJSON data.
+
+    Returns:
+    dict: GeoJSON data or None if download fails.
+    """
+    geojson_response = requests.get(geojson_url)
+    if geojson_response.status_code == 200:
+        return geojson_response.json()
+    else:
+        print("Failed to download GeoJSON data.")
+        return None
+
+    
+
+def handle_fallbacks(adm_level, selected):
+    """
+    Handle fallbacks to lower administrative levels if data is not available.
+
+    Parameters:
+    adm_level (str): The current administrative level.
+    selected (dict): Dictionary containing selected values for various parameters.
+
+    Returns:
+    dict: GeoJSON data or None if no data is available.
+    """
+    if adm_level == 'ADM2':
+        return get_boundaries({**selected, 'adm2_subarea': None}, country_list, placeholders)  # Fallback to ADM1
+    elif adm_level == 'ADM1':
+        return get_boundaries({**selected, 'adm1_subarea': None}, country_list, placeholders)  # Fallback to ADM0
+    return None
+
+
+
 def get_boundaries(selected, country_list, placeholders):
+    """
+    Fetch geographic boundaries data for the selected area.
+
+    Parameters:
+    selected (dict): Dictionary containing selected values for various parameters.
+    country_list (list): List of country dictionaries.
+    placeholders (dict): Placeholder values to check against when selections are default or empty.
+
+    Returns:
+    dict: GeoJSON data for the selected area.
+    """
     base_url = "https://www.geoboundaries.org/api/current/gbOpen"
-    adm_level = None
     geojson_data = None
 
     adm_level, selected_area = get_adm_level_and_area_name(selected, placeholders)
 
-    # Fetch geographic boundaries data
     if adm_level:
-        isocode = next((item['isocode'] for item in country_list if item["name"] == selected['country']), None)
+        isocode = get_isocode_for_country(country_list, selected['country'])
         if isocode:
-            api_url = f"{base_url}/{isocode}/{adm_level}/"
-            response = requests.get(api_url)
-            if response.status_code == 200:
-                data = response.json()
-                geojson_url = data['simplifiedGeometryGeoJSON']
-                # Fetch the GeoJSON data from the URL
-                geojson_response = requests.get(geojson_url)
-                if geojson_response.status_code == 200:
-                    geojson_data = geojson_response.json()
-                else:
-                    print("Failed to download GeoJSON data.")
-            else:
-                print(f"No data available for {selected_area} at {adm_level}, checking lower administrative levels.")
-                if adm_level == 'ADM2':
-                    return get_boundaries({**selected, 'adm2_subarea': None})  # Fallback to ADM1
-                elif adm_level == 'ADM1':
-                    return get_boundaries({**selected, 'adm1_subarea': None})  # Fallback to ADM0
+            geojson_data = fetch_geojson_data(base_url, isocode, adm_level, selected, selected_area)
         else:
             print("Invalid ISO code.")
     else:
         print("No valid administrative level selected.")
 
     if geojson_data:
-        print(f"Coordinates retrieved for {selected_area} ({adm_level}) - {geojson_url}")
+        print(f"Coordinates retrieved for {selected_area} ({adm_level}) - {base_url}/{isocode}/{adm_level}/")
     else:
         print("Failed to retrieve GeoJSON data.")
+    
     return geojson_data
+
 
             
             
@@ -311,9 +488,18 @@ def generate_coordinate_values(start_coord, end_coord):
     return coordinate_values.tolist()
 
 
-
+#####################################################################
     
 def is_readable_nc(file_path):
+    """
+    Check if a NetCDF file is readable.
+
+    Parameters:
+    file_path (str): The path to the NetCDF file.
+
+    Returns:
+    bool: True if the file is readable, False otherwise.
+    """
     try:
         with nc.Dataset(file_path, 'r') as dataset:
             pass  # File opened successfully
@@ -325,6 +511,19 @@ def is_readable_nc(file_path):
     
     
 def preprocess(ds, bounds):
+    """
+    Preprocess the dataset by subsetting it within the given geographic bounds.
+
+    Parameters:
+    ds (xarray.Dataset): The dataset to preprocess.
+    bounds (tuple): A tuple containing the geographic bounds (min_lon, min_lat, max_lon, max_lat).
+
+    Returns:
+    xarray.Dataset: The subset of the original dataset within the specified bounds.
+
+    Raises:
+    ValueError: If generated coordinates do not match any available in the dataset.
+    """
     min_lon, min_lat, max_lon, max_lat = bounds
     latitude_list = generate_coordinate_values(min_lat, max_lat)
     longitude_list = generate_coordinate_values(min_lon, max_lon)
@@ -336,6 +535,70 @@ def preprocess(ds, bounds):
     ds_subset = ds.sel(lat=latitude_list, lon=longitude_list)
     return ds_subset
 
+
+
+def generate_file_patterns(btn_name, selectors, placeholders, months, selected_timescale, middle_pattern, data_path):
+    """
+    Generate file patterns to match NetCDF files based on the selected criteria.
+
+    Parameters:
+    btn_name (str): Button name to determine the type of data fetching.
+    selectors (dict): Dictionary containing widget selectors.
+    placeholders (dict): Placeholder values for widgets.
+    months (dict): Dictionary of month abbreviations to numbers.
+    selected_timescale (str): The selected timescale.
+    middle_pattern (str): The middle pattern for file matching.
+    data_path (str): The base path for data files.
+
+    Returns:
+    list: List of file patterns matching the criteria.
+    """
+    if btn_name == 'year_range_widgets_btn':
+        start_year, end_year = selectors['year_range'].value
+        file_patterns = []
+        for year in range(int(start_year), int(end_year) + 1):
+            for month in months.values():
+                file_pattern = f'SPEI{selected_timescale}{middle_pattern}{year}{month}*.nc'
+                file_patterns.extend(glob.glob(os.path.join(data_path, file_pattern)))
+    else:
+        selected_month = months[selectors['month'].value] if selectors['month'].value != placeholders['month'] else None
+        selected_year = selectors['year'].value if selectors['year'].value != placeholders['year'] else None
+        file_pattern = f'SPEI{selected_timescale}{middle_pattern}'
+        file_pattern += f'{selected_year if selected_year else "????"}{selected_month if selected_month else "??"}*.nc'
+        file_patterns = sorted(glob.glob(os.path.join(data_path, file_pattern)))
+    
+    return file_patterns
+
+def filter_valid_nc_files(file_patterns):
+    """
+    Filter out valid NetCDF files from the given file patterns.
+
+    Parameters:
+    file_patterns (list): List of file patterns.
+
+    Returns:
+    list: List of valid NetCDF files.
+    """
+    return [file for file in file_patterns if is_readable_nc(file)]
+
+def load_and_preprocess_dataset(valid_files, bounds):
+    """
+    Load and preprocess the dataset from the valid NetCDF files.
+
+    Parameters:
+    valid_files (list): List of valid NetCDF files.
+    bounds (tuple): Geographic boundary coordinates.
+
+    Returns:
+    xarray.Dataset: The processed dataset.
+    """
+    return xr.open_mfdataset(
+        valid_files,
+        concat_dim='time',
+        combine='nested',
+        parallel=True,
+        preprocess=lambda ds: preprocess(ds, bounds)
+    )
 
 
 def get_xarray_data(btn_name, bounds, selectors, placeholders, months, timescales):
@@ -355,37 +618,17 @@ def get_xarray_data(btn_name, bounds, selectors, placeholders, months, timescale
     """
     selected_timescale = timescales[selectors['timescale'].value]
     data_path = f'/data1/drought_dataset/spei/spei{selected_timescale}/'
-    # Flexible pattern to match both 'era5' and 'era5t'
     middle_pattern = '*global_era5*_moda_ref1991to2020_'
     
-    # Determine the file pattern based on the button pressed
-    if btn_name == 'year_range_widgets_btn':
-        start_year, end_year = selectors['year_range'].value
-        file_patterns = []
-        for year in range(int(start_year), int(end_year) + 1):
-            for month in months.values():
-                file_pattern = f'SPEI{selected_timescale}{middle_pattern}{year}{month}*.nc'
-                file_patterns.extend(glob.glob(os.path.join(data_path, file_pattern)))
-    else:
-        selected_month = months[selectors['month'].value] if selectors['month'].value != placeholders['month'] else None
-        selected_year = selectors['year'].value if selectors['year'].value != placeholders['year'] else None
-        file_pattern = f'SPEI{selected_timescale}{middle_pattern}'
-        file_pattern += f'{selected_year if selected_year else "????"}{selected_month if selected_month else "??"}*.nc'
-        file_patterns = sorted(glob.glob(os.path.join(data_path, file_pattern)))
-
+    file_patterns = generate_file_patterns(btn_name, selectors, placeholders, months, selected_timescale, middle_pattern, data_path)
+    
     try:
-        valid_files = [file for file in file_patterns if is_readable_nc(file)]
+        valid_files = filter_valid_nc_files(file_patterns)
         if not valid_files:
             print("No readable NetCDF files found.")
             return None
 
-        data = xr.open_mfdataset(
-            valid_files,
-            concat_dim='time',
-            combine='nested',
-            parallel=True,
-            preprocess=lambda ds: preprocess(ds, bounds)  # Ensure preprocess function is defined to handle bounds
-        )
+        data = load_and_preprocess_dataset(valid_files, bounds)
         return data
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -423,353 +666,8 @@ def display_data_details(selected, subset):
     # Optional: Uncomment these if more detailed outputs are needed
     # print(subset[index].values)
     # print(subset[index].time)
-            
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-            
-
-
-
-
-def display_map(bounds):
-    """
-    Create a map with a rectangle representing the bounding box.
-    
-    Parameters:
-    bounds (list): A list containing the coordinates of the bounding box 
-                   in the format [min_lat, max_lat, min_lon, max_lon].
-    
-    Returns:
-    folium.Map: A folium map object with the bounding box displayed.
-    
-    Note:
-    This map is to verify that the selected area is the one of interest
-    """
-    # Create a map centered around the middle of the bounds
-    center_lat = (bounds[0] + bounds[1]) / 2
-    center_lon = (bounds[2] + bounds[3]) / 2
-    folium_map = folium.Map(location=[center_lat, center_lon], zoom_start=6)
-    
-    # Add a rectangle to represent the bounding box
-    folium.Rectangle(
-        bounds=[(bounds[0], bounds[2]), (bounds[1], bounds[3])],
-        color='blue',
-        fill=True,
-        fill_opacity=0.5
-    ).add_to(folium_map)    
-    return folium_map
-
-
-
-def display_map_in_iframe(folium_map, width=500, height=500):
-    """
-    Embeds a Folium map in an iframe for controlled size display in Jupyter Notebooks.
-    
-    Parameters:
-    folium_map (folium.Map): The Folium map object to be displayed.
-    width (int): Width of the iframe.
-    height (int): Height of the iframe.
-    
-    Returns:
-    IPython.display.IFrame: An iframe containing the HTML representation of the Folium map.
-    """
-    map_html = 'map.html'
-    folium_map.save(map_html)
-    return IFrame(map_html, width=width, height=height)
-
-
-
-
-    
-
-def get_bounds(area, country_code):
-    """
-    Retrieve the bounding box coordinates for a given area within a specified country.
-
-    Parameters:
-    area (str): The name of the area (country or subarea) for which to retrieve the bounding box.
-    country_code (str): The ISO two-letter country code to refine the search within a specific country.
-
-    Returns:
-    tuple or str: A tuple containing the bounding box coordinates in the format 
-                  (min_lat, max_lat, min_lon, max_lon) if successful, 
-                  or an error message if not found or in case of an error.
-    """
-    geolocator = Nominatim(user_agent="talesofdrought")  # Initialize the Nominatim client
-    try:
-        # Use geocode to query the area within the specific country, using the country_codes parameter
-        location = geolocator.geocode(f'{area}, {country_code}', exactly_one=True, country_codes=country_code, timeout=10)
-        if location:
-            # Extract the bounding box
-            bounding_box = location.raw['boundingbox']
-            bounds = (float(bounding_box[0]), float(bounding_box[1]),
-                      float(bounding_box[2]), float(bounding_box[3]))
-            return bounds
-        else:
-            return "No data found."
-    except GeocoderTimedOut:
-        print(f"Geocoding timed out for {area}; retrying...")
-        time.sleep(1)
-        return get_bounds(area, country_code)  # Retry for this area with the country code
-    except Exception as e:
-        return f"Error retrieving data for {area}: {e}"    
-    
-                
-
-def find_valid_files(year, timescale):
-    """
-    Find valid NetCDF files for a given year and timescale.
-    """
-    file_pattern = f'SPEI{timescale}{MIDDLE_PATTERN}{year}*.nc'
-    file_list = glob.glob(os.path.join(SPEI_DATA_PATH, f'spei{timescale}/', file_pattern))
-    return [file for file in file_list if os.path.isfile(file) and os.access(file, os.R_OK)]
-
-
-def load_climate_datasets(files, bounds):
-    """
-    Load and preprocess climate datasets from a list of file paths.
-    """
-    if files:
-        return xr.open_mfdataset(
-            files,
-            concat_dim='time',
-            combine='nested',
-            parallel=True,
-            preprocess=lambda ds: preprocess(ds, bounds)
-        )
-    return None
-
-
-def handle_area_change_year_range(bounds, start_year, end_year, selected_timescale):
-    """
-    Load and process a dataset of climate data for all months from a starting year to an ending year, and geographic area.
-    """
-    valid_files = []
-    errors = []
-
-    for year in range(start_year, end_year + 1):
-        try:
-            year_files = find_valid_files(year, selected_timescale)
-            valid_files.extend(year_files)
-        except Exception as e:
-            errors.append(f"An error occurred processing data for {year}: {e}")
-
-    data = load_climate_datasets(valid_files, bounds)
-
-    if not data:
-        error_message = "No readable NetCDF files found for any year in the range."
-        if errors:
-            error_message += " Errors encountered: " + "; ".join(errors)
-        print(error_message)
-
-    return data
-
-          
-           
-def handle_area_change(bounds, selected_month, selected_year, selected_timescale):
-    """
-    Load and process a dataset of climate data for a specified month, year, and geographic area.
-
-    Parameters:
-    bounds (tuple): Geographic boundary coordinates.
-    selected_month (str or None): Month for which data is to be loaded, in two-digit format (e.g., "01").
-    selected_year (str or None): Year for which data is to be loaded, in four-digit format (e.g., "1990").
-    selected_timescale (str): Timescale for the SPEI index.
-
-    Returns:
-    xarray.Dataset or None: The processed dataset or None if no readable files are found.
-    """
-    data_path = f'/data1/drought_dataset/spei/spei{selected_timescale}/'
-    # Flexible pattern to match both 'era5' and 'era5t'
-    middle_pattern = '*global_era5*_moda_ref1991to2020_'
-    file_pattern = f'SPEI{selected_timescale}{middle_pattern}'
-    file_pattern += f'{selected_year if selected_year else "????"}{selected_month if selected_month else "??"}*.nc'
-    try:
-        file_list = sorted(glob.glob(os.path.join(data_path, file_pattern)))
-        valid_files = [file for file in file_list if is_readable_nc(file)]
-        if not valid_files:
-            print("No readable NetCDF files found.")
-            return None
-
-        data = xr.open_mfdataset(
-            valid_files,
-            concat_dim='time',
-            combine='nested',
-            parallel=True,
-            preprocess=lambda ds: preprocess(ds, bounds)  # Ensure preprocess function is defined to handle bounds
-        )
-        return data
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return None
-
-    
-    
-    
-def get_country_code(country_name):
-    country = pycountry.countries.get(name=country_name)
-    return country.alpha_2 if country else None
-
-
-def update_display(country_selector, subarea_selector, month_selector, year_selector, timescale_selector, months, timescales, placeholders):
-    """
-    Updates the area subset data based on user selections from the dropdown widgets. The function dynamically 
-    adjusts the displayed data depending on the selected country, subarea, month, year, and timescale. 
-
-    Parameters:
-    - country_selector (Widget): Widget for selecting a country.
-    - subarea_selector (Widget): Widget for selecting a subarea within a country.
-    - month_selector (Widget): Widget for selecting a month.
-    - year_selector (Widget): Widget for selecting a year.
-    - timescale_selector (Widget): Widget for selecting a timescale for data aggregation.
-    - months (dict): Dictionary mapping month names to their respective numerical representations.
-    - timescales (dict): Dictionary mapping timescale identifiers to their descriptive strings.
-    - placeholders (dict): Dictionary containing placeholder values used as defaults in the selectors to handle cases where no selection is made.
-
-    The function checks for valid selections and retrieves corresponding bounds based on the geographical selections.
-    It then fetches or recalculates the data for the specified area, time frame, and timescale, updating the global 
-    `subset` accordingly.
-
-    If valid data is available based on the selections, it outputs the updated data scope. If selections are incomplete 
-    or data is unavailable, it provides feedback via printed messages.
-
-    Returns:
-    - Returns the updated `subset` if the selections are complete and valid data is available, 
-      otherwise returns None.
-    """       
-    global subset
-    missing_selections = []
-
-    # Check each selector for a valid selection and update accordingly
-    country_code = get_country_code(country_selector.value) if country_selector.value != placeholders['country'] else missing_selections.append('country')
-    subarea = subarea_selector.value if subarea_selector.value != placeholders['subarea'] else missing_selections.append('subarea')
-    selected_timescale = timescales.get(timescale_selector.value) if timescale_selector.value != placeholders['timescale'] else missing_selections.append('timescale')
-    
-    # Check for month or year, since they are mutually exclusive
-    if month_selector.value != placeholders['month']:
-        selected_month = months.get(month_selector.value)
-        selected_year = None       
-    elif year_selector.value != placeholders['year']:
-        selected_year = year_selector.value
-        selected_month = None
-    else:
-        missing_selections.append('time period')
-    
-    if not missing_selections:
-        bounds = get_bounds(subarea, country_code)
-        if bounds and (selected_month is not None or selected_year is not None) and selected_timescale:
-            subset = handle_area_change(bounds, selected_month, selected_year, selected_timescale)
-            if subset:
-                if selected_month:
-                    print(f"Data updated for: Area={bounds}, Month={selected_month}, Timescale={selected_timescale}")
-                elif selected_year:
-                    print(f"Data updated for: Area={bounds}, Year={selected_year}, Timescale={selected_timescale}")
-                return subset
-            else:
-                print("No data available for the selected area, month/year, and timescale")
-    else:
-        # Join all missing selections into a string and display the message
-        missing = ", ".join(missing_selections)
-        print(f"Selection incomplete. Please select all required options: {missing}")
-
-
-        
-        
-
-def update_yr_display(country_selector, subarea_selector, year_range_selector, timescale_selector, months, timescales, placeholders):   
-    global subset
-    missing_selections = []
-
-    # Check each selector for a valid selection and update accordingly
-    country_code = get_country_code(country_selector.value) if country_selector.value != placeholders['country'] else missing_selections.append('country')
-    subarea = subarea_selector.value if subarea_selector.value != placeholders['subarea'] else missing_selections.append('subarea')
-    selected_timescale = timescales.get(timescale_selector.value) if timescale_selector.value != placeholders['timescale'] else missing_selections.append('timescale')
-    selected_year_range = year_range_selector.value
-    
-    if not missing_selections:
-        bounds = get_bounds(subarea, country_code)
-        if bounds and selected_timescale:
-            subset = handle_area_change_year_range(bounds, int(selected_year_range[0]), int(selected_year_range[1]), selected_timescale)
-            if subset:
-                print(f"Data updated for: Area={bounds}, Year range={selected_year_range[0]}-{selected_year_range[1]}, Timescale={selected_timescale}")
-                return subset
-            else:
-                print("No data available for the selected area, year range, and timescale")
-    else:
-        # Join all missing selections into a string and display the message
-        missing = ", ".join(missing_selections)
-        print(f"Selection incomplete. Please select all required options: {missing}")
-
-        
-
-   
-            
+     
+               
             
 
 def replace_invalid_values(data: pd.DataFrame, invalid_value: float = -9999.0) -> (pd.DataFrame, int, float):
@@ -894,61 +792,65 @@ def process_datarray(data_array: xr.DataArray) -> (xr.DataArray, dict):
 
 
 
-def compute_stats(data: xr.DataArray) -> dict:
+def compute_stats(data: xr.DataArray, full_stats: bool = True) -> dict:
     """
     Computes the statistics needed to create a boxplot from the SPEI data over latitude and longitude.
     These statistics include the median, lower and upper quantiles (25th and 75th percentiles), minimum, and maximum values.
 
     Parameters:
     data (xr.DataArray): The DataArray containing the SPEI data with dimensions including 'lat', 'lon', and 'time'.
+    full_stats (bool): If True, computes all statistics. If False, computes only mean and median.
 
     Returns:
     dict: A dictionary containing:
         - times (np.ndarray): The array of time values.
         - means (np.ndarray): The array of mean values over the specified dimensions.
         - medians (np.ndarray): The array of median values over the specified dimensions.
-        - q1s (np.ndarray): The array of 25th percentile values.
-        - q3s (np.ndarray): The array of 75th percentile values.
-        - mins (np.ndarray): The array of minimum values.
-        - maxs (np.ndarray): The array of maximum values.
+        - q1s (np.ndarray): The array of 25th percentile values (only if full_stats is True).
+        - q3s (np.ndarray): The array of 75th percentile values (only if full_stats is True).
+        - mins (np.ndarray): The array of minimum values (only if full_stats is True).
+        - maxs (np.ndarray): The array of maximum values (only if full_stats is True).
     """
     # Remove NaN values across lat and lon dimensions for more robust stats
     valid_data = data.dropna(dim='lat', how='all').dropna(dim='lon', how='all')
     
-    # Compute the statistics using data with removed all-NaN slices, skipping NaN values if any residual 
-    mean = valid_data.mean(dim=['lat', 'lon'], skipna=True)
+    # Compute the median
     median = valid_data.median(dim=['lat', 'lon'], skipna=True)
-    q1 = valid_data.quantile(0.25, dim=['lat', 'lon'], skipna=True)
-    q3 = valid_data.quantile(0.75, dim=['lat', 'lon'], skipna=True)
-    min_val = valid_data.min(dim=['lat', 'lon'], skipna=True)
-    max_val = valid_data.max(dim=['lat', 'lon'], skipna=True)
 
     # Compute the values
-    mean_computed = mean.compute()
     median_computed = median.compute()
-    q1_computed = q1.compute()
-    q3_computed = q3.compute()
-    min_computed = min_val.compute()
-    max_computed = max_val.compute()
 
-    # Extract times and values
-    times = median_computed['time'].values if 'time' in median_computed.dims else None
-    means = mean_computed.values
-    medians = median_computed.values
-    q1s = q1_computed.values
-    q3s = q3_computed.values
-    mins = min_computed.values
-    maxs = max_computed.values
-
-    return {
-        'times': times,
-        'means': means,
-        'medians': medians,
-        'q1s': q1s,
-        'q3s': q3s,
-        'mins': mins,
-        'maxs': maxs
+    # Initialize the result dictionary with median
+    result = {
+        'times': median_computed['time'].values if 'time' in median_computed.dims else None,
+        'medians': median_computed.values
     }
+
+    # Compute additional statistics if full_stats is True
+    if full_stats:
+        mean = valid_data.mean(dim=['lat', 'lon'], skipna=True)
+        q1 = valid_data.quantile(0.25, dim=['lat', 'lon'], skipna=True)
+        q3 = valid_data.quantile(0.75, dim=['lat', 'lon'], skipna=True)
+        min_val = valid_data.min(dim=['lat', 'lon'], skipna=True)
+        max_val = valid_data.max(dim=['lat', 'lon'], skipna=True)
+
+        mean_computed = mean.compute()
+        q1_computed = q1.compute()
+        q3_computed = q3.compute()
+        min_computed = min_val.compute()
+        max_computed = max_val.compute()
+
+        # Update the result dictionary with additional statistics
+        result.update({
+            'means': mean_computed.values,
+            'q1s': q1_computed.values,
+            'q3s': q3_computed.values,
+            'mins': min_computed.values,
+            'maxs': max_computed.values
+        })
+
+    return result
+
 
 
 
@@ -957,14 +859,14 @@ def assign_color_spei(spei_values):
     Assigns colors based on the Standardized Precipitation-Evapotranspiration Index (SPEI) values.
     This function takes a list of SPEI values and assigns a color code to each value based on the degree of wetness or dryness.
     The colors are assigned as follows:
-    - Extremely wet: SPEI > 2.0 (color: '#064A78')
-    - Severely wet: 1.5 < SPEI <= 2.0 (color: '#49AEFF')
-    - Moderately wet: 1.0 < SPEI <= 1.5 (color: '#61A5CE')
-    - Near-normal / mildly wet: 0 < SPEI <= 1.0 (color: '#ACD1E5')
-    - Near-normal / mildly dry: -1.0 < SPEI <= 0 (color: '#F7BB9F')
-    - Moderately dry: -1.5 < SPEI <= -1.0 (color: '#D96C59')
-    - Severely dry: -2.0 < SPEI <= -1.5 (color: '#AF2331')
-    - Extremely dry: SPEI <= -2.0 (color: '#681824')
+    - Extremely wet: SPEI > 2.0 (color: '#006400')  # Dark Green
+    - Severely wet: 1.5 < SPEI <= 2.0 (color: '#228B22')  # Forest Green
+    - Moderately wet: 1.0 < SPEI <= 1.5 (color: '#32CD32')  # Lime Green
+    - Near-normal / mildly wet: 0 < SPEI <= 1.0 (color: '#ADFF2F')  # Green Yellow
+    - Near-normal / mildly dry: -1.0 < SPEI <= 0 (color: '#FFD700')  # Gold
+    - Moderately dry: -1.5 < SPEI <= -1.0 (color: '#DAA520')  # Goldenrod
+    - Severely dry: -2.0 < SPEI <= -1.5 (color: '#A0522D')  # Sienna
+    - Extremely dry: SPEI <= -2.0 (color: '#8B4513')  # Saddle Brown
     If the SPEI value is NaN, the color will be transparent (color: 'rgba(0,0,0,0)').
     
     Parameters:
@@ -981,23 +883,22 @@ def assign_color_spei(spei_values):
         if math.isnan(spei):
             colors.append('rgba(0,0,0,0)')  # transparent for NaN values
         elif spei > 2.0:
-            colors.append('#064A78')  # extremely wet
+            colors.append('#074B30')  # extremely wet
         elif 1.5 < spei <= 2.0:
-            colors.append('#49AEFF')  # severely wet
+            colors.append('#OD965f')  # severely wet
         elif 1.0 < spei <= 1.5:
-            colors.append('#61A5CE')  # moderately wet
+            colors.append('#43EFAA')  # moderately wet
         elif 0 < spei <= 1.0:
-            colors.append('#ACD1E5')  # near-normal / mildly wet
+            colors.append('#A1F7D5')  # near-normal / mildly wet
         elif -1.0 < spei <= 0:
-            colors.append('#F7BB9F')  # near-normal / mildly dry
+            colors.append('#FFBF69')  # near-normal / mildly dry
         elif -1.5 < spei <= -1.0:
-            colors.append('#D96C59')  # moderately dry
+            colors.append('#FF961F')  # moderately dry
         elif -2.0 < spei <= -1.5:
-            colors.append('#AF2331')  # severely dry
+            colors.append('#8F5100')  # severely dry
         elif spei <= -2.0:
-            colors.append('#681824')  # extremely dry
+            colors.append('#291700')  # extremely dry
     return colors
-
 
 
 def create_scatterplot(values: dict, timescales: dict, selected: dict, placeholders: dict):
