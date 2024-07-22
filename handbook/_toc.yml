@@ -54,6 +54,11 @@ parts:
     title: "Solving the puzzle"
 
 
+- caption: "Focus"
+  chapters:
+  - file: chapters/08-focus-madagascar/index
+    title: "Drought in Madagascar"
+
 
 - caption: "Appendix"
   chapters:

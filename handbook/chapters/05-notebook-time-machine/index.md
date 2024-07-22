@@ -1,6 +1,5 @@
 # The time machine: identify drought events
 
-Test for github pages update
 
 ## Purpose of the notebook
 Explain the objective of the notebook, which is to recognize drought events around the world and over time.
