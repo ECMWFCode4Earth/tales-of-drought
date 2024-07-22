@@ -170,10 +170,10 @@ def update_subareas(change, country_list, placeholders, adm1_subarea_selector, a
 
             
 
-def month_year_interaction(change, month_selector, year_selector, selected, placeholders):
+def month_year_interaction(btn_name, month_selector, year_selector, selected, placeholders):
     """
     Handle interactions between the month and year selectors, resetting the other selector
-    when one is changed, or resetting both if neither is explicitly changed.
+    when one is changed, or resetting both if year_range is explicitly changed.
 
     Args:
     change (dict): The change event dictionary containing the owner and new value of the change.
@@ -182,13 +182,13 @@ def month_year_interaction(change, month_selector, year_selector, selected, plac
     selected (dict): A dictionary storing the currently selected month and year.
     placeholders (dict): A dictionary containing placeholder texts for the selectors.
     """
-    if change['owner'] == month_selector and change['new']:
+    if btn_name == 'month_widgets_btn':
         year_selector.value = placeholders['year']
         selected['year'] = placeholders['year']
-    elif change['owner'] == year_selector and change['new']:
+    elif btn_name == 'year_widgets_btn':
         month_selector.value = placeholders['month']
         selected['month'] = placeholders['month']
-    else:  # year_range case
+    elif btn_name == 'year_range_widgets_btn':
         year_selector.value = placeholders['year']
         selected['year'] = placeholders['year']
         month_selector.value = placeholders['month']
