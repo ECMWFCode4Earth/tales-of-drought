@@ -4,21 +4,24 @@ import dask
 import math
 import numpy as np
 import pandas as pd
+import json
 import glob
 import os
+import requests
+import time
+from datetime import datetime
 import cftime
 import folium
 from IPython.display import display, IFrame
 import plotly.graph_objects as go
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
-import time
-from datetime import datetime
-import json
+from shapely.geometry import Point, Polygon
 import pycountry
 
 SPEI_DATA_PATH = '/data1/drought_dataset/spei/'
 MIDDLE_PATTERN = '*global_era5*_moda_ref1991to2020_'
+
 
 def save_selection(selection):
     """
@@ -29,42 +32,251 @@ def save_selection(selection):
     """
     # Construct the file path relative to the current script's directory
     current_dir = os.path.dirname(__file__)
-    file_path = os.path.join(current_dir, '..', 'data', 'previous_selection.json')
+    file_path = os.path.join(current_dir, '..', 'data', 'selection.json')
     with open(file_path, 'w') as file:
         json.dump(selection, file)
         
 
-
-def read_json_to_dict(file_name, sort=False):
+        
+def read_json_to_dict(file_name):
     """
-    Reads a JSON file from a directory relative to the script's location, sorts its keys (countries) 
-    and their subkeys (subareas) alphabetically if requested, and returns its contents as a dictionary.
+    Reads a JSON file and returns its content as a dictionary.
 
-    Parameters:
-    file_name (str): The name of the JSON file.
-    sort (bool): A flag to determine whether to sort the dictionary alphabetically by countries and subareas.
+    Args:
+    file_name (str): The name the JSON file.
 
     Returns:
-    dict: The contents of the JSON file, optionally sorted.
+    dict: The content of the JSON file as a dictionary.
     """
-    # Construct the file path relative to the current script's directory
     current_dir = os.path.dirname(__file__)
     file_path = os.path.join(current_dir, '..', 'data', file_name)
-    
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
-        if sort:
-            sorted_data = {country: sorted(subareas) for country, subareas in sorted(data.items())}
-            return sorted_data    
         return data
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON in file: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        
 
-  
+
+def read_json_to_sorted_dict(file_name):
+    """
+    Reads a JSON file, sorts all nested levels alphabetically by the 'name' key, 
+    and returns the content as a sorted list.
+
+    Args:
+    file_path (str): The path to the JSON file.
+
+    Returns:
+    list: The sorted content of the JSON file.
+    """
+    current_dir = os.path.dirname(__file__)
+    file_path = os.path.join(current_dir, '..', 'data', file_name)
+    try:
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+        
+        def sort_dict_list(lst):
+            """
+            Recursively sorts lists of dictionaries by the 'name' key and sorts nested levels.
+            """
+            sorted_list = sorted(lst, key=lambda x: x['name'])
+            for item in sorted_list:
+                for key, value in item.items():
+                    if isinstance(value, list) and value and isinstance(value[0], dict):
+                        item[key] = sort_dict_list(value)
+            return sorted_list
+        
+        sorted_data = sort_dict_list(data)
+        return sorted_data
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON in file: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {e}")   
+
+
+
+        
+# Helper function to find subareas
+def get_subareas_for_country(country_list, isocode, level='adm1_subareas'):
+    for country in country_list:
+        if country['isocode'] == isocode:
+            return [subarea['name'] for subarea in country.get(level, [])]
+    return []
+
+
+
+# Update function for subarea selectors
+def update_subareas(change, country_list, placeholders, adm1_subarea_selector, adm2_subarea_selector):
+    if change['type'] == 'change' and change['name'] == 'value':
+        # Clear previous subarea selections
+        selected_country = next((item for item in country_list if item["name"] == change['new']), None)
+        if selected_country:
+            adm1_options = get_subareas_for_country(country_list, selected_country['isocode'], 'adm1_subareas')
+            adm2_options = get_subareas_for_country(country_list, selected_country['isocode'], 'adm2_subareas')
+        else:
+            adm1_options = []
+            adm2_options = []
+
+        # Update options with condition to show 'No subareas' message
+        if adm1_options:
+            adm1_subarea_selector.options = [placeholders['adm1_subarea']] + adm1_options
+        else:
+            adm1_subarea_selector.options = ['No adm1 subareas']
+
+        if adm2_options:
+            adm2_subarea_selector.options = [placeholders['adm2_subarea']] + adm2_options
+        else:
+            adm2_subarea_selector.options = ['No adm2 subareas']
+
+
+            
+# Define the interaction function for month and year selectors
+def month_year_interaction(change, month_selector, year_selector, selected, placeholders):
+    if change['owner'] == month_selector and change['new']:
+        year_selector.value = placeholders['year']
+        selected['year'] = placeholders['year']
+    elif change['owner'] == year_selector and change['new']:
+        month_selector.value = placeholders['month']
+        selected['month'] = placeholders['month']
+    else:  # year_range case
+        year_selector.value = placeholders['year']
+        selected['year'] = placeholders['year']
+        month_selector.value = placeholders['month']
+        selected['month'] = placeholders['month']        
+        
+        
+            
+def validate_selections(btn_name, selected, selectors, placeholders, output_area):
+    selected.update({
+            'country': selectors['country'].value if selectors['country'].value != placeholders['country'] else placeholders['country'],        
+            'adm1_subarea': selectors['adm1_subarea'].value if (selectors['adm1_subarea'].value != placeholders['adm1_subarea']) and \
+            (selectors['adm1_subarea'].value != 'No adm1 subareas') else placeholders['adm1_subarea'],        
+            'adm2_subarea': selectors['adm2_subarea'].value if (selectors['adm2_subarea'].value != placeholders['adm2_subarea']) and \
+            (selectors['adm2_subarea'].value != 'No adm2 subareas') else placeholders['adm2_subarea'],        
+            'timescale': selectors['timescale'].value if selectors['timescale'].value != placeholders['timescale'] else placeholders['timescale'],
+            'month': selectors['month'].value if selectors['month'].value != placeholders['month'] else placeholders['month'],
+            'year': selectors['year'].value if selectors['year'].value != placeholders['year'] else placeholders['year'],
+            'year_range': selectors['year_range'].value        
+    })
+    save_selection(selected)
+    missing = []
+    # Validate country selection
+    if selected['country'] == placeholders['country']:
+        missing.append('country')
     
+    # Validate timescale selection
+    if selected['timescale'] == placeholders['timescale']:
+        missing.append('timescale')
+    
+    # Validate the appropriate time period based on which button was clicked
+    if btn_name == 'month_widgets_btn':
+        if selected['month'] == placeholders['month']:
+            missing.append('month')
+    elif btn_name == 'year_widgets_btn':
+        if selected['year'] == placeholders['year']:
+            missing.append('year')
+    elif btn_name == 'year_range_widgets_btn':
+        if selected['year_range'] is None:
+            missing.append('year range')
 
-def adjust_to_nearest_025(coord):
+    if missing:
+        with output_area:
+            output_area.clear_output()
+            alert = "Please select a value for " + ", ".join(missing)
+            print(alert)
+        return False
+    return True            
+
+
+def get_period_of_time(btn_name, selected, placeholders):
+    """
+    Determines the string representing the selected time period based on the button name.
+
+    Parameters:
+    btn_name (str): Identifies which button was clicked.
+    selected (dict): Dictionary containing selected values for various parameters.
+    placeholders (dict): Placeholder values to check against when selections are default or empty.
+
+    Returns:
+    str: Description of the selected time period.
+    """
+    if btn_name == 'month_widgets_btn':
+        time_period = 'month ' + (selected['month'] if selected['month'] != placeholders['month'] else 'undefined month')
+    elif btn_name == 'year_widgets_btn':
+        time_period = 'year ' + (selected['year'] if selected['year'] != placeholders['year'] else 'undefined year')
+    elif btn_name == 'year_range_widgets_btn':
+        start_year, end_year = selected['year_range'] if selected['year_range'] else ('undefined', 'undefined')
+        time_period = f'year range {start_year} to {end_year}'
+
+    return time_period
+
+
+
+def get_adm_level_and_area_name(selected, placeholders):
+    adm_level = None
+    # Determine the appropriate administrative level to query
+    if selected['adm2_subarea'] and selected['adm2_subarea'] != placeholders['adm2_subarea']:
+        adm_level = 'ADM2'
+        selected_area = selected['adm2_subarea']
+    elif selected['adm1_subarea'] and selected['adm1_subarea'] != placeholders['adm1_subarea']:
+        adm_level = 'ADM1'
+        selected_area = selected['adm1_subarea']
+    elif selected['country'] and selected['country'] != placeholders['country']:
+        adm_level = 'ADM0'
+        selected_area = selected['country']
+    return adm_level, selected_area
+
+
+
+def get_boundaries(selected, country_list, placeholders):
+    base_url = "https://www.geoboundaries.org/api/current/gbOpen"
+    adm_level = None
+    geojson_data = None
+
+    adm_level, selected_area = get_adm_level_and_area_name(selected, placeholders)
+
+    # Fetch geographic boundaries data
+    if adm_level:
+        isocode = next((item['isocode'] for item in country_list if item["name"] == selected['country']), None)
+        if isocode:
+            api_url = f"{base_url}/{isocode}/{adm_level}/"
+            response = requests.get(api_url)
+            if response.status_code == 200:
+                data = response.json()
+                geojson_url = data['simplifiedGeometryGeoJSON']
+                # Fetch the GeoJSON data from the URL
+                geojson_response = requests.get(geojson_url)
+                if geojson_response.status_code == 200:
+                    geojson_data = geojson_response.json()
+                else:
+                    print("Failed to download GeoJSON data.")
+            else:
+                print(f"No data available for {selected_area} at {adm_level}, checking lower administrative levels.")
+                if adm_level == 'ADM2':
+                    return get_boundaries({**selected, 'adm2_subarea': None})  # Fallback to ADM1
+                elif adm_level == 'ADM1':
+                    return get_boundaries({**selected, 'adm1_subarea': None})  # Fallback to ADM0
+        else:
+            print("Invalid ISO code.")
+    else:
+        print("No valid administrative level selected.")
+
+    if geojson_data:
+        print(f"Coordinates retrieved for {selected_area} ({adm_level}) - {geojson_url}")
+    else:
+        print("Failed to retrieve GeoJSON data.")
+    return geojson_data
+
+            
+            
+def nearest_grid_point(coord, grid_resolution=0.25):
     """
     Adjust the given coordinate value to the nearest multiple of 0.25.
     
@@ -74,9 +286,9 @@ def adjust_to_nearest_025(coord):
     Returns:
     float: Adjusted coordinate value, rounded to the nearest multiple of 0.25.
     """
-    return np.round(coord * 4) / 4
-
-
+    return np.round(coord / grid_resolution) * grid_resolution
+     
+        
 
 def generate_coordinate_values(start_coord, end_coord):
     """
@@ -92,11 +304,196 @@ def generate_coordinate_values(start_coord, end_coord):
     Note:
     This function is because ds.sel(lat=slice(min_lat, max_lat), lon=slice(min_lon, max_lon)) seems not working
     """
-    adjusted_start = adjust_to_nearest_025(start_coord)
-    adjusted_end = adjust_to_nearest_025(end_coord)
+    adjusted_start = nearest_grid_point(start_coord)
+    adjusted_end = nearest_grid_point(end_coord)
     adjusted_start, adjusted_end = min(adjusted_start, adjusted_end), max(adjusted_start, adjusted_end)     # Ensure start is less than end
     coordinate_values = np.arange(adjusted_start, adjusted_end + 0.25, 0.25)      # Generate values within the range
     return coordinate_values.tolist()
+
+
+
+    
+def is_readable_nc(file_path):
+    try:
+        with nc.Dataset(file_path, 'r') as dataset:
+            pass  # File opened successfully
+        return True
+    except OSError:
+        print(f"Warning: Skipping unreadable NetCDF file: {file_path}")
+        return False
+
+    
+    
+def preprocess(ds, bounds):
+    min_lon, min_lat, max_lon, max_lat = bounds
+    latitude_list = generate_coordinate_values(min_lat, max_lat)
+    longitude_list = generate_coordinate_values(min_lon, max_lon)
+    # Ensure only existing coordinates are used for subsetting
+    latitude_list = [lat for lat in latitude_list if lat in ds.lat.values]
+    longitude_list = [lon for lon in longitude_list if lon in ds.lon.values]
+    if not latitude_list or not longitude_list:
+        raise ValueError("Generated coordinates do not match any available in the dataset.")    
+    ds_subset = ds.sel(lat=latitude_list, lon=longitude_list)
+    return ds_subset
+
+
+
+def get_xarray_data(btn_name, bounds, selectors, placeholders, months, timescales):
+    """
+    Load and process a dataset of climate data for a specified month, year, and geographic area.
+
+    Parameters:
+    bounds (tuple): Geographic boundary coordinates.
+    btn_name (str): Button name to determine the type of data fetching.
+    selectors (dict): Dictionary containing widget selectors.
+    placeholders (dict): Placeholder values for widgets.
+    months (dict): Dictionary of month abbreviations to numbers.
+    timescales (dict): Dictionary of available timescales.
+
+    Returns:
+    xarray.Dataset or None: The processed dataset or None if no readable files are found.
+    """
+    selected_timescale = timescales[selectors['timescale'].value]
+    data_path = f'/data1/drought_dataset/spei/spei{selected_timescale}/'
+    # Flexible pattern to match both 'era5' and 'era5t'
+    middle_pattern = '*global_era5*_moda_ref1991to2020_'
+    
+    # Determine the file pattern based on the button pressed
+    if btn_name == 'year_range_widgets_btn':
+        start_year, end_year = selectors['year_range'].value
+        file_patterns = []
+        for year in range(int(start_year), int(end_year) + 1):
+            for month in months.values():
+                file_pattern = f'SPEI{selected_timescale}{middle_pattern}{year}{month}*.nc'
+                file_patterns.extend(glob.glob(os.path.join(data_path, file_pattern)))
+    else:
+        selected_month = months[selectors['month'].value] if selectors['month'].value != placeholders['month'] else None
+        selected_year = selectors['year'].value if selectors['year'].value != placeholders['year'] else None
+        file_pattern = f'SPEI{selected_timescale}{middle_pattern}'
+        file_pattern += f'{selected_year if selected_year else "????"}{selected_month if selected_month else "??"}*.nc'
+        file_patterns = sorted(glob.glob(os.path.join(data_path, file_pattern)))
+
+    try:
+        valid_files = [file for file in file_patterns if is_readable_nc(file)]
+        if not valid_files:
+            print("No readable NetCDF files found.")
+            return None
+
+        data = xr.open_mfdataset(
+            valid_files,
+            concat_dim='time',
+            combine='nested',
+            parallel=True,
+            preprocess=lambda ds: preprocess(ds, bounds)  # Ensure preprocess function is defined to handle bounds
+        )
+        return data
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+
+    
+    
+def display_data_details(selected, subset):
+    """
+    Displays details of the selected data and subset based on the specified index.
+
+    Parameters:
+    selected (dict): A dictionary containing selection attributes such as country, subarea, month, year, and timescale.
+    subset (list of xr.DataArray): A list of xarray DataArrays containing the subset data.
+
+    Returns:
+    None: This function only prints details to the console.
+    """
+    print("Country: ", selected['country'])
+    print("ADM1 subarea: ", selected['adm1_subarea'])
+    print("ADM2 subarea: ", selected['adm2_subarea'])
+    print("Month: ", selected['month'])
+    print("Year: ", selected['year'])
+    print("Year range: ", selected['year_range'])
+    print("Timescale: ", selected['timescale'], '\n')
+
+    print("Time values in the subset:", subset.time.values.shape[0])
+    print("Latitude values in the subset:", subset.lat.values.shape[0])
+    print("Longitude values in the subset:", subset.lon.values.shape[0], '\n')
+
+    # This prints a sample of the data for the first time point and the first 5 latitudes and longitudes
+    print("Data sample: ", subset.isel(time=0, lat=slice(0, 5), lon=slice(0, 5)).values)
+
+    # Optional: Uncomment these if more detailed outputs are needed
+    # print(subset[index].values)
+    # print(subset[index].time)
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            
+
 
 
 
@@ -148,56 +545,6 @@ def display_map_in_iframe(folium_map, width=500, height=500):
 
 
 
-def preprocess(ds, bounds):
-    """
-    Subset the dataset to the specified geographic bounds.
-
-    Parameters:
-    ds (xarray.Dataset): The dataset to be subsetted.
-    bounds (list): A list containing the coordinates of the bounding box 
-                   in the format [min_lon, min_lat, max_lon, max_lat].
-
-    Returns:
-    xarray.Dataset: The subsetted dataset.
-    """
-    min_lon, min_lat, max_lon, max_lat = bounds
-    latitude_list = generate_coordinate_values(min_lat, max_lat)
-    longitude_list = generate_coordinate_values(min_lon, max_lon)
-    # Ensure only existing coordinates are used for subsetting
-    latitude_list = [lat for lat in latitude_list if lat in ds.lat.values]
-    longitude_list = [lon for lon in longitude_list if lon in ds.lon.values]
-    if not latitude_list or not longitude_list:
-        raise ValueError("Generated coordinates do not match any available in the dataset.")    
-    ds_subset = ds.sel(lat=latitude_list, lon=longitude_list)
-    return ds_subset
-
-
-
-def is_readable_nc(file_path):
-    """
-    Check if a NetCDF file is readable.
-
-    This function attempts to open a NetCDF file in read-only mode to determine if it is accessible and not corrupted.
-    It handles any errors encountered during the file opening process and reports if the file is unreadable.
-
-    Parameters:
-    file_path (str): The path to the NetCDF file to be checked.
-
-    Returns:
-    bool: True if the file can be successfully opened, False otherwise.
-
-    Notes:
-    - The function uses a try-except block to handle potential OSError exceptions that may occur if the file is 
-      corrupted or otherwise unreadable.
-    - If an error occurs, a warning message is printed, indicating the file path of the unreadable file.
-    """
-    try:
-        with nc.Dataset(file_path, 'r') as dataset:
-            pass  # Just attempting to open the file
-        return True
-    except OSError:
-        print(f"Warning: Skipping unreadable NetCDF file: {file_path}")
-        return False
 
     
 
@@ -323,6 +670,8 @@ def handle_area_change(bounds, selected_month, selected_year, selected_timescale
         return None
 
     
+    
+    
 def get_country_code(country_name):
     country = pycountry.countries.get(name=country_name)
     return country.alpha_2 if country else None
@@ -418,34 +767,6 @@ def update_yr_display(country_selector, subarea_selector, year_range_selector, t
         print(f"Selection incomplete. Please select all required options: {missing}")
 
         
-def display_data_details(selected, subset):
-    """
-    Displays details of the selected data and subset based on the specified index.
-
-    Parameters:
-    selected (dict): A dictionary containing selection attributes such as country, subarea, month, year, and timescale.
-    subset (list of xr.DataArray): A list of xarray DataArrays containing the subset data.
-
-    Returns:
-    None: This function only prints details to the console.
-    """
-    print("Country: ", selected['country'])
-    print("Subarea: ", selected['subarea'])
-    print("Month: ", selected['month'])
-    print("Year: ", selected['year'])
-    print("Year range: ", selected['year_range'])
-    print("Timescale: ", selected['timescale'], '\n')
-
-    print("Time values in the subset:", subset.time.values.shape[0])
-    print("Latitude values in the subset:", subset.lat.values.shape[0])
-    print("Longitude values in the subset:", subset.lon.values.shape[0], '\n')
-
-    # This prints a sample of the data for the first time point and the first 5 latitudes and longitudes
-    print("Data sample: ", subset.isel(time=0, lat=slice(0, 5), lon=slice(0, 5)).values)
-
-    # Optional: Uncomment these if more detailed outputs are needed
-    # print(subset[index].values)
-    # print(subset[index].time)
 
    
             
@@ -679,7 +1000,7 @@ def assign_color_spei(spei_values):
 
 
 
-def create_scatterplot(values: dict, timescales: dict, selected: dict):
+def create_scatterplot(values: dict, timescales: dict, selected: dict, placeholders: dict):
     """
     Creates and displays a scatterplot representing the SPEI over time, using provided data and user selections.
     It plots both mean (marked with dots) and median (marked with diamonds) SPEI values, each colored based on their respective values.
@@ -688,7 +1009,7 @@ def create_scatterplot(values: dict, timescales: dict, selected: dict):
     - values (dict): Contains time series data necessary for the plot, with keys 'times', 'means', and 'medians' that
                      list the years, mean SPEI values, and median SPEI values respectively.
     - timescales (dict): Maps timescale identifiers to their string representations, used for labeling in the plot.
-    - selected (dict): User-selected filters for the plot, including 'timescale', 'country', 'subarea', and 'month'.
+    - selected (dict): User-selected filters for the plot, including 'timescale', 'country', 'area', and 'month'.
     """
     times = values['times']
     means = values['means']
@@ -737,16 +1058,16 @@ def create_scatterplot(values: dict, timescales: dict, selected: dict):
     
     timescale = selected['timescale']
     country = selected['country']
-    subarea = selected['subarea']
+    _, area = get_adm_level_and_area_name(selected, placeholders)
     month = selected['month']
     
     # Initialize and update the figure
     fig = go.Figure([mean_trace, median_trace])
     fig.update_layout(
-        title=f"{timescale} SPEI Index Trends Over Time in {country}'s {subarea} for {month}",
+        title=f"{timescale} SPEI index, trends over time {area} in the month of {month}",
         xaxis_title='Year',
         yaxis_title=f"SPEI{timescales[timescale]} Value",
-        height=500,
+        height=600,
         template='plotly_white',
         plot_bgcolor='rgba(0,0,0,0)',
         yaxis=dict(
@@ -762,14 +1083,14 @@ def create_scatterplot(values: dict, timescales: dict, selected: dict):
 
 
 
-def create_boxplot(values: dict, timescales, selected):
+def create_boxplot(values: dict, timescales:dict, selected: dict, placeholders: dict):
     """
     Creates a boxplot chart using the provided boxplot statistics and colors the boxes based on SPEI index values.
 
     Parameters:
     values (dict): A dictionary containing 'times', 'medians', 'q1s', 'q3s', 'mins', 'maxs'.
     timescales (dict): A dictionary mapping timescale codes to their descriptions.
-    selected (dict): A dictionary containing the 'timescale', 'country', 'subarea', and 'month'.
+    selected (dict): A dictionary containing the 'timescale', 'country', 'area', and 'month'.
     spei_values (list of float): SPEI values corresponding to each time in `values['times']`.
     """
     times = values['times']
@@ -784,7 +1105,7 @@ def create_boxplot(values: dict, timescales, selected):
     
     timescale = selected['timescale']
     country = selected['country']
-    subarea = selected['subarea']
+    _, area = get_adm_level_and_area_name(selected, placeholders)
     month = selected['month']
 
     fig = go.Figure()
@@ -803,10 +1124,10 @@ def create_boxplot(values: dict, timescales, selected):
         ))
 
     fig.update_layout(
-        title=f"Boxplot of {timescale} SPEI Index, trends over time in {country}'s {subarea} area for the month of {month}",
+        title=f"{timescale} SPEI index, trends over time in {area} area in the month of {month}",
         xaxis_title='Years',
         yaxis_title=f"SPEI{timescales[timescale]}",
-        height=500,
+        height=600,
         template='plotly_white',
         plot_bgcolor='rgba(0,0,0,0)',
         yaxis=dict(
@@ -822,10 +1143,10 @@ def create_boxplot(values: dict, timescales, selected):
 
     
     
-def create_linechart(values: dict, timescales: dict, selected: dict):
+def create_linechart(values: dict, timescales:dict, selected: dict, placeholders: dict):
     """
     Creates and displays a line chart with markers showing the Median SPEI trends over time based on the provided data and user selections. 
-    This chart is specifically designed to depict how the SPEI changes over the months of a specific year within a selected region and subarea.
+    This chart is specifically designed to depict how the SPEI changes over the months of a specific year within a selected region and area.
 
     Parameters:
     - values (dict): Contains time series data for the plot with keys:
@@ -836,7 +1157,7 @@ def create_linechart(values: dict, timescales: dict, selected: dict):
     - selected (dict): Contains user-selected filters for the chart, including:
         - 'timescale': The SPEI timescale being displayed.
         - 'country': The country of interest.
-        - 'subarea': The specific subarea within the country.
+        - 'area': The specific area within the country.
         - 'year': The year for which the data is plotted.
     """
     times = values['times']
@@ -871,16 +1192,16 @@ def create_linechart(values: dict, timescales: dict, selected: dict):
 
     timescale = selected['timescale']
     country = selected['country']
-    subarea = selected['subarea']
+    _, area = get_adm_level_and_area_name(selected, placeholders)
     year = selected['year']
     
     # Initialize and update the figure
     fig = go.Figure([trace])
     fig.update_layout(
-        title=f"Median {timescale} SPEI Index, trends over time in {country}'s {subarea} area in {year}",
+        title=f"Median {timescale} SPEI index, trends over time in {area} area in {year}",
         xaxis_title='Months',
         yaxis_title=f"Median SPEI{timescales[timescale]}",
-        height=500,
+        height=600,
         template='plotly_white',
         plot_bgcolor='rgba(0,0,0,0)',
         yaxis=dict(
@@ -895,14 +1216,14 @@ def create_linechart(values: dict, timescales: dict, selected: dict):
 
     
     
-def create_stripechart(values: dict, timescales: dict, selected: dict, start_year: int, end_year: int, aggregate_by: str = 'month'):
+def create_stripechart(values: dict, timescales: dict, selected: dict, placeholders: dict, aggregate_by: str = 'month'):
     """
     Generates generated chart is a vertical bar (stripe) chart, where each bar's color represents the median SPEI value for a specific period.
 
     Parameters:
         values (dict): A dictionary containing the data arrays for time points (`times`) and their corresponding median SPEI values (`medians`).
         timescales (dict): A dictionary that maps timescale identifiers to their SPEI calculation descriptions.
-        selected (dict): A dictionary with selections for the timescale, country, subarea, and year range.
+        selected (dict): A dictionary with selections for the timescale, country, area, and year range.
         start_year (int): The starting year for the visualization.
         end_year (int): The ending year for the visualization.
         aggregate_by (str): Determines the aggregation level of the data points in the visualization; default is 'month'. Other possible value is 'year'.
@@ -910,6 +1231,7 @@ def create_stripechart(values: dict, timescales: dict, selected: dict, start_yea
     times = values['times']
     medians = values['medians']
     colors = assign_color_spei(medians)
+    _, area = get_adm_level_and_area_name(selected, placeholders)
     
     # Convert numpy datetime64 to datetime64[M] for sorting
     date_transform = [np.datetime64(time, 'M') for time in times]
@@ -930,6 +1252,8 @@ def create_stripechart(values: dict, timescales: dict, selected: dict, start_yea
 
 
     # Filter dates to show only specific years in ten-year intervals
+    start_year = int(selected['year_range'][0])
+    end_year = int(selected['year_range'][1])
     year_diff = end_year - start_year
     if year_diff <= 15:
         interval = (3, 1)
@@ -960,10 +1284,10 @@ def create_stripechart(values: dict, timescales: dict, selected: dict, start_yea
 
     # Update layout
     fig.update_layout(
-        title=f"Median {selected['timescale']} SPEI Index, trends over time in {selected['country']}'s {selected['subarea']} area from {selected['year_range'][0]} to {selected['year_range'][1]}",
+        title=f"Median {selected['timescale']} SPEI index, trends over time in {area} area from {selected['year_range'][0]} to {selected['year_range'][1]}",
         xaxis_title='Years',
         yaxis_title=f"Median SPEI{timescales[selected['timescale']]}",
-        height=500,
+        height=600,
         yaxis=dict(showticklabels=False, showgrid=False, zeroline=False),
         xaxis={'type': 'category', 'tickmode': 'array', 'tickvals': sorted_dates, 'ticktext': display_dates, 'tickangle': 0},
         template='plotly_white',
