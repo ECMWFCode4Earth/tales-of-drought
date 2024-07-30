@@ -11,3 +11,6 @@ ipywidgets
 pandas
 folium
 IPython
+xarray
+cftime
+glob
