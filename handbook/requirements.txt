@@ -13,4 +13,3 @@ folium
 IPython
 xarray
 cftime
-glob
