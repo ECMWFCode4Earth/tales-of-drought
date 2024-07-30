@@ -1,3 +1,13 @@
 jupyter-book
 matplotlib
 numpy
+dask
+pycountry
+shapely
+netCDF4
+plotly
+kaleido
+ipywidgets
+pandas
+folium
+IPython
