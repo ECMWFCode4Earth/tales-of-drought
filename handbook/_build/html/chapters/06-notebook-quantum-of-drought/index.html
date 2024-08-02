@@ -32,10 +32,10 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=90a0d8e8" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
@@ -62,7 +62,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Solving the puzzle: determine drivers of the drought" href="../07-notebook-solving-puzzle/index.html" />
-    <link rel="prev" title="The notebook" href="../05-notebook-time-machine/notebook.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="../05-notebook-time-machine/notebook.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -202,7 +202,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">First exploration</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/index.html">The Time Machine</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook.html">The notebook</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Second exploration</span></p>
 <ul class="current nav bd-sidenav">
@@ -448,20 +447,20 @@ document.write(`
 </section>
 <section id="recap-of-notebook-1">
 <h2>Recap of Notebook 1<a class="headerlink" href="#recap-of-notebook-1" title="Link to this heading">#</a></h2>
-<p>In the first notebook, we focused on identifying drought events globally using the SPI and SPEI indices. We explored how these indices are calculated and their significance in determining drought conditions across different regions and times.</p>
+<p>In the first notebook, we focused on identifying drought events globally using the SPEI indices. We explored how these indices are calculated and their significance in determining drought conditions across different regions and times.</p>
 </section>
 <section id="indicators-of-interest">
 <h2>Indicators of interest<a class="headerlink" href="#indicators-of-interest" title="Link to this heading">#</a></h2>
-<p>We will concentrate on the SPI and SPEI values from our dataset, covering the period from 1940 to the present. The data quality will be assessed, noting any limitations such as missing data or measurement errors that could influence our analysis.</p>
+<p>We will concentrate on the SPEI values from our dataset, covering the period from 1940 to the present. The data quality will be assessed, noting any limitations such as missing data or measurement errors that could influence our analysis.</p>
 </section>
 <section id="understanding-drought-severity-and-anomalies">
 <h2>Understanding drought severity and anomalies<a class="headerlink" href="#understanding-drought-severity-and-anomalies" title="Link to this heading">#</a></h2>
-<p>We will begin by defining drought severity and anomalies, explaining how indices like SPI and SPEI contribute to our understanding of these phenomena. The section will clarify the metrics used to measure drought intensity and irregularities in climatic patterns.</p>
+<p>We will begin by defining drought severity and anomalies, explaining how indices like SPEI contribute to our understanding of these phenomena. The section will clarify the metrics used to measure drought intensity and irregularities in climatic patterns.</p>
 </section>
 <section id="data-loading-and-preprocessing">
 <h2>Data loading and preprocessing<a class="headerlink" href="#data-loading-and-preprocessing" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Getting the data: we will describe the source of our dataset, primarily focusing on the distribution of SPI and SPEI values in NetCDF format.</p></li>
+<li><p>Getting the data: we will describe the source of our dataset, primarily focusing on the distribution of SPEI values in NetCDF format.</p></li>
 <li><p>Loading data: instructions on how to load these indices using Python libraries like xarray for handling multidimensional arrays.</p></li>
 <li><p>Data inspection: a walkthrough of the dataset’s structure, highlighting important variables, their dimensions, and accessing metadata.</p></li>
 <li><p>Preprocessing steps: necessary steps such as handling missing values, aligning time series data, and normalizing the indices will be covered.</p></li>
@@ -479,9 +478,9 @@ document.write(`
 <section id="visual-methods">
 <h3>Visual methods:<a class="headerlink" href="#visual-methods" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Time series plots: creating plots to show long-term trends in SPI and SPEI values.</p></li>
+<li><p>Time series plots: creating plots to show long-term trends in SPEI values.</p></li>
 <li><p>Histograms: these will help understand the frequency distribution of drought severities.</p></li>
-<li><p>Box plots: to visualize the range, median, and outliers in the drought data.</p></li>
+<li><p>Box plots: to visualize the range, median, and outliers in the drought data (there is chart in notebook 1 that can be move here).</p></li>
 </ul>
 </section>
 </section>
@@ -541,7 +540,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">The notebook</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
       </div>
     </a>
     <a class="right-next"

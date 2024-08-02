@@ -987,20 +987,23 @@ def compute_stats(data: xr.DataArray, full_stats: bool = True) -> dict:
         q3 = valid_data.quantile(0.75, dim=['lat', 'lon'], skipna=True)
         min_val = valid_data.min(dim=['lat', 'lon'], skipna=True)
         max_val = valid_data.max(dim=['lat', 'lon'], skipna=True)
-
+        std_dev = valid_data.std(dim=['lat', 'lon'], skipna=True)
+        
         mean_computed = mean.compute()
         q1_computed = q1.compute()
         q3_computed = q3.compute()
         min_computed = min_val.compute()
         max_computed = max_val.compute()
-
+        std_dev_computed = std_dev.compute()
+        
         # Update the result dictionary with additional statistics
         result.update({
             'means': mean_computed.values,
             'q1s': q1_computed.values,
             'q3s': q3_computed.values,
             'mins': min_computed.values,
-            'maxs': max_computed.values
+            'maxs': max_computed.values,
+            'std_devs': std_dev_computed.values
         })
 
     return result

@@ -5,43 +5,12 @@
 Explain the objective of the notebook, which is to recognize drought events around the world and over time.
 
 
-````{tab-set}
-```{tab-item} notebook
-
-    from ipywidgets import Layout, Dropdown, widgets  
-    from IPython.display import display, clear_output, IFrame  
-    from functools import partial  
-    import datetime  
-    import numpy as np  
-    import modules.n1_utilities as uti  
-    import warnings  
-    warnings.filterwarnings("ignore", category=RuntimeWarning) 
-
-```
-
-```{tab-item} utilities
-
-    def get_file_path(file_name):
-        """
-        Get the file path for the given file name.
-
-        Args:
-        file_name (str): The name of the file.
-
-        Returns:
-        str: The file path for the given file name.
-        """
-        current_dir = os.path.dirname(__file__)
-        return os.path.join(current_dir, '..', 'data', file_name)
-
-```
-````
 
 ## Indicators of interest
-We will concentrate on the SPI and SPEI values from our dataset, covering the period from 1940 to the present. The data quality will be assessed, noting any limitations such as missing data or measurement errors that could influence our analysis.
+We will concentrate on the SPEI values from our dataset, covering the period from 1940 to the present. The data quality will be assessed, noting any limitations such as missing data or measurement errors that could influence our analysis.
 
 ## Data loading and preprocessing
-- Getting the data: we will describe the source of our dataset, primarily focusing on the distribution of SPI and SPEI values in NetCDF format.
+- Getting the data: we will describe the source of our dataset, primarily focusing on the distribution of SPEI values in NetCDF format.
 - Loading data: instructions on how to load these indices using Python libraries like xarray for handling multidimensional arrays.
 - Data inspection: a walkthrough of the dataset’s structure, highlighting important variables, their dimensions, and accessing metadata.
 - Preprocessing steps: necessary steps such as handling missing values, aligning time series data, and normalizing the indices will be covered.
