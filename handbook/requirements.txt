@@ -13,3 +13,4 @@ folium
 IPython
 xarray
 cftime
+cartopy
