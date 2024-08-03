@@ -64,14 +64,28 @@ def assign_color_spei(spei_values):
 
 def create_scatterplot(values: dict, timescales: dict, selected: dict, placeholders: dict):
     """
-    Creates and displays a scatterplot representing the SPEI over time, using provided data and user selections.
-    It plots both mean (marked with dots) and median (marked with diamonds) SPEI values, each colored based on their respective values.
+    Creates and displays a scatterplot of the Standardized Precipitation-Evapotranspiration Index (SPEI)
+    over time, using provided data points for both mean and median values. The plot marks mean values
+    with dots and median values with diamonds, each colored according to their SPEI categories. Tooltips
+    provide additional data insights on hover.
 
     Parameters:
-    - values (dict): Contains time series data necessary for the plot, with keys 'times', 'means', and 'medians' that
-                     list the years, mean SPEI values, and median SPEI values respectively.
-    - timescales (dict): Maps timescale identifiers to their string representations, used for labeling in the plot.
-    - selected (dict): User-selected filters for the plot, including 'timescale', 'country', 'area', and 'month'.
+    - values (dict): Contains time series data for the plot, including:
+        - 'times': List of datetime objects representing the years.
+        - 'means': List of mean SPEI values corresponding to the times.
+        - 'medians': List of median SPEI values corresponding to the times.
+    - timescales (dict): Maps timescale identifiers (e.g., 'monthly', 'annual') to their descriptive
+                         names, which are used for labeling in the plot.
+    - selected (dict): Specifies the filters applied to the data, including:
+        - 'timescale': The selected timescale identifier.
+        - 'country': The country for the data.
+        - 'area': Specific area within the country.
+        - 'month': The month for which the data is visualized.
+    - placeholders (dict): A dictionary containing placeholder values for additional
+                           configuration, such as ADM level and area names.
+
+    Returns:
+    - None: This function creates and displays the scatterplot directly using the Plotly visualization library.
     """
     times = values['times']
     means = values['means']
@@ -121,16 +135,29 @@ def create_scatterplot(values: dict, timescales: dict, selected: dict, placehold
         hoverinfo='text'
     )
     
+    
+    # Initialize and update the figure
+    fig = go.Figure([mean_trace, median_trace])
+    
+    # Add dummy traces for color legend using the spei categories
+    for category, color in spei_categories.items():
+        fig.add_trace(go.Scatter(
+            x=[None], y=[None], mode='markers',
+            marker=dict(size=10, color=color),
+            name=category,
+            legendgroup='colors', showlegend=True,
+            hoverinfo='none'
+    ))
+    
     timescale = selected['timescale']
     country = selected['country']
     _, area = get_adm_level_and_area_name(selected, placeholders)
     month = selected['month']
     
-    # Initialize and update the figure
-    fig = go.Figure([mean_trace, median_trace])
+    # Update the figure
     fig.update_layout(
         title=f"{timescale} SPEI index, trends over time {area} in the month of {month}",
-        xaxis_title='Year',
+        xaxis_title='Years',
         yaxis_title=f"SPEI{timescales[timescale]} Value",
         height=600,
         template='plotly_white',
@@ -148,15 +175,31 @@ def create_scatterplot(values: dict, timescales: dict, selected: dict, placehold
 
 
 
-def create_boxplot(values: dict, timescales:dict, selected: dict, placeholders: dict):
+def create_boxplot(values: dict, timescales: dict, selected: dict, placeholders: dict):
     """
-    Creates a boxplot chart using the provided boxplot statistics and colors the boxes based on SPEI index values.
+    Creates a boxplot chart using the provided boxplot statistics, where boxes are colored 
+    based on SPEI index values. This function also configures the plot with custom labels 
+    and a legend that indicates different SPEI categories.
 
     Parameters:
-    values (dict): A dictionary containing 'times', 'medians', 'q1s', 'q3s', 'mins', 'maxs'.
-    timescales (dict): A dictionary mapping timescale codes to their descriptions.
-    selected (dict): A dictionary containing the 'timescale', 'country', 'area', and 'month'.
-    spei_values (list of float): SPEI values corresponding to each time in `values['times']`.
+    - values (dict): A dictionary containing key statistics for the boxplot:
+        - 'times': List of times (dates).
+        - 'medians': List of median values.
+        - 'q1s': List of first quartile values.
+        - 'q3s': List of third quartile values.
+        - 'mins': List of minimum values.
+        - 'maxs': List of maximum values.
+    - timescales (dict): A dictionary mapping timescale codes to their descriptive names.
+    - selected (dict): A dictionary containing selected parameters for the plot:
+        - 'timescale': The code of the timescale to use.
+        - 'country': The country for which the data is plotted.
+        - 'area': The area within the country.
+        - 'month': The month for which the data is plotted.
+    - placeholders (dict): A dictionary containing placeholder values for additional 
+      configuration, such as ADM level and area names.
+
+    Returns:
+    - None: This function directly displays the boxplot using Plotly's visualization library.
     """
     times = values['times']
     medians = values['medians']
@@ -166,6 +209,7 @@ def create_boxplot(values: dict, timescales:dict, selected: dict, placeholders: 
     maxs = values['maxs']
     
     times = pd.to_datetime(times).to_list()
+    spei_categories = read_json_to_dict('spei_categories.json')
     colors = assign_color_spei(medians)
     
     timescale = selected['timescale']
@@ -175,32 +219,42 @@ def create_boxplot(values: dict, timescales:dict, selected: dict, placeholders: 
 
     fig = go.Figure()
 
+    # Create box traces with showlegend set to False
     for i, time in enumerate(times):
         fig.add_trace(go.Box(
-            x=[time],  # Directly use datetime object for x-axis
-            q1=[q1s[i]],  # Lower quartile (25th percentile)
-            median=[medians[i]],  # Median
-            q3=[q3s[i]],  # Upper quartile (75th percentile)
-            lowerfence=[mins[i]],  # Minimum
-            upperfence=[maxs[i]],  # Maximum
-            name=str(time),  # Label with time value
-            marker_color=colors[i],  # Color of the box based on SPEI
-            whiskerwidth=0.2,  # Width of the whiskers
+            x=[time],
+            q1=[q1s[i]],
+            median=[medians[i]],
+            q3=[q3s[i]],
+            lowerfence=[mins[i]],
+            upperfence=[maxs[i]],
+            name=str(time),  # This is used for hovertext but not for the legend
+            marker_color=colors[i],
+            whiskerwidth=0.2,
+            showlegend=False  # Disable showing each box in the legend
+        ))
+
+    # Add dummy traces for color legend
+    for category, color in spei_categories.items():
+        fig.add_trace(go.Box(
+            x=[None], y=[None],
+            name=category,
+            marker_color=color,
+            legendgroup='colors', 
+            showlegend=True,  # Ensure only these are shown in the legend
+            hoverinfo='none'
         ))
 
     fig.update_layout(
-        title=f"{timescale} SPEI index, trends over time in {area} area in the month of {month}",
+        title=f"{timescale} SPEI index, trends over time in {area} in the month of {month}",
         xaxis_title='Years',
-        yaxis_title=f"SPEI{timescales[timescale]}",
+        yaxis_title=f"SPEI{timescales[timescale]} Value",
         height=600,
         template='plotly_white',
         plot_bgcolor='rgba(0,0,0,0)',
-        yaxis=dict(
-            zeroline=True,  # Ensure the zero line is visible
-            zerolinewidth=1,
-            zerolinecolor='#D3D3D3'  # Change zero line color to blue
-        ),
-        showlegend=False
+        yaxis=dict(zeroline=True, zerolinewidth=1, zerolinecolor='#D3D3D3'),
+        legend_title="SPEI Categories",
+        showlegend=True
     )
 
     fig.show()
@@ -208,51 +262,52 @@ def create_boxplot(values: dict, timescales:dict, selected: dict, placeholders: 
 
     
     
-def create_linechart(values: dict, timescales:dict, selected: dict, placeholders: dict):
+def create_linechart(values: dict, timescales: dict, selected: dict, placeholders: dict):
     """
-    Creates and displays a line chart with markers showing the Median SPEI trends over time based on the provided data and user selections. 
-    This chart is specifically designed to depict how the SPEI changes over the months of a specific year within a selected region and area.
+    Creates and displays a line chart with markers to depict Median SPEI (Standardized Precipitation-Evapotranspiration Index) trends 
+    over the months of a selected year within a specified region and area. Each point on the line chart is color-coded based on its 
+    SPEI value to provide visual cues about drought conditions.
 
     Parameters:
-    - values (dict): Contains time series data for the plot with keys:
-        - 'times': A list of months or other time units.
-        - 'medians': Corresponding medians SPEI values for each time unit.
-        - 'colors': Colors for the markers; can be a single color or a list of colors that matches the length of 'times' and 'means'.
-    - timescales (dict): Maps timescale identifiers to their string representations, which are used in the y-axis label of the chart.
-    - selected (dict): Contains user-selected filters for the chart, including:
-        - 'timescale': The SPEI timescale being displayed.
-        - 'country': The country of interest.
-        - 'area': The specific area within the country.
-        - 'year': The year for which the data is plotted.
+    - values (dict): Contains time series data for the plot, including:
+        - 'times': List of datetime objects representing the months.
+        - 'medians': List of median SPEI values corresponding to each time point.
+    - timescales (dict): Maps timescale identifiers (e.g., 'monthly', 'annual') to their descriptive
+                         names, used for axis labeling and titles.
+    - selected (dict): Specifies the filters and selections for the plot:
+        - 'timescale': The selected timescale identifier.
+        - 'country': The country for which the data is plotted.
+        - 'area': Specific area within the country.
+        - 'year': The year for which the data is visualized.
+    - placeholders (dict): Contains placeholder values and additional configuration data,
+                           such as administrative level and area names, which are used in labeling and tooltips.
+
+    Returns:
+    - None: The function directly displays the line chart using the Plotly visualization library.
+
+    The line chart includes a custom tooltip for each data point that shows the month and year along with the median SPEI value, enhancing 
+    user interaction by providing detailed context. Additionally, a legend for SPEI categories is included to assist with interpretation of the SPEI values.
     """
     times = values['times']
     medians = values['medians']
+    spei_categories = read_json_to_dict('spei_categories.json')
     colors = assign_color_spei(medians)
     
-    # Prepare the text for the tooltips
-    # Convert numpy.datetime64 for formatting
-    tooltip_texts = [f"{np.datetime64(time, 'D').astype('datetime64[M]').astype(object).strftime('%B %Y')}, median: {median:.2f}" for time, median in zip(times, medians)]
+    tooltip_texts = [
+        f"{np.datetime64(time, 'D').astype('datetime64[M]').astype(object).strftime('%B %Y')}, median: {median:.2f}"
+        for time, median in zip(times, medians)
+    ]
 
-    # Define the line plot (trace) with markers
     trace = go.Scatter(
         x=times,
         y=medians,
-        mode='lines+markers',  # Combine lines and markers
+        mode='lines+markers',
         name='Median SPEI',
-        line=dict(
-            color='#B89A7D',  # Define line color
-            width=2           # Set line width
-        ),
-        marker=dict(
-            color=colors,  # Colors for each marker
-            size=15,        # Set marker size
-            line = dict(
-                color = "#B89A7D",
-                width = 2
-          )
-        ),
-        text=tooltip_texts,  # Custom tooltip text
-        hoverinfo='text'
+        line=dict(color='#B89A7D', width=2),
+        marker=dict(color=colors, size=15, line=dict(color="#B89A7D", width=2)),
+        text=tooltip_texts,
+        hoverinfo='text',
+        showlegend=False  # Do not show this trace in the legend
     )
 
     timescale = selected['timescale']
@@ -260,41 +315,59 @@ def create_linechart(values: dict, timescales:dict, selected: dict, placeholders
     _, area = get_adm_level_and_area_name(selected, placeholders)
     year = selected['year']
     
-    # Initialize and update the figure
     fig = go.Figure([trace])
+
+    # Add dummy traces for color legend
+    for category, color in spei_categories.items():
+        fig.add_trace(go.Scatter(
+            x=[None], y=[None],
+            mode='markers',  # Only markers needed for the legend
+            marker=dict(color=color, size=10),
+            name=category,
+            legendgroup='colors',
+            showlegend=True,
+            hoverinfo='none'
+        ))
+
     fig.update_layout(
-        title=f"Median {timescale} SPEI index, trends over time in {area} area in {year}",
+        title=f"Median {timescale} SPEI index, trends over time in {area} in {year}",
         xaxis_title='Months',
         yaxis_title=f"Median SPEI{timescales[timescale]}",
         height=600,
         template='plotly_white',
         plot_bgcolor='rgba(0,0,0,0)',
-        yaxis=dict(
-            zeroline=True,  # Ensure the zero line is visible
-            zerolinewidth=1,
-            zerolinecolor='#D3D3D3'  # Change zero line color
-        )
+        yaxis=dict(zeroline=True, zerolinewidth=1, zerolinecolor='#D3D3D3'),
+        legend_title="SPEI Categories"
     )
 
-    # Display the figure
     fig.show()
 
     
     
 def create_stripechart(values: dict, timescales: dict, selected: dict, placeholders: dict, aggregate_by: str = 'month'):
     """
-    Generates generated chart is a vertical bar (stripe) chart, where each bar's color represents the median SPEI value for a specific period.
+    Generates a vertical bar (stripe) chart that visualizes the median SPEI (Standardized Precipitation-Evapotranspiration Index) values over a specified time period. 
+    Each bar represents a specific period (month or year based on aggregation) and is color-coded based on the median SPEI value, facilitating an intuitive understanding 
+    of drought severity over time. The chart features tooltips that provide detailed information about the median SPEI for each period when hovered over. 
 
     Parameters:
-        values (dict): A dictionary containing the data arrays for time points (`times`) and their corresponding median SPEI values (`medians`).
-        timescales (dict): A dictionary that maps timescale identifiers to their SPEI calculation descriptions.
-        selected (dict): A dictionary with selections for the timescale, country, area, and year range.
-        start_year (int): The starting year for the visualization.
-        end_year (int): The ending year for the visualization.
-        aggregate_by (str): Determines the aggregation level of the data points in the visualization; default is 'month'. Other possible value is 'year'.
+        values (dict): Contains the time points (`times`) and their corresponding median SPEI values (`medians`).
+        timescales (dict): Maps timescale identifiers to their SPEI calculation descriptions, used for labeling the chart.
+        selected (dict): Stores user-selected filters including:
+            - 'timescale': The SPEI timescale (e.g., monthly, annual).
+            - 'country': The country for the data.
+            - 'area': Specific area within the country.
+            - 'year_range': Tuple of (start_year, end_year) defining the range for visualization.
+        placeholders (dict): Holds placeholder data and additional configuration items for display purposes.
+        aggregate_by (str): Determines the aggregation level for data points (default 'month'). 
+                            'year' is the other possible value, allowing for annual aggregation.
+
+    Returns:
+        None: The function directly creates and displays the stripe chart using Plotly's visualization capabilities.
     """
     times = values['times']
     medians = values['medians']
+    spei_categories = read_json_to_dict('spei_categories.json')
     colors = assign_color_spei(medians)
     _, area = get_adm_level_and_area_name(selected, placeholders)
     
@@ -335,17 +408,31 @@ def create_stripechart(values: dict, timescales: dict, selected: dict, placehold
 
     # Create the stripe chart
     bar_width = 1.0 if aggregate_by == 'month' else 0.8
-    fig = go.Figure(data=[
-        go.Bar(
-            x=sorted_dates,
-            y=[1] * len(sorted_dates),
-            marker_color=sorted_colors,
-            hovertext=tooltip_texts,
-            hoverinfo='text',
-            orientation='v',
-            width=bar_width
-        )
-    ])
+    fig = go.Figure()
+    
+    
+    fig.add_trace(go.Bar(
+        x=sorted_dates,
+        y=[1] * len(sorted_dates),
+        marker_color=sorted_colors,
+        hovertext=tooltip_texts,
+        hoverinfo='text',
+        orientation='v',
+        showlegend=False,  # Disable showing each bar in the legend
+        width=bar_width
+    ))
+    
+        # Add dummy bars for color legend
+    for category, color in spei_categories.items():
+        fig.add_trace(go.Bar(
+            x=[None],
+            y=[None],
+            marker_color=color,
+            name=category,
+            showlegend=True,  # Enable legend only for dummy bars
+            hoverinfo='none'
+    ))
+        
 
     # Update layout
     fig.update_layout(
@@ -357,7 +444,8 @@ def create_stripechart(values: dict, timescales: dict, selected: dict, placehold
         xaxis={'type': 'category', 'tickmode': 'array', 'tickvals': sorted_dates, 'ticktext': display_dates, 'tickangle': 0},
         template='plotly_white',
         plot_bgcolor='rgba(0,0,0,0)',
-        showlegend=False,
+        showlegend=True,
+        legend_title="SPEI Categories"
     )
     fig.update_yaxes(visible=False)
     fig.show()   
