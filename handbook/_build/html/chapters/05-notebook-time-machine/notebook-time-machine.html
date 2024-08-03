@@ -826,8 +826,8 @@ cftime_conversions 0
 <span class="p">)</span>
 
 <span class="c1"># Use a lambda to pass both ds (processed_subset) and time_index to the function</span>
-<span class="n">interactive_plot</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span><span class="k">lambda</span> <span class="n">time_index</span><span class="p">:</span> <span class="n">charts</span><span class="o">.</span><span class="n">plot_spei_geographical_distribution</span><span class="p">(</span><span class="n">processed_subset</span><span class="p">,</span> <span class="n">time_index</span><span class="p">),</span> <span class="n">time_index</span><span class="o">=</span><span class="n">maps_year_slider</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">interactive_plot</span><span class="p">)</span>
+<span class="n">maps_year_interactive_plot</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span><span class="k">lambda</span> <span class="n">time_index</span><span class="p">:</span> <span class="n">charts</span><span class="o">.</span><span class="n">plot_spei_geographical_distribution</span><span class="p">(</span><span class="n">processed_subset</span><span class="p">,</span> <span class="n">time_index</span><span class="p">),</span> <span class="n">time_index</span><span class="o">=</span><span class="n">maps_year_slider</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">maps_year_interactive_plot</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
