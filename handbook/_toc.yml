@@ -39,7 +39,7 @@ parts:
   chapters:
   - file: chapters/05-notebook-time-machine/index
     title: "The Time Machine"
-  - file: chapters/05-notebook-time-machine/notebook
+  - file: chapters/05-notebook-time-machine/notebook-time-machine
     title: "The notebook"
 
 - caption: "Second exploration"

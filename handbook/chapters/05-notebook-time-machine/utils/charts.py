@@ -6,6 +6,8 @@ import json
 import time
 from datetime import datetime
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
 from utils.widgets_handler import read_json_to_dict
 from utils.widgets_handler import get_adm_level_and_area_name
 
@@ -59,6 +61,38 @@ def assign_color_spei(spei_values):
             colors.append(spei_categories["Extremely dry"])
     return colors
 
+
+
+def plot_spei_geographical_distribution(ds, time_index):
+    """
+    Plots a geographical map showing the distribution of SPEI (Standardized Precipitation-Evapotranspiration Index) values
+    at a specified time index from a dataset. The function utilizes a Plate Carree projection to display the data 
+    on a 2D map, color-coded according to SPEI values using a brown-green color map. The map includes coastlines for better geographical context.
+    It automatically extracts the SPEI values for the specified time, formats the date for the title, 
+    and plots the data on the map. The color bar is added to indicate the range and intensity of SPEI values, enhancing interpretability.
+
+    Parameters:
+        time_index (int): The index of the time slice in the dataset to visualize. This index corresponds to a specific time point 
+                          in the dataset's time dimension.
+
+    Returns:
+        None: Displays the map using matplotlib's plt.show() function without returning any objects. 
+    """
+    fig, ax = plt.subplots(figsize=(12, 8), subplot_kw={'projection': ccrs.PlateCarree()})
+    
+    # Select the data at the given time index
+    spei_values = ds.isel(time=time_index)
+    
+    # Format the datetime object to show only the date in yyyy-mm-dd format
+    formatted_date = np.datetime_as_string(spei_values.time.values, unit='D')
+    
+    # Plot data
+    pcolormesh = spei_values.plot.pcolormesh(ax=ax, transform=ccrs.PlateCarree(), 
+                                             add_colorbar=True, cmap='BrBG')
+    
+    ax.set_title(f"{formatted_date}")
+    ax.coastlines()
+    plt.show()
 
 
 
@@ -259,6 +293,92 @@ def create_boxplot(values: dict, timescales: dict, selected: dict, placeholders:
 
     fig.show()
 
+    
+    
+    
+def create_std_dev_bar_chart(values: dict, timescales: dict, selected: dict, placeholders: dict):
+    """
+    Generates a bar chart that displays the mean Standardized Precipitation-Evapotranspiration Index (SPEI) values 
+    across different years for a specific month and location. The bars are colored based on the SPEI categories and 
+    include error bars representing the standard deviation of the SPEI values.
+
+    Parameters:
+        values (dict): A dictionary containing the datasets needed for plotting. It includes:
+            - 'times': A list of time points (typically years).
+            - 'means': A list of mean SPEI values corresponding to each time point.
+            - 'std_devs': A list of standard deviations for the SPEI values at each time point.
+        timescales (dict): A dictionary mapping timescale codes to their descriptions, used for labeling.
+        selected (dict): A dictionary specifying the selections made for visualization:
+            - 'timescale': The timescale code (e.g., 'monthly', 'annual').
+            - 'country': The country of interest.
+            - 'area': The specific area within the country.
+            - 'month': The month for which the data is plotted.
+        placeholders (dict): A dictionary containing additional placeholder values used in the function,
+                             like administrative level and area names.
+
+    Returns:
+        None: The function creates and displays the bar chart directly using Plotly's visualization capabilities.
+    """
+    spei_categories = widgets_handler.read_json_to_dict('spei_categories.json')
+    
+    times = pd.to_datetime(values['times'])
+    means = values['means']
+    std_devs = values['std_devs']
+    
+    mean_colors = charts.assign_color_spei(means)
+
+    timescale = selected['timescale']
+    country = selected['country']
+    _, area = widgets_handler.get_adm_level_and_area_name(selected, placeholders)
+    month = selected['month']
+
+    # Create the bar chart
+    fig = go.Figure()
+
+    # Main bar trace
+    fig.add_trace(go.Bar(
+        x=times,
+        y=means,
+        error_y=dict(
+            type='data',  # Standard deviation
+            array=std_devs,
+            visible=True
+        ),
+        marker_color=mean_colors,
+        name='Monthly SPEI'
+    ))
+
+    # This trace will not show in the legend
+    fig.data[0].showlegend = False
+
+    # Add dummy bars for the SPEI color categories legend
+    for category, color in spei_categories.items():
+        fig.add_trace(go.Bar(
+            x=[None],  # Dummy data point, not visible in the chart
+            y=[None],
+            marker_color=color,
+            name=category,
+            showlegend=True  # This ensures it shows in the legend
+        ))
+
+    # Update plot layout
+    fig.update_layout(
+        title=f"Mean {timescale} SPEI and standard deviation for the month of {month} across years in {area}",
+        xaxis_title='Years',
+        yaxis_title=f"SPEI {timescales[timescale]}",
+        height=600,
+        template='plotly_white',
+        plot_bgcolor='rgba(0,0,0,0)',
+        yaxis=dict(
+            zeroline=True,
+            zerolinewidth=1,
+            zerolinecolor='#D3D3D3'
+        ),
+        legend_title="SPEI Categories"
+    )
+
+    # Display the figure
+    fig.show()
 
     
     
