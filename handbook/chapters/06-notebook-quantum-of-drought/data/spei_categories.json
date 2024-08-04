@@ -1,0 +1,10 @@
+{
+    "Extremely wet": "#074B30",
+    "Severely wet": "#0D965f",
+    "Moderately wet": "#43EFAA",
+    "Mildly wet": "#A1F7D5",
+    "Mildly dry": "#FFBF69",
+    "Moderately dry": "#FF961F",
+    "Severely dry": "#8F5100",
+    "Extremely dry": "#3d2100"
+}
