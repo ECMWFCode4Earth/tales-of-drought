@@ -37,10 +37,12 @@ parts:
 
 - caption: "First exploration"
   chapters:
-  - file: chapters/05-notebook-time-machine/index
-    title: "The Time Machine"
   - file: chapters/05-notebook-time-machine/notebook-time-machine
-    title: "The notebook"
+    title: "The Time Machine"
+  - file: chapters/05-notebook-time-machine/under-the-hood
+    title: "Under the hood"
+  - file: chapters/05-notebook-time-machine/storyboard
+    title: "Storyboard (to be deleted)"
 
 - caption: "Second exploration"
   chapters:
