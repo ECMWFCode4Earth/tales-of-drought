@@ -319,17 +319,17 @@ def create_std_dev_bar_chart(values: dict, timescales: dict, selected: dict, pla
     Returns:
         None: The function creates and displays the bar chart directly using Plotly's visualization capabilities.
     """
-    spei_categories = widgets_handler.read_json_to_dict('spei_categories.json')
+    spei_categories = read_json_to_dict('spei_categories.json')
     
     times = pd.to_datetime(values['times'])
     means = values['means']
     std_devs = values['std_devs']
     
-    mean_colors = charts.assign_color_spei(means)
+    mean_colors = assign_color_spei(means)
 
     timescale = selected['timescale']
     country = selected['country']
-    _, area = widgets_handler.get_adm_level_and_area_name(selected, placeholders)
+    _, area = get_adm_level_and_area_name(selected, placeholders)
     month = selected['month']
 
     # Create the bar chart
