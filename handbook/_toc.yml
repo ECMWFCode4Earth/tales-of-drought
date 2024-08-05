@@ -32,8 +32,10 @@ parts:
 
 - caption: "Setting up the environment"
   chapters:
-  - file: chapters/04-set-up-env/index
-    title: "title xxx"
+  - file: "chapters/04-set-up-env/set-up-environment"
+    title: "Libraries, variables and widgets"
+  - file: "chapters/04-set-up-env/storyboard"
+    title: "Storyboard (to be deleted)"
 
 - caption: "First exploration"
   chapters:
