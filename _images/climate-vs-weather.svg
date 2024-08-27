@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 800 234" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <g transform="matrix(1, 0, 0, 1, 1.961061, -250.378632)">
+    <g>
+      <path d="M 555.483 398.914 H 758.628 L 758.628 389.414 L 782.628 409.414 L 758.628 429.414 L 758.628 419.914 H 555.483 V 398.914 Z" style="stroke: rgb(0, 0, 0); fill: rgb(64, 162, 183); stroke-width: 0px;" bx:shape="arrow 555.483 389.414 227.145 40 21 24 0 1@a9a9412a"/>
+      <rect x="232.261" y="399.002" width="327" height="21" style="stroke: rgb(0, 0, 0); fill: rgb(64, 162, 183); stroke-width: 0px;"/>
+      <path d="M -234.227 399.025 H -31.082 L -31.082 389.525 L -7.082 409.525 L -31.082 429.525 L -31.082 420.025 H -234.227 V 399.025 Z" style="stroke: rgb(0, 0, 0); fill: rgb(64, 162, 183); stroke-width: 0px;" transform="matrix(-1, 0, 0, 1, 0, 0)" bx:shape="arrow -234.227 389.525 227.145 40 21 24 0 1@9739e55f"/>
+    </g>
+    <g>
+      <text style="fill: rgb(51, 51, 51); font-family: Ubuntu; font-size: 17px; text-transform: lowercase; white-space: pre;" x="46.413" y="441.949">HOURS</text>
+      <text style="fill: rgb(51, 51, 51); font-family: Ubuntu; font-size: 17px; text-transform: lowercase; white-space: pre;" x="552.6" y="443.728">DECADES</text>
+      <text style="fill: rgb(51, 51, 51); font-family: Ubuntu; font-size: 17px; text-transform: lowercase; white-space: pre;" x="141.653" y="442.392">DAYS</text>
+      <text style="fill: rgb(51, 51, 51); font-family: Ubuntu; font-size: 17px; text-transform: lowercase; white-space: pre;" x="234.571" y="442.729">MONTHS</text>
+      <text style="fill: rgb(51, 51, 51); font-family: Ubuntu; font-size: 17px; text-transform: lowercase; white-space: pre;" x="345.136" y="442.616">SEASONS</text>
+      <text style="fill: rgb(51, 51, 51); font-family: Ubuntu; font-size: 17px; text-transform: lowercase; white-space: pre;" x="459.829" y="442.84">YEARS</text>
+      <text style="fill: rgb(51, 51, 51); font-family: Ubuntu; font-size: 17px; text-transform: lowercase; white-space: pre;" x="661.669" y="443.638">CENTURIES</text>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 0, 24)">
+      <text style="fill: rgb(51, 51, 51); font-family: Ubuntu; font-size: 17px; font-weight: 500; text-transform: lowercase; white-space: pre;" x="77.651" y="333.45">WEATHER</text>
+      <g transform="matrix(1, 0, 0, 1, -2.656771, 84.352493)">
+        <path d="M 125.9 260.801 H 177.163 L 177.163 258.801 L 182.163 261.801 L 177.163 264.801 L 177.163 262.801 H 125.9 V 260.801 Z" style="stroke: rgb(0, 0, 0); stroke-width: 0px;" bx:shape="arrow 125.9 258.801 56.263 6 2 5 0 1@2f7480c4"/>
+        <path d="M -100.701 260.793 H -49.438 L -49.438 258.793 L -44.438 261.793 L -49.438 264.793 L -49.438 262.793 H -100.701 V 260.793 Z" style="stroke: rgb(0, 0, 0); stroke-width: 0px;" transform="matrix(-1, 0, 0, 1, 0, 0)" bx:shape="arrow -100.701 258.793 56.263 6 2 5 0 1@f78654e4"/>
+        <rect x="100.558" y="260.805" width="26" height="2" style="stroke: rgb(0, 0, 0); stroke-width: 0px;"/>
+      </g>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 15, 50)">
+      <text style="fill: rgb(51, 51, 51); font-family: Ubuntu; font-size: 17px; font-weight: 500; text-transform: lowercase; white-space: pre;" x="275.161" y="281.897">CLIMATE VARIABILITY</text>
+      <g transform="matrix(1, 0, 0, 1, 162.242508, 33.825024)">
+        <path d="M 275.9 260.801 H 327.163 L 327.163 258.801 L 332.163 261.801 L 327.163 264.801 L 327.163 262.801 H 275.9 V 260.801 Z" style="stroke: rgb(0, 0, 0); stroke-width: 0px;" bx:shape="arrow 275.9 258.801 56.263 6 2 5 0 1@3b6d26d7"/>
+        <path d="M -100.701 260.793 H -49.438 L -49.438 258.793 L -44.438 261.793 L -49.438 264.793 L -49.438 262.793 H -100.701 V 260.793 Z" style="stroke: rgb(0, 0, 0); stroke-width: 0px;" transform="matrix(-1, 0, 0, 1, 0, 0)" bx:shape="arrow -100.701 258.793 56.263 6 2 5 0 1@f78654e4"/>
+        <rect x="98.558" y="260.805" width="178" height="2" style="stroke: rgb(0, 0, 0); stroke-width: 0px;"/>
+      </g>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 0, 72)">
+      <text style="fill: rgb(51, 51, 51); font-family: Ubuntu; font-size: 17px; font-weight: 500; text-transform: lowercase; white-space: pre;" x="592.516" y="228.996">CLIMATE CHANGE</text>
+      <g transform="matrix(1, 0, 0, 1, 498.344513, -18.397987)">
+        <path d="M 194.9 260.801 H 246.163 L 246.163 258.801 L 251.163 261.801 L 246.163 264.801 L 246.163 262.801 H 194.9 V 260.801 Z" style="stroke: rgb(0, 0, 0); stroke-width: 0px;" bx:shape="arrow 194.9 258.801 56.263 6 2 5 0 1@2b70e733"/>
+        <path d="M -100.701 260.793 H -49.438 L -49.438 258.793 L -44.438 261.793 L -49.438 264.793 L -49.438 262.793 H -100.701 V 260.793 Z" style="stroke: rgb(0, 0, 0); stroke-width: 0px;" transform="matrix(-1, 0, 0, 1, 0, 0)" bx:shape="arrow -100.701 258.793 56.263 6 2 5 0 1@f78654e4"/>
+        <rect x="100.558" y="260.805" width="95" height="2" style="stroke: rgb(0, 0, 0); stroke-width: 0px;"/>
+      </g>
+    </g>
+  </g>
+</svg>

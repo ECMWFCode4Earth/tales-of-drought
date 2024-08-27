@@ -1,0 +1,1170 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Access Temperature variable from ADS/CDS &#8212; Tales of Dry Lands</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ee12de98" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/07-notebook-solving-puzzle/drought-drivers';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo-no-bg.png" class="logo__image only-light" alt="Tales of Dry Lands - Home"/>
+    <script>document.write(`<img src="../../_static/logo-no-bg.png" class="logo__image only-dark" alt="Tales of Dry Lands - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Tales of Dry Lands: Chronicles of Drought
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Climate toolkit for beginners</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/what-is-climate.html">What is climate?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/coordinate-system.html">Earth's coordinate system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/data-sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/netCDF-files.html">netCDF files</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Droughts focus</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../02-drought-focus/index.html">Droughts and their impacts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-drought-focus/timeline.html">Historic droughts timeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-drought-focus/indices.html">Drought indices</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Setting up the environment</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../04-set-up-env/set-up-environment.html">Libraries, variables and widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04-set-up-env/storyboard.html">Storyboard (to be deleted)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">First exploration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-time-machine.html">The Time Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-focus-madagascar.html">Drought in Madagascar</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/storyboard.html">Storyboard (to be deleted)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Second exploration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../06-notebook-quantum-of-drought/notebook-quantum-of-drought.html">Load data function</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../06-notebook-quantum-of-drought/storyboard.html">Storyboard (to be deleted)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Third exploration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="storyboard.html">Storyboard (to be deleted)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../credits-license.html">Credits</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ECMWFCode4Earth/tales-of-drought/handbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ECMWFCode4Earth/tales-of-drought/handbook/issues/new?title=Issue%20on%20page%20%2Fchapters/07-notebook-solving-puzzle/drought-drivers.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/07-notebook-solving-puzzle/drought-drivers.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Access Temperature variable from ADS/CDS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Access Temperature variable from ADS/CDS</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#access-relative-humidity">Access relative humidity</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#era5-land-monthly-averaged-data-from-1950-to-present">ERA5-Land monthly averaged data from 1950 to present</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#focus-in-madagascar">Focus in Madagascar</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-to-baseline-1991-to-2023">Compare to baseline (1991 to 2023)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#temperature-and-precipitation-gridded-data-for-global-and-regional-domains-derived-from-in-situ-and-satellite-observations">Temperature and precipitation gridded data for global and regional domains derived from in-situ and satellite observations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#river-discharge-and-related-historical-data-from-the-global-flood-awareness-system">River discharge and related historical data from the Global Flood Awareness System</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cdsapi</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">cdsapi</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://cds-beta.climate.copernicus.eu/api&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;6db1903d-4754-4084-a35e-fd1d44e2f457&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="access-temperature-variable-from-ads-cds">
+<h1>Access Temperature variable from ADS/CDS<a class="headerlink" href="#access-temperature-variable-from-ads-cds" title="Link to this heading">#</a></h1>
+</section>
+<section id="access-relative-humidity">
+<h1>Access relative humidity<a class="headerlink" href="#access-relative-humidity" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># dataset = &quot;reanalysis-era5-pressure-levels&quot;</span>
+<span class="c1"># request = {</span>
+<span class="c1">#     &#39;product_type&#39;: [&#39;reanalysis&#39;],</span>
+<span class="c1">#     &#39;variable&#39;: [&#39;relative_humidity&#39;, &#39;specific_cloud_liquid_water_content&#39;, &#39;specific_rain_water_content&#39;, &#39;temperature&#39;],</span>
+<span class="c1">#     &#39;year&#39;: [&#39;2020&#39;],</span>
+<span class="c1">#     &#39;month&#39;: [&#39;08&#39;],</span>
+<span class="c1">#     &#39;day&#39;: [&#39;03&#39;],</span>
+<span class="c1">#     &#39;time&#39;: [&#39;14:00&#39;],</span>
+<span class="c1">#     &#39;data_format&#39;: &#39;netcdf&#39;,</span>
+<span class="c1">#     &#39;download_format&#39;: &#39;unarchived&#39;</span>
+<span class="c1"># }</span>
+
+<span class="c1"># client.retrieve(dataset, request, &#39;download.nc&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="era5-land-monthly-averaged-data-from-1950-to-present">
+<h1>ERA5-Land monthly averaged data from 1950 to present<a class="headerlink" href="#era5-land-monthly-averaged-data-from-1950-to-present" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://cds-beta.climate.copernicus.eu/datasets/reanalysis-era5-land-monthly-means?tab=overview">https://cds-beta.climate.copernicus.eu/datasets/reanalysis-era5-land-monthly-means?tab=overview</a></p>
+<section id="focus-in-madagascar">
+<h2>Focus in Madagascar<a class="headerlink" href="#focus-in-madagascar" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">'area':</span> <span class="pre">[-9.95,</span> <span class="pre">40.23,</span> <span class="pre">-26.8,</span> <span class="pre">52.45]</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="s2">&quot;reanalysis-era5-land-monthly-means&quot;</span>
+<span class="n">request</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;product_type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;monthly_averaged_reanalysis&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2m_temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;skin_temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;soil_temperature_level_1&#39;</span><span class="p">,</span> <span class="s1">&#39;soil_temperature_level_2&#39;</span><span class="p">,</span> <span class="s1">&#39;soil_temperature_level_3&#39;</span><span class="p">,</span> <span class="s1">&#39;soil_temperature_level_4&#39;</span><span class="p">,</span> 
+                 <span class="s1">&#39;volumetric_soil_water_layer_1&#39;</span><span class="p">,</span> <span class="s1">&#39;volumetric_soil_water_layer_2&#39;</span><span class="p">,</span> <span class="s1">&#39;volumetric_soil_water_layer_3&#39;</span><span class="p">,</span> <span class="s1">&#39;volumetric_soil_water_layer_4&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;potential_evaporation&#39;</span><span class="p">,</span> <span class="s1">&#39;runoff&#39;</span><span class="p">,</span><span class="s1">&#39;sub_surface_runoff&#39;</span><span class="p">,</span> <span class="s1">&#39;surface_runoff&#39;</span><span class="p">,</span> <span class="s1">&#39;total_evaporation&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;10m_u_component_of_wind&#39;</span><span class="p">,</span> <span class="s1">&#39;10m_v_component_of_wind&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;total_precipitation&#39;</span><span class="p">,</span> <span class="s1">&#39;leaf_area_index_high_vegetation&#39;</span><span class="p">,</span> <span class="s1">&#39;leaf_area_index_low_vegetation&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1991</span><span class="p">,</span> <span class="mi">2024</span><span class="p">)],</span>
+                 <span class="c1"># [&#39;2018&#39;, &#39;2019&#39;, &#39;2020&#39;, &#39;2021&#39;, &#39;2022&#39;, &#39;2023&#39;],</span>
+    <span class="s1">&#39;month&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="s1">&#39;02&#39;</span><span class="p">,</span> <span class="s1">&#39;03&#39;</span><span class="p">,</span> <span class="s1">&#39;04&#39;</span><span class="p">,</span> <span class="s1">&#39;05&#39;</span><span class="p">,</span> <span class="s1">&#39;06&#39;</span><span class="p">,</span> <span class="s1">&#39;07&#39;</span><span class="p">,</span> <span class="s1">&#39;08&#39;</span><span class="p">,</span> <span class="s1">&#39;09&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;00:00&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;data_format&#39;</span><span class="p">:</span> <span class="s1">&#39;netcdf&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;download_format&#39;</span><span class="p">:</span> <span class="s1">&#39;unarchived&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;area&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">9.95</span><span class="p">,</span> <span class="mf">40.23</span><span class="p">,</span> <span class="o">-</span><span class="mf">26.8</span><span class="p">,</span> <span class="mf">52.45</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># client.retrieve(dataset, request, &#39;era5-land-monthly-means-madagascar-2018-2024.nc&#39;)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-08-27 06:42:47,041 INFO Request ID is e542069c-9297-49c9-9658-5254bf2f731c
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-08-27 06:42:47,168 INFO status has been updated to accepted
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">19</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">request</span> <span class="o">=</span> <span class="p">{</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="s1">&#39;product_type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;monthly_averaged_reanalysis&#39;</span><span class="p">],</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2m_temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;skin_temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;soil_temperature_level_1&#39;</span><span class="p">,</span> <span class="s1">&#39;soil_temperature_level_2&#39;</span><span class="p">,</span> <span class="s1">&#39;soil_temperature_level_3&#39;</span><span class="p">,</span> <span class="s1">&#39;soil_temperature_level_4&#39;</span><span class="p">,</span> 
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="s1">&#39;area&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">9.95</span><span class="p">,</span> <span class="mf">40.23</span><span class="p">,</span> <span class="o">-</span><span class="mf">26.8</span><span class="p">,</span> <span class="mf">52.45</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="p">}</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="c1"># client.retrieve(dataset, request, &#39;era5-land-monthly-means-madagascar-2018-2024.nc&#39;)</span>
+<span class="ne">---&gt; </span><span class="mi">19</span> <span class="n">client</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cads_api_client/legacy_api_client.py:149,</span> in <span class="ni">LegacyApiClient.retrieve</span><span class="nt">(self, name, request, target)</span>
+<span class="g g-Whitespace">    </span><span class="mi">146</span> <span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">147</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">148</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">processing</span><span class="o">.</span><span class="n">Results</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">149</span>     <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logging_decorator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">submit_and_wait_on_result</span><span class="p">)(</span>
+<span class="g g-Whitespace">    </span><span class="mi">150</span>         <span class="n">collection_id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">151</span>         <span class="n">retry_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">retry_options</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">152</span>         <span class="o">**</span><span class="n">request</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">153</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">154</span>     <span class="n">partial_download</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">155</span>         <span class="n">result</span><span class="o">.</span><span class="n">download</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">156</span>         <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">157</span>         <span class="n">retry_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">retry_options</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">158</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">159</span>     <span class="n">result</span><span class="o">.</span><span class="n">download</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logging_decorator</span><span class="p">(</span><span class="n">partial_download</span><span class="p">)</span>  <span class="c1"># type: ignore[method-assign]</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cads_api_client/legacy_api_client.py:134,</span> in <span class="ni">LegacyApiClient.logging_decorator.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">129</span> <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">130</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">131</span>     <span class="k">with</span> <span class="n">LoggingContext</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">132</span>         <span class="n">logger</span><span class="o">=</span><span class="n">processing</span><span class="o">.</span><span class="n">logger</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">quiet</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_debug</span>
+<span class="g g-Whitespace">    </span><span class="mi">133</span>     <span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">134</span>         <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cads_api_client/api_client.py:77,</span> in <span class="ni">ApiClient.submit_and_wait_on_result</span><span class="nt">(self, collection_id, retry_options, **request)</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span> <span class="k">def</span> <span class="nf">submit_and_wait_on_result</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">75</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">collection_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">retry_options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">**</span><span class="n">request</span><span class="p">:</span> <span class="n">Any</span>
+<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">processing</span><span class="o">.</span><span class="n">Results</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">77</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">retrieve_api</span><span class="o">.</span><span class="n">submit_and_wait_on_result</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">78</span>         <span class="n">collection_id</span><span class="p">,</span> <span class="n">retry_options</span><span class="o">=</span><span class="n">retry_options</span><span class="p">,</span> <span class="o">**</span><span class="n">request</span>
+<span class="g g-Whitespace">     </span><span class="mi">79</span>     <span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cads_api_client/processing.py:454,</span> in <span class="ni">Processing.submit_and_wait_on_result</span><span class="nt">(self, collection_id, retry_options, **request)</span>
+<span class="g g-Whitespace">    </span><span class="mi">450</span> <span class="k">def</span> <span class="nf">submit_and_wait_on_result</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">451</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">collection_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">retry_options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">**</span><span class="n">request</span><span class="p">:</span> <span class="n">Any</span>
+<span class="g g-Whitespace">    </span><span class="mi">452</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Results</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">453</span>     <span class="n">remote</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">collection_id</span><span class="p">,</span> <span class="n">retry_options</span><span class="o">=</span><span class="n">retry_options</span><span class="p">,</span> <span class="o">**</span><span class="n">request</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">454</span>     <span class="n">remote</span><span class="o">.</span><span class="n">wait_on_result</span><span class="p">(</span><span class="n">retry_options</span><span class="o">=</span><span class="n">retry_options</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">455</span>     <span class="k">return</span> <span class="n">remote</span><span class="o">.</span><span class="n">make_results</span><span class="p">()</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cads_api_client/processing.py:248,</span> in <span class="ni">Remote.wait_on_result</span><span class="nt">(self, retry_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">246</span>     <span class="k">raise</span> <span class="n">ProcessingFailedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown API state </span><span class="si">{</span><span class="n">status</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">247</span> <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;result not ready, waiting for </span><span class="si">{</span><span class="n">sleep</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">248</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>unzip<span class="w"> </span>-o<span class="w"> </span>ba855dda853e457af1754a3c905632f.zip
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">dask</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;2m_temperature&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;t2m_c&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abs_diff_cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;2m Temperature [C]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the temperature of air at 2m above the surface of land, sea or in-land waters. </span><span class="se">\</span>
+<span class="s1">        2m temperature is calculated by interpolating between the lowest model level and the Earth</span><span class="se">\&#39;</span><span class="s1">s surface, taking account of the atmospheric conditions.&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;skin_temperature&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;skt_c&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abs_diff_cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Skin temperature [C]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;The skin temperature is the theoretical temperature that is required to satisfy the surface energy balance. </span><span class="se">\</span>
+<span class="s1">        It represents the temperature of the uppermost surface layer, which has no heat capacity and so can respond instantaneously to </span><span class="se">\</span>
+<span class="s1">        changes in surface fluxes. Skin temperature is calculated differently over land and sea.&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;soil_temperature_level_1&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;stl1_c&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abs_diff_cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Soil temperature level 1 (0 - 7cm) [C]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the temperature of the soil at level 1 (in the middle of layer 1). Layer 1: 0 - 7cm&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;soil_temperature_level_2&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;stl2_c&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abs_diff_cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Soil temperature level 2 (7 - 28cm) [C]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the temperature of the soil at level 2 (in the middle of layer 1). Layer 1: 7 - 28cm&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;soil_temperature_level_3&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;stl3_c&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abs_diff_cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Soil temperature level 3 (28 - 100cm) [C]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the temperature of the soil at level 3 (in the middle of layer 1). Layer 1: 28 - 100cm&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;soil_temperature_level_4&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;stl4_c&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abs_diff_cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Soil temperature level 4 (100 - 289cm) [C]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the temperature of the soil at level 4 (in the middle of layer 1). Layer 1: 100 - 289cm&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;volumetric_soil_water_layer_1&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;swvl1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abs_diff_cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Volumetric soil water layer 1 (0 - 7cm) [m3 m-3]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the volume of water in soil layer 1 (0 - 7cm, the surface is at 0cm). </span><span class="se">\</span>
+<span class="s1">        The volumetric soil water is associated with the soil texture (or classification), soil depth, and the underlying groundwater level.&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;volumetric_soil_water_layer_2&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;swvl2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abs_diff_cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Volumetric soil water layer 2 (7 - 28cm) [m3 m-3]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the volume of water in soil layer 1 (7 - 28cm, the surface is at 0cm). </span><span class="se">\</span>
+<span class="s1">        The volumetric soil water is associated with the soil texture (or classification), soil depth, and the underlying groundwater level.&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;volumetric_soil_water_layer_3&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;swvl3&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abs_diff_cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Volumetric soil water layer 3 (28 - 100cm) [m3 m-3]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the volume of water in soil layer 1 (28 - 100cm, the surface is at 0cm). </span><span class="se">\</span>
+<span class="s1">        The volumetric soil water is associated with the soil texture (or classification), soil depth, and the underlying groundwater level.&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;volumetric_soil_water_layer_4&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;swvl4&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abs_diff_cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Volumetric soil water layer 4 (100 - 289cm) [m3 m-3]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the volume of water in soil layer 1 (100 - 289cm, the surface is at 0cm). </span><span class="se">\</span>
+<span class="s1">        The volumetric soil water is associated with the soil texture (or classification), soil depth, and the underlying groundwater level.&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;potential_evaporation&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;pev&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;YlOrBr&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Potential evaporation [meters]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is a measure of the extent to which near-surface atmospheric conditions are </span><span class="se">\</span>
+<span class="s1">        conducive to the process of evaporation. It is usually considered to be the amount of evaporation, </span><span class="se">\</span>
+<span class="s1">        under existing atmospheric conditions, from a surface of pure water which has the temperature of </span><span class="se">\</span>
+<span class="s1">        the lowest layer of the atmosphere and gives an indication of the maximum possible evaporation.&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;runoff&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;GnBu&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Runoff [meters]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s2">&quot;Some water from rainfall, melting snow, or deep in the soil, stays stored in the soil. </span><span class="se">\</span>
+<span class="s2">        Otherwise, the water drains away, either over the surface (surface runoff), </span><span class="se">\</span>
+<span class="s2">        or under the ground (sub-surface runoff) and the sum of these two is simply called &#39;runoff&#39;.&quot;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;sub_surface_runoff&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ssro&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;GnBu&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Sub-Surface Runoff [meters]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s2">&quot;Some water from rainfall, melting snow, or deep in the soil, stays stored in the soil. </span><span class="se">\</span>
+<span class="s2">        Otherwise, the water drains away, either over the surface (surface runoff), </span><span class="se">\</span>
+<span class="s2">        or under the ground (sub-surface runoff) and the sum of these two is simply called &#39;runoff&#39;.&quot;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;surface_runoff&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;sro&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;GnBu&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Surface Runoff [meters]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s2">&quot;Some water from rainfall, melting snow, or deep in the soil, stays stored in the soil. </span><span class="se">\</span>
+<span class="s2">        Otherwise, the water drains away, either over the surface (surface runoff), </span><span class="se">\</span>
+<span class="s2">        or under the ground (sub-surface runoff) and the sum of these two is simply called &#39;runoff&#39;.&quot;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;total_evaporation&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;YlOrBr&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Evaporation [m of water equivalent]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s2">&quot;This parameter is the accumulated amount of water that has evaporated from the Earth&#39;s surface, </span><span class="se">\</span>
+<span class="s2">        including a simplified representation of transpiration (from vegetation), into vapour in the air above.&quot;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;10m_u_component_of_wind&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;u10&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;U component of wind [m s-1]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the eastward component of the wind. It is the horizontal speed of air moving towards the east, </span><span class="se">\</span>
+<span class="s1">        in metres per second. A negative sign thus indicates air movement towards the west. </span><span class="se">\</span>
+<span class="s1">        This parameter can be combined with the V component of wind to give the speed and direction of the horizontal wind.&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;10m_v_component_of_wind&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;v10&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;V component of wind [m s-1]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the northward component of the wind. It is the horizontal speed of air moving towards the north, </span><span class="se">\</span>
+<span class="s1">        in metres per second. A negative sign thus indicates air movement towards the south. </span><span class="se">\</span>
+<span class="s1">        This parameter can be combined with the U component of wind to give the speed and direction of the horizontal wind.&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;total_precipitation&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;tp&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;PuBuGn&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abs_diff_cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;RdBu&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Total precipitation [meters]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;This parameter is the accumulated liquid and frozen water, comprising rain and snow, </span><span class="se">\</span>
+<span class="s1">        that falls to the Earth</span><span class="se">\&#39;</span><span class="s1">s surface. It is the sum of large-scale precipitation and convective precipitation.&#39;</span>
+    <span class="p">},</span>
+    
+    <span class="s1">&#39;leaf_area_index_high_vegetation&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;lai_hv&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;Greens&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Leaf area index, high vegetation [m2 m-2]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s2">&quot;This parameter is the surface area of one side of all the leaves found over an area of land for </span><span class="se">\</span>
+<span class="s2">        vegetation classified as &#39;high&#39;. This parameter has a value of 0 over bare ground or where there are no leaves. </span><span class="se">\</span>
+<span class="s2">        It can be calculated daily from satellite data. It is important for forecasting, for example, </span><span class="se">\</span>
+<span class="s2">        how much rainwater will be intercepted by the vegetative canopy, rather than falling to the ground.&quot;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;leaf_area_index_low_vegetation&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;lai_lv&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;Greens&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;plot_title&#39;</span><span class="p">:</span> <span class="s1">&#39;Leaf area index, low vegetation [m2 m-2]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s2">&quot;This parameter is the surface area of one side of all the leaves found over an area of land for </span><span class="se">\</span>
+<span class="s2">        vegetation classified as &#39;low&#39;. This parameter has a value of 0 over bare ground or where there are no leaves. </span><span class="se">\</span>
+<span class="s2">        It can be calculated daily from satellite data. It is important for forecasting, for example, </span><span class="se">\</span>
+<span class="s2">        how much rainwater will be intercepted by the vegetative canopy, rather than falling to the ground.&quot;</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">([</span><span class="s1">&#39;data_0.nc&#39;</span><span class="p">,</span> <span class="s1">&#39;data_1.nc&#39;</span><span class="p">,</span> <span class="s1">&#39;data_2.nc&#39;</span><span class="p">,</span> <span class="s1">&#39;data_3.nc&#39;</span><span class="p">],</span> <span class="n">chunks</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">},</span> <span class="n">concat_dim</span><span class="o">=</span><span class="s2">&quot;valid_time&quot;</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;nested&#39;</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># Resample to monthly data (if necessary)</span>
+<span class="n">ds_sorted</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="s1">&#39;valid_time&#39;</span><span class="p">)</span>
+<span class="n">ds_monthly</span> <span class="o">=</span> <span class="n">ds_sorted</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=</span><span class="s1">&#39;1ME&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;t2m_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;t2m&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;skt_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;skt&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl1_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl1&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl2_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl2&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl3_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl3&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl4_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl4&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds_monthly</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">visualise_variable_annually</span><span class="p">(</span><span class="n">variable_name</span><span class="p">,</span> <span class="n">year</span><span class="p">):</span>
+    
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;projection&#39;</span><span class="p">:</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()})</span>
+    <span class="n">months</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;January&quot;</span><span class="p">,</span> <span class="s2">&quot;February&quot;</span><span class="p">,</span> <span class="s2">&quot;March&quot;</span><span class="p">,</span> <span class="s2">&quot;April&quot;</span><span class="p">,</span> <span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;June&quot;</span><span class="p">,</span><span class="s2">&quot;July&quot;</span><span class="p">,</span> <span class="s2">&quot;August&quot;</span><span class="p">,</span> <span class="s2">&quot;September&quot;</span><span class="p">,</span> <span class="s2">&quot;October&quot;</span><span class="p">,</span> <span class="s2">&quot;November&quot;</span><span class="p">,</span> <span class="s2">&quot;December&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
+        <span class="p">(</span><span class="n">ds_monthly</span><span class="p">[</span><span class="n">plot_params</span><span class="p">[</span><span class="n">variable_name</span><span class="p">][</span><span class="s2">&quot;short_name&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">:</span><span class="s1">02d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span><span class="n">cmap</span><span class="o">=</span><span class="n">plot_params</span><span class="p">[</span><span class="n">variable_name</span><span class="p">][</span><span class="s1">&#39;cmap&#39;</span><span class="p">],</span> <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">plot_params</span><span class="p">[</span><span class="n">variable_name</span><span class="p">][</span><span class="s2">&quot;plot_title&quot;</span><span class="p">]})</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_params</span><span class="p">[</span><span class="n">variable_name</span><span class="p">][</span><span class="s2">&quot;plot_title&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> for </span><span class="si">{</span><span class="n">months</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_variable_annually</span><span class="p">(</span><span class="s1">&#39;2m_temperature&#39;</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="compare-to-baseline-1991-to-2023">
+<h1>Compare to baseline (1991 to 2023)<a class="headerlink" href="#compare-to-baseline-1991-to-2023" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_monthly_baseline</span><span class="p">(</span><span class="n">ds_monthly</span><span class="p">,</span> <span class="n">ignore_years</span><span class="o">=</span><span class="p">[</span><span class="mi">2020</span><span class="p">]):</span>
+    <span class="n">ds_baseline</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=~</span><span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;valid_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">ignore_years</span><span class="p">))</span>
+    <span class="n">monthly_baseline</span> <span class="o">=</span> <span class="n">ds_baseline</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;valid_time.month&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;valid_time&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">monthly_baseline</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_comparisons</span><span class="p">(</span><span class="n">ds_annual</span><span class="p">,</span> <span class="n">ds_monthly_baseline</span><span class="p">,</span> <span class="n">variable_name</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">show_diff_plots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_box_plots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_hists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_extremes_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">extreme_perc</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">ds_annual_variable</span> <span class="o">=</span> <span class="n">ds_annual</span><span class="p">[</span><span class="n">plot_params</span><span class="p">[</span><span class="n">variable_name</span><span class="p">][</span><span class="s2">&quot;short_name&quot;</span><span class="p">]]</span>
+    <span class="n">ds_monthly_variable</span> <span class="o">=</span> <span class="n">ds_annual_variable</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;valid_time.month&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;valid_time&#39;</span><span class="p">)</span>
+
+    <span class="n">ds_monthly_baseline_variable</span> <span class="o">=</span> <span class="n">ds_monthly_baseline</span><span class="p">[</span><span class="n">plot_params</span><span class="p">[</span><span class="n">variable_name</span><span class="p">][</span><span class="s2">&quot;short_name&quot;</span><span class="p">]]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Selected variable....&#39;</span><span class="p">)</span>
+    <span class="n">months</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;January&quot;</span><span class="p">,</span> <span class="s2">&quot;February&quot;</span><span class="p">,</span> <span class="s2">&quot;March&quot;</span><span class="p">,</span> <span class="s2">&quot;April&quot;</span><span class="p">,</span> <span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;June&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;July&quot;</span><span class="p">,</span> <span class="s2">&quot;August&quot;</span><span class="p">,</span> <span class="s2">&quot;September&quot;</span><span class="p">,</span> <span class="s2">&quot;October&quot;</span><span class="p">,</span> <span class="s2">&quot;November&quot;</span><span class="p">,</span> <span class="s2">&quot;December&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Create subplots</span>
+    <span class="k">if</span> <span class="n">show_diff_plots</span><span class="p">:</span>
+        <span class="n">fig_plot</span><span class="p">,</span> <span class="n">axes_plot</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;projection&#39;</span><span class="p">:</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()})</span>
+        <span class="n">fig_plot</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Comparisons for </span><span class="si">{</span><span class="n">variable_name</span><span class="si">}</span><span class="s1"> in </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    
+    <span class="c1"># Box Plots in a 3x4 layout</span>
+    <span class="k">if</span> <span class="n">show_box_plots</span><span class="p">:</span>
+        <span class="n">fig_box</span><span class="p">,</span> <span class="n">axes_box</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+        <span class="n">fig_box</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">variable_name</span><span class="si">}</span><span class="s1"> Box Plot Comparisons for </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="c1"># Histogram Plots in a 3x4 layout</span>
+    <span class="k">if</span> <span class="n">show_hists</span><span class="p">:</span>
+        <span class="n">fig_hist</span><span class="p">,</span> <span class="n">axes_hist</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+        <span class="n">fig_hist</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">variable_name</span><span class="si">}</span><span class="s1"> Histogram Comparisons for </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">show_extremes_plot</span><span class="p">:</span>
+        <span class="c1"># Focus on Extremes in a 3x4 layout</span>
+        <span class="n">fig_extremes</span><span class="p">,</span> <span class="n">axes_extremes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+        <span class="n">fig_extremes</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">variable_name</span><span class="si">}</span><span class="s1"> Focus on Extremes for </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Processing month </span><span class="si">{</span><span class="n">months</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">month</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        
+        <span class="c1"># Extract the data for the current month</span>
+        <span class="n">annual_month</span> <span class="o">=</span> <span class="n">ds_monthly_variable</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="n">month</span><span class="p">)</span>
+        <span class="n">baseline_month</span> <span class="o">=</span> <span class="n">ds_monthly_baseline_variable</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="n">month</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">show_diff_plots</span><span class="p">:</span>
+            <span class="c1"># Absolute Difference Map</span>
+            <span class="n">abs_diff</span> <span class="o">=</span> <span class="n">annual_month</span> <span class="o">-</span> <span class="n">baseline_month</span>
+            <span class="n">ax_plot</span> <span class="o">=</span> <span class="n">axes_plot</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">abs_diff</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax_plot</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plot_params</span><span class="p">[</span><span class="n">variable_name</span><span class="p">][</span><span class="s2">&quot;abs_diff_cmap&quot;</span><span class="p">],</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Abs Diff </span><span class="si">{</span><span class="n">variable_name</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">months</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">})</span>
+            <span class="n">ax_plot</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+            <span class="n">ax_plot</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">)</span>
+            <span class="n">ax_plot</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Abs Diff </span><span class="si">{</span><span class="n">months</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        
+        <span class="c1"># Ensure only valid pixels are compared (non-NaN in both datasets)</span>
+        <span class="k">if</span> <span class="n">show_box_plots</span> <span class="ow">or</span> <span class="n">show_hists</span> <span class="ow">or</span> <span class="n">show_extremes_plot</span><span class="p">:</span>
+            <span class="n">annual_month_flat</span> <span class="o">=</span> <span class="n">annual_month</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">baseline_month_flat</span> <span class="o">=</span> <span class="n">baseline_month</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    
+            <span class="n">valid_data</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">annual_month_flat</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">baseline_month_flat</span><span class="p">)</span>
+    
+            <span class="n">annual_month_valid</span> <span class="o">=</span> <span class="n">annual_month_flat</span><span class="p">[</span><span class="n">valid_data</span><span class="p">]</span>
+            <span class="n">baseline_month_valid</span> <span class="o">=</span> <span class="n">baseline_month_flat</span><span class="p">[</span><span class="n">valid_data</span><span class="p">]</span>
+        
+        <span class="c1"># Focus on Extremes Plot</span>
+        <span class="k">if</span> <span class="n">show_extremes_plot</span><span class="p">:</span>
+            <span class="n">ax_extremes</span> <span class="o">=</span> <span class="n">axes_extremes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">top_2_percent_threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">baseline_month_valid</span><span class="p">,</span> <span class="mi">100</span><span class="o">-</span><span class="n">extreme_perc</span><span class="p">)</span>
+            <span class="n">bottom_2_percent_threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">baseline_month_valid</span><span class="p">,</span> <span class="n">extreme_perc</span><span class="p">)</span>
+    
+            <span class="c1"># Identify the top and bottom 2% pixels</span>
+            <span class="n">high_baseline</span> <span class="o">=</span> <span class="n">baseline_month_valid</span><span class="p">[</span><span class="n">baseline_month_valid</span> <span class="o">&gt;=</span> <span class="n">top_2_percent_threshold</span><span class="p">]</span>
+            <span class="n">high_annual</span> <span class="o">=</span> <span class="n">annual_month_valid</span><span class="p">[</span><span class="n">baseline_month_valid</span> <span class="o">&gt;=</span> <span class="n">top_2_percent_threshold</span><span class="p">]</span>
+    
+            <span class="n">low_baseline</span> <span class="o">=</span> <span class="n">baseline_month_valid</span><span class="p">[</span><span class="n">baseline_month_valid</span> <span class="o">&lt;=</span> <span class="n">bottom_2_percent_threshold</span><span class="p">]</span>
+            <span class="n">low_annual</span> <span class="o">=</span> <span class="n">annual_month_valid</span><span class="p">[</span><span class="n">baseline_month_valid</span> <span class="o">&lt;=</span> <span class="n">bottom_2_percent_threshold</span><span class="p">]</span>
+    
+            <span class="c1"># Scatter plot for the high 2%</span>
+            <span class="n">ax_extremes</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">high_baseline</span><span class="p">,</span> <span class="n">high_annual</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;High </span><span class="si">{</span><span class="n">extreme_perc</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+            <span class="n">ax_extremes</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">high_baseline</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">high_baseline</span><span class="p">)],</span>
+                             <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">high_baseline</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">high_baseline</span><span class="p">)],</span> <span class="s1">&#39;k--&#39;</span><span class="p">)</span>
+    
+            <span class="c1"># Scatter plot for the low 2%</span>
+            <span class="n">ax_extremes</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">low_baseline</span><span class="p">,</span> <span class="n">low_annual</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Low </span><span class="si">{</span><span class="n">extreme_perc</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+            <span class="n">ax_extremes</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">low_baseline</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">low_baseline</span><span class="p">)],</span>
+                             <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">low_baseline</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">low_baseline</span><span class="p">)],</span> <span class="s1">&#39;k--&#39;</span><span class="p">)</span>
+    
+            <span class="n">ax_extremes</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Baseline&#39;</span><span class="p">)</span>
+            <span class="n">ax_extremes</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">ax_extremes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">months</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">ax_extremes</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">ax_extremes</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        
+        <span class="c1"># Box Plot</span>
+        <span class="k">if</span> <span class="n">show_box_plots</span><span class="p">:</span>
+            <span class="n">ax_box</span> <span class="o">=</span> <span class="n">axes_box</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">ax_box</span><span class="o">.</span><span class="n">boxplot</span><span class="p">([</span><span class="n">baseline_month_valid</span><span class="p">,</span> <span class="n">annual_month_valid</span><span class="p">],</span> <span class="n">tick_labels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Baseline&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">months</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">],</span> <span class="n">notch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">ax_box</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">months</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">ax_box</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Histogram Plot</span>
+        <span class="k">if</span> <span class="n">show_hists</span><span class="p">:</span>
+            <span class="n">ax_hist</span> <span class="o">=</span> <span class="n">axes_hist</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">ax_hist</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">baseline_month_valid</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Baseline&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+            <span class="n">ax_hist</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">annual_month_valid</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">months</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+            <span class="n">ax_hist</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">months</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">ax_hist</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">show_diff_plots</span><span class="p">:</span>
+        <span class="n">fig_plot</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">show_box_plots</span><span class="p">:</span>
+        <span class="n">fig_box</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">show_hists</span><span class="p">:</span>
+        <span class="n">fig_hist</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">show_extremes_plot</span><span class="p">:</span>
+        <span class="n">fig_extremes</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_year</span> <span class="o">=</span> <span class="mi">2017</span>
+<span class="n">monthly_baseline</span> <span class="o">=</span> <span class="n">create_monthly_baseline</span><span class="p">(</span><span class="n">ds_monthly</span><span class="p">,</span> <span class="n">ignore_years</span><span class="o">=</span><span class="p">[</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">2018</span><span class="p">,</span> <span class="mi">2019</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="mi">2022</span><span class="p">,</span> <span class="mi">2023</span><span class="p">])</span>
+<span class="n">ds_target</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=</span><span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;valid_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="n">target_year</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">make_comparisons</span><span class="p">(</span><span class="n">ds_target</span><span class="p">,</span> <span class="n">monthly_baseline</span><span class="p">,</span> <span class="s1">&#39;2m_temperature&#39;</span><span class="p">,</span> <span class="n">target_year</span><span class="p">,</span> <span class="n">show_box_plots</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_hists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_extremes_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">make_comparisons</span><span class="p">(</span><span class="n">ds_target</span><span class="p">,</span> <span class="n">monthly_baseline</span><span class="p">,</span> <span class="s1">&#39;total_precipitation&#39;</span><span class="p">,</span> <span class="n">target_year</span><span class="p">,</span> <span class="n">show_box_plots</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_hists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_extremes_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="temperature-and-precipitation-gridded-data-for-global-and-regional-domains-derived-from-in-situ-and-satellite-observations">
+<h2>Temperature and precipitation gridded data for global and regional domains derived from in-situ and satellite observations<a class="headerlink" href="#temperature-and-precipitation-gridded-data-for-global-and-regional-domains-derived-from-in-situ-and-satellite-observations" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://cds-beta.climate.copernicus.eu/datasets/insitu-gridded-observations-global-and-regional?tab=download">https://cds-beta.climate.copernicus.eu/datasets/insitu-gridded-observations-global-and-regional?tab=download</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="s2">&quot;insitu-gridded-observations-global-and-regional&quot;</span>
+<span class="n">request</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;origin&#39;</span><span class="p">:</span> <span class="s1">&#39;chirps&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;region&#39;</span><span class="p">:</span> <span class="s1">&#39;africa&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;precipitation&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;time_aggregation&#39;</span><span class="p">:</span> <span class="s1">&#39;daily&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;horizontal_aggregation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;0_25_x_0_25&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2019&#39;</span><span class="p">,</span> <span class="s1">&#39;2020&#39;</span><span class="p">,</span> <span class="s1">&#39;2021&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;v2_0&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">cdsapi</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+<span class="n">client</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="s2">&quot;insitu-gridded-observations-global-and-regional&quot;</span>
+<span class="n">request</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;origin&#39;</span><span class="p">:</span> <span class="s1">&#39;gpcc&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;region&#39;</span><span class="p">:</span> <span class="s1">&#39;global&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;precipitation&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;time_aggregation&#39;</span><span class="p">:</span> <span class="s1">&#39;monthly&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;horizontal_aggregation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;1_x_1&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2019&#39;</span><span class="p">,</span> <span class="s1">&#39;2020&#39;</span><span class="p">,</span> <span class="s1">&#39;2021&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;v2020_0&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">cdsapi</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+<span class="n">client</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="river-discharge-and-related-historical-data-from-the-global-flood-awareness-system">
+<h2>River discharge and related historical data from the Global Flood Awareness System<a class="headerlink" href="#river-discharge-and-related-historical-data-from-the-global-flood-awareness-system" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://cds-beta.climate.copernicus.eu/datasets/cems-glofas-historical?tab=download">https://cds-beta.climate.copernicus.eu/datasets/cems-glofas-historical?tab=download</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="s2">&quot;cems-glofas-historical&quot;</span>
+<span class="n">request</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;system_version&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;version_4_0&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;hydrological_model&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lisflood&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;product_type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;consolidated&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;river_discharge_in_the_last_24_hours&#39;</span><span class="p">,</span> <span class="s1">&#39;runoff_water_equivalent&#39;</span><span class="p">,</span> <span class="s1">&#39;soil_wetness_index&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;hyear&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2018&#39;</span><span class="p">,</span> <span class="s1">&#39;2019&#39;</span><span class="p">,</span> <span class="s1">&#39;2020&#39;</span><span class="p">,</span> <span class="s1">&#39;2021&#39;</span><span class="p">,</span> <span class="s1">&#39;2022&#39;</span><span class="p">,</span> <span class="s1">&#39;2023&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;hmonth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="s1">&#39;02&#39;</span><span class="p">,</span> <span class="s1">&#39;03&#39;</span><span class="p">,</span> <span class="s1">&#39;04&#39;</span><span class="p">,</span> <span class="s1">&#39;05&#39;</span><span class="p">,</span> <span class="s1">&#39;06&#39;</span><span class="p">,</span> <span class="s1">&#39;07&#39;</span><span class="p">,</span> <span class="s1">&#39;08&#39;</span><span class="p">,</span> <span class="s1">&#39;09&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;hday&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="s1">&#39;02&#39;</span><span class="p">,</span> <span class="s1">&#39;03&#39;</span><span class="p">,</span> <span class="s1">&#39;04&#39;</span><span class="p">,</span> <span class="s1">&#39;05&#39;</span><span class="p">,</span> <span class="s1">&#39;06&#39;</span><span class="p">,</span> <span class="s1">&#39;07&#39;</span><span class="p">,</span> <span class="s1">&#39;08&#39;</span><span class="p">,</span> <span class="s1">&#39;09&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;14&#39;</span><span class="p">,</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;16&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">,</span> <span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="s1">&#39;19&#39;</span><span class="p">,</span> <span class="s1">&#39;20&#39;</span><span class="p">,</span> <span class="s1">&#39;21&#39;</span><span class="p">,</span> <span class="s1">&#39;22&#39;</span><span class="p">,</span> <span class="s1">&#39;23&#39;</span><span class="p">,</span> <span class="s1">&#39;24&#39;</span><span class="p">,</span> <span class="s1">&#39;25&#39;</span><span class="p">,</span> <span class="s1">&#39;26&#39;</span><span class="p">,</span> <span class="s1">&#39;27&#39;</span><span class="p">,</span> <span class="s1">&#39;28&#39;</span><span class="p">,</span> <span class="s1">&#39;29&#39;</span><span class="p">,</span> <span class="s1">&#39;30&#39;</span><span class="p">,</span> <span class="s1">&#39;31&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;data_format&#39;</span><span class="p">:</span> <span class="s1">&#39;netcdf&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;download_format&#39;</span><span class="p">:</span> <span class="s1">&#39;zip&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;area&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">11</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="o">-</span><span class="mi">26</span><span class="p">,</span> <span class="mi">51</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">cdsapi</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+<span class="n">client</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/07-notebook-solving-puzzle"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Access Temperature variable from ADS/CDS</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#access-relative-humidity">Access relative humidity</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#era5-land-monthly-averaged-data-from-1950-to-present">ERA5-Land monthly averaged data from 1950 to present</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#focus-in-madagascar">Focus in Madagascar</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-to-baseline-1991-to-2023">Compare to baseline (1991 to 2023)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#temperature-and-precipitation-gridded-data-for-global-and-regional-domains-derived-from-in-situ-and-satellite-observations">Temperature and precipitation gridded data for global and regional domains derived from in-situ and satellite observations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#river-discharge-and-related-historical-data-from-the-global-flood-awareness-system">River discharge and related historical data from the Global Flood Awareness System</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Marina Caporlingua, Akis Karagiannis, George Begkas, Lucy Colley - Thanks to ECMWF mentors Jessica Keune, Christopher Barnard, Francesca Di Giuseppe
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

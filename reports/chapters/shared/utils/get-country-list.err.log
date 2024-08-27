@@ -1,0 +1,45 @@
+Traceback (most recent call last):
+  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 1314, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+output_file, missing_file = create_country_list_json()
+print(f"Data has been successfully saved to {output_file}")
+print(f"Missing countries have been saved to {missing_file}")
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
+Cell [0;32mIn[5], line 1[0m
+[0;32m----> 1[0m output_file, missing_file [38;5;241m=[39m [43mcreate_country_list_json[49m[43m([49m[43m)[49m
+[1;32m      2[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mData has been successfully saved to [39m[38;5;132;01m{[39;00moutput_file[38;5;132;01m}[39;00m[38;5;124m"[39m)
+[1;32m      3[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mMissing countries have been saved to [39m[38;5;132;01m{[39;00mmissing_file[38;5;132;01m}[39;00m[38;5;124m"[39m)
+
+Cell [0;32mIn[4], line 101[0m, in [0;36mcreate_country_list_json[0;34m(directory_path)[0m
+[1;32m    100[0m [38;5;28;01mdef[39;00m [38;5;21mcreate_country_list_json[39m(directory_path[38;5;241m=[39m[38;5;124m'[39m[38;5;124mcountry-geojson[39m[38;5;124m'[39m):
+[0;32m--> 101[0m     geojson_files [38;5;241m=[39m [43mlist_geojson_files[49m[43m([49m[43mdirectory_path[49m[43m)[49m
+[1;32m    102[0m     countries, adm1_subareas, adm2_subareas [38;5;241m=[39m separate_files_by_adm_level(geojson_files, directory_path)
+[1;32m    104[0m     country_list, initial_missing_countries [38;5;241m=[39m process_countries(countries, adm1_subareas, adm2_subareas)
+
+Cell [0;32mIn[4], line 2[0m, in [0;36mlist_geojson_files[0;34m(directory_path)[0m
+[1;32m      1[0m [38;5;28;01mdef[39;00m [38;5;21mlist_geojson_files[39m(directory_path):
+[0;32m----> 2[0m     [38;5;28;01mreturn[39;00m [f [38;5;28;01mfor[39;00m f [38;5;129;01min[39;00m [43mos[49m[38;5;241;43m.[39;49m[43mlistdir[49m[43m([49m[43mdirectory_path[49m[43m)[49m [38;5;28;01mif[39;00m f[38;5;241m.[39mendswith([38;5;124m'[39m[38;5;124m.geojson[39m[38;5;124m'[39m)]
+
+[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'country-geojson'
+

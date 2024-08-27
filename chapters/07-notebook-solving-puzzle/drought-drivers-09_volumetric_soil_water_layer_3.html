@@ -1,0 +1,850 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ERA5-Land monthly averaged data from 1950 to present &#8212; Tales of Dry Lands</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ee12de98" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/07-notebook-solving-puzzle/drought-drivers-09_volumetric_soil_water_layer_3';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo-no-bg.png" class="logo__image only-light" alt="Tales of Dry Lands - Home"/>
+    <script>document.write(`<img src="../../_static/logo-no-bg.png" class="logo__image only-dark" alt="Tales of Dry Lands - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Tales of Dry Lands: Chronicles of Drought
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Climate toolkit for beginners</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/what-is-climate.html">What is climate?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/coordinate-system.html">Earth's coordinate system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/data-sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/netCDF-files.html">netCDF files</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Droughts focus</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../02-drought-focus/index.html">Droughts and their impacts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-drought-focus/timeline.html">Historic droughts timeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-drought-focus/indices.html">Drought indices</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Setting up the environment</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../04-set-up-env/set-up-environment.html">Libraries, variables and widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04-set-up-env/storyboard.html">Storyboard (to be deleted)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">First exploration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-time-machine.html">The Time Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-focus-madagascar.html">Drought in Madagascar</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/storyboard.html">Storyboard (to be deleted)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Second exploration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../06-notebook-quantum-of-drought/notebook-quantum-of-drought.html">Load data function</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../06-notebook-quantum-of-drought/storyboard.html">Storyboard (to be deleted)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Third exploration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="storyboard.html">Storyboard (to be deleted)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../credits-license.html">Credits</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ECMWFCode4Earth/tales-of-drought/handbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ECMWFCode4Earth/tales-of-drought/handbook/issues/new?title=Issue%20on%20page%20%2Fchapters/07-notebook-solving-puzzle/drought-drivers-09_volumetric_soil_water_layer_3.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/07-notebook-solving-puzzle/drought-drivers-09_volumetric_soil_water_layer_3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>ERA5-Land monthly averaged data from 1950 to present</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ERA5-Land monthly averaged data from 1950 to present</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#focus-in-madagascar">Focus in Madagascar</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-to-baseline-1991-to-2023">Compare to baseline (1991 to 2023)</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="era5-land-monthly-averaged-data-from-1950-to-present">
+<h1>ERA5-Land monthly averaged data from 1950 to present<a class="headerlink" href="#era5-land-monthly-averaged-data-from-1950-to-present" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://cds-beta.climate.copernicus.eu/datasets/reanalysis-era5-land-monthly-means?tab=overview">https://cds-beta.climate.copernicus.eu/datasets/reanalysis-era5-land-monthly-means?tab=overview</a></p>
+<section id="focus-in-madagascar">
+<h2>Focus in Madagascar<a class="headerlink" href="#focus-in-madagascar" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">'area':</span> <span class="pre">[-9.95,</span> <span class="pre">40.23,</span> <span class="pre">-26.8,</span> <span class="pre">52.45]</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">shared</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param_long_name</span> <span class="o">=</span> <span class="s1">&#39;volumetric_soil_water_layer_3&#39;</span>
+<span class="n">param_short_name</span> <span class="o">=</span> <span class="s1">&#39;swvl3&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">([</span><span class="s1">&#39;data_0.nc&#39;</span><span class="p">,</span> <span class="s1">&#39;data_1.nc&#39;</span><span class="p">,</span> <span class="s1">&#39;data_2.nc&#39;</span><span class="p">],</span> <span class="n">chunks</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">},</span> <span class="n">concat_dim</span><span class="o">=</span><span class="s2">&quot;valid_time&quot;</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;nested&#39;</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Resample to monthly data (if necessary)</span>
+<span class="n">ds_sorted</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="s1">&#39;valid_time&#39;</span><span class="p">)</span>
+<span class="n">ds_monthly</span> <span class="o">=</span> <span class="n">ds_sorted</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=</span><span class="s1">&#39;1ME&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;t2m_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;t2m&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;skt_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;skt&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl1_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl1&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl2_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl2&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl3_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl3&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl4_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl4&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">~/drought-311-venv/lib64/python3.11/site-packages/xarray/core/dataset.py</span> in <span class="ni">?</span><span class="nt">(self, name)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1477</span>             <span class="n">variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1478</span>         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1479</span>             <span class="n">_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">variable</span> <span class="o">=</span> <span class="n">_get_virtual_variable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sizes</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1480</span> 
+
+<span class="ne">KeyError</span>: &#39;t2m&#39;
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">~/drought-311-venv/lib64/python3.11/site-packages/xarray/core/dataset.py</span> in <span class="ni">?</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1576</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_construct_dataarray</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1577</span>             <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1578</span>                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1579</span>                     <span class="sa">f</span><span class="s2">&quot;No variable named </span><span class="si">{</span><span class="n">key</span><span class="si">!r}</span><span class="s2">. Variables on the dataset include </span><span class="si">{</span><span class="n">shorten_list_repr</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span><span class="w"> </span><span class="n">max_items</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nn">~/drought-311-venv/lib64/python3.11/site-packages/xarray/core/dataset.py</span> in <span class="ni">?</span><span class="nt">(self, name)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1477</span>             <span class="n">variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1478</span>         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1479</span>             <span class="n">_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">variable</span> <span class="o">=</span> <span class="n">_get_virtual_variable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sizes</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1480</span> 
+
+<span class="nn">~/drought-311-venv/lib64/python3.11/site-packages/xarray/core/dataset.py</span> in <span class="ni">?</span><span class="nt">(variables, key, dim_sizes)</span>
+<span class="g g-Whitespace">    </span><span class="mi">211</span>     <span class="n">split_key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">212</span>     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_key</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">213</span>         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">214</span> 
+
+<span class="ne">KeyError</span>: &#39;t2m&#39;
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">/tmp/ipykernel_2003397/2383951278.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Resample to monthly data (if necessary)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">ds_sorted</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="s1">&#39;valid_time&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">ds_monthly</span> <span class="o">=</span> <span class="n">ds_sorted</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=</span><span class="s1">&#39;1ME&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;t2m_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;t2m&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;skt_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;skt&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl1_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl1&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl2_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;stl2&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+
+<span class="nn">~/drought-311-venv/lib64/python3.11/site-packages/xarray/core/dataset.py</span> in <span class="ni">?</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1574</span>         <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">hashable</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1575</span>             <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1576</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_construct_dataarray</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1577</span>             <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1578</span>                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1579</span>                     <span class="sa">f</span><span class="s2">&quot;No variable named </span><span class="si">{</span><span class="n">key</span><span class="si">!r}</span><span class="s2">. Variables on the dataset include </span><span class="si">{</span><span class="n">shorten_list_repr</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span><span class="w"> </span><span class="n">max_items</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1580</span>                 <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+<span class="g g-Whitespace">   </span><span class="mi">1581</span> 
+
+<span class="ne">KeyError</span>: &quot;No variable named &#39;t2m&#39;. Variables on the dataset include [&#39;swvl1&#39;, &#39;swvl2&#39;, &#39;swvl3&#39;, &#39;swvl4&#39;, &#39;stl1&#39;, ..., &#39;pev&#39;, &#39;number&#39;, &#39;latitude&#39;, &#39;longitude&#39;, &#39;valid_time&#39;]&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_variable_annually</span><span class="p">(</span><span class="n">ds_monthly</span><span class="p">,</span> <span class="n">param_long_name</span><span class="p">,</span> <span class="mi">2020</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/289d8cead64313b0c7583963683462f364ba7f3d6db1e218d86844c546647efd.png" src="../../_images/289d8cead64313b0c7583963683462f364ba7f3d6db1e218d86844c546647efd.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="compare-to-baseline-1991-to-2023">
+<h1>Compare to baseline (1991 to 2023)<a class="headerlink" href="#compare-to-baseline-1991-to-2023" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_year</span> <span class="o">=</span> <span class="mi">2021</span>
+<span class="n">monthly_baseline</span> <span class="o">=</span> <span class="n">create_monthly_baseline</span><span class="p">(</span><span class="n">ds_monthly</span><span class="p">,</span> <span class="n">ignore_years</span><span class="o">=</span><span class="p">[</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="mi">2022</span><span class="p">,</span> <span class="mi">2023</span><span class="p">])</span>
+<span class="n">ds_target</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=</span><span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;valid_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="n">target_year</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">make_comparisons</span><span class="p">(</span><span class="n">ds_target</span><span class="p">,</span> <span class="n">monthly_baseline</span><span class="p">,</span> <span class="n">param_long_name</span><span class="p">,</span> <span class="n">target_year</span><span class="p">,</span> <span class="n">show_box_plots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_hists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_extremes_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1c8ceda376295a8d38dce77b5778e3c102e8fa28ac09ea50866ed90c253795d5.png" src="../../_images/1c8ceda376295a8d38dce77b5778e3c102e8fa28ac09ea50866ed90c253795d5.png" />
+<img alt="../../_images/589a089f7b7046b7f9d1afad64a0044e394793b0a1ac068d84c36d955e525606.png" src="../../_images/589a089f7b7046b7f9d1afad64a0044e394793b0a1ac068d84c36d955e525606.png" />
+<img alt="../../_images/137cd98112172c2c9fe9d45201071bd46c44e59dddaaebc8a5970634e5f29763.png" src="../../_images/137cd98112172c2c9fe9d45201071bd46c44e59dddaaebc8a5970634e5f29763.png" />
+<img alt="../../_images/f761e012bbe8005f3ff16ddc9059c72f4c1cb574af0907d65a3a1b6de88c610f.png" src="../../_images/f761e012bbe8005f3ff16ddc9059c72f4c1cb574af0907d65a3a1b6de88c610f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var_baseline</span> <span class="o">=</span> <span class="n">monthly_baseline</span><span class="p">[</span><span class="n">param_short_name</span><span class="p">]</span>
+<span class="n">ds_2020</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=</span><span class="n">ds_monthly</span><span class="p">[</span><span class="s1">&#39;valid_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">2020</span><span class="p">)</span>
+<span class="n">var_2020</span> <span class="o">=</span> <span class="n">ds_2020</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;valid_time.month&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;valid_time&#39;</span><span class="p">)[</span><span class="n">param_short_name</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var_baseline_flatten</span> <span class="o">=</span> <span class="n">var_baseline</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">var_2020_flatten</span> <span class="o">=</span> <span class="n">var_2020</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">valid_data</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">var_baseline_flatten</span><span class="p">)</span> <span class="o">*</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">var_2020_flatten</span><span class="p">)</span>
+<span class="n">var_baseline_flatten_valid</span> <span class="o">=</span> <span class="n">var_baseline_flatten</span><span class="p">[</span><span class="n">valid_data</span><span class="p">]</span>
+<span class="n">var_2020_flatten_valid</span> <span class="o">=</span> <span class="n">var_2020_flatten</span><span class="p">[</span><span class="n">valid_data</span><span class="p">]</span>
+<span class="n">var_2020_flatten_valid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.15460305, 0.24403481, 0.15631203, ..., 0.10804848, 0.0621119 ,
+       0.06800179], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">([</span><span class="n">var_baseline_flatten_valid</span><span class="p">,</span> <span class="n">var_2020_flatten_valid</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Baseline&#39;</span><span class="p">,</span> <span class="s1">&#39;Dec 2020&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;m**3 m**-3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution: 2020 vs Baseline&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8479763198ba4d62c108e8ee1893876469c09087d099ccf6a0f9ee54860a5445.png" src="../../_images/8479763198ba4d62c108e8ee1893876469c09087d099ccf6a0f9ee54860a5445.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">var_baseline_flatten_valid</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Baseline&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">var_2020_flatten_valid</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Dec 2020&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;m**3 m**-3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histogram: Dec 2020 vs Baseline&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/70afbaa1d8eb0826113b907e1e5ec24ac3866bbc60bae094571c4c694d71c742.png" src="../../_images/70afbaa1d8eb0826113b907e1e5ec24ac3866bbc60bae094571c4c694d71c742.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anomaly</span> <span class="o">=</span> <span class="p">(</span><span class="n">var_2020</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span> <span class="o">-</span> <span class="n">var_baseline</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="mi">12</span><span class="p">))</span>
+
+<span class="c1"># Plotting the anomaly with NaNs handled automatically</span>
+<span class="n">anomaly</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Anomaly: Dec 2020 vs Baseline&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/05724b60bfadd9b27f801a423359e73c522b59a48aaa97a4a25ce7a8c4afba37.png" src="../../_images/05724b60bfadd9b27f801a423359e73c522b59a48aaa97a4a25ce7a8c4afba37.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assuming ds_monthly and monthly_baseline are already defined</span>
+
+<span class="c1"># Extract May 2020 and May baseline data</span>
+<span class="n">may_2020</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="p">[</span><span class="n">param_short_name</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=</span><span class="s1">&#39;2020-05&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+<span class="n">may_baseline</span> <span class="o">=</span> <span class="n">monthly_baseline</span><span class="p">[</span><span class="n">param_short_name</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Compute the arrays to remove Dask dependency</span>
+<span class="n">may_2020_computed</span> <span class="o">=</span> <span class="n">may_2020</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<span class="n">may_baseline_computed</span> <span class="o">=</span> <span class="n">may_baseline</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+
+<span class="c1"># Flatten the data to sort and find the top/bottom 2% thresholds</span>
+<span class="n">flattened_may_2020</span> <span class="o">=</span> <span class="n">may_2020_computed</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="c1"># Calculate the thresholds for the highest and lowest 2%</span>
+<span class="n">high_threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">flattened_may_2020</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">flattened_may_2020</span><span class="p">)],</span> <span class="mi">98</span><span class="p">)</span>
+<span class="n">low_threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">flattened_may_2020</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">flattened_may_2020</span><span class="p">)],</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Identify the pixels where the temperature is in the highest 2%</span>
+<span class="n">high_2_percent_mask</span> <span class="o">=</span> <span class="n">may_2020_computed</span> <span class="o">&gt;=</span> <span class="n">high_threshold</span>
+<span class="n">low_2_percent_mask</span> <span class="o">=</span> <span class="n">may_2020_computed</span> <span class="o">&lt;=</span> <span class="n">low_threshold</span>
+
+<span class="c1"># Compute the masks to remove Dask dependency</span>
+<span class="n">high_2_percent_mask</span> <span class="o">=</span> <span class="n">high_2_percent_mask</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<span class="n">low_2_percent_mask</span> <span class="o">=</span> <span class="n">low_2_percent_mask</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+
+<span class="c1"># Extract the corresponding baseline values for the identified pixels</span>
+<span class="n">high_2_percent_baseline</span> <span class="o">=</span> <span class="n">may_baseline_computed</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">high_2_percent_mask</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">high_2_percent_2020</span> <span class="o">=</span> <span class="n">may_2020_computed</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">high_2_percent_mask</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">low_2_percent_baseline</span> <span class="o">=</span> <span class="n">may_baseline_computed</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">low_2_percent_mask</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">low_2_percent_2020</span> <span class="o">=</span> <span class="n">may_2020_computed</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">low_2_percent_mask</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Flatten the arrays and remove NaNs for scatter plot comparison</span>
+<span class="n">high_baseline_flat</span> <span class="o">=</span> <span class="n">high_2_percent_baseline</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">high_2020_flat</span> <span class="o">=</span> <span class="n">high_2_percent_2020</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="n">low_baseline_flat</span> <span class="o">=</span> <span class="n">low_2_percent_baseline</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">low_2020_flat</span> <span class="o">=</span> <span class="n">low_2_percent_2020</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="c1"># Remove NaN values from both baseline and 2020 data</span>
+<span class="n">valid_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">high_baseline_flat</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">high_2020_flat</span><span class="p">)</span>
+<span class="n">valid_low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">low_baseline_flat</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">low_2020_flat</span><span class="p">)</span>
+
+<span class="n">high_baseline_flat</span> <span class="o">=</span> <span class="n">high_baseline_flat</span><span class="p">[</span><span class="n">valid_high</span><span class="p">]</span>
+<span class="n">high_2020_flat</span> <span class="o">=</span> <span class="n">high_2020_flat</span><span class="p">[</span><span class="n">valid_high</span><span class="p">]</span>
+
+<span class="n">low_baseline_flat</span> <span class="o">=</span> <span class="n">low_baseline_flat</span><span class="p">[</span><span class="n">valid_low</span><span class="p">]</span>
+<span class="n">low_2020_flat</span> <span class="o">=</span> <span class="n">low_2020_flat</span><span class="p">[</span><span class="n">valid_low</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Scatter plot for the high 2%</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">high_baseline_flat</span><span class="p">,</span> <span class="n">high_2020_flat</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">high_baseline_flat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">high_baseline_flat</span><span class="p">)],</span> 
+         <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">high_baseline_flat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">high_baseline_flat</span><span class="p">)],</span> <span class="s1">&#39;k--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Baseline May&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;May 2020&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;High 2% Pixels: May 2020 vs Baseline&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Scatter plot for the low 2%</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">low_baseline_flat</span><span class="p">,</span> <span class="n">low_2020_flat</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">low_baseline_flat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">low_baseline_flat</span><span class="p">)],</span> 
+         <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">low_baseline_flat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">low_baseline_flat</span><span class="p">)],</span> <span class="s1">&#39;k--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Baseline May&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;May 2020&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Low 2% Pixels: May 2020 vs Baseline&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/0b7e79fd4db33b978cf6ee6d94889a76d1fc6f609f9eb4974dc929fedfb7024a.png" src="../../_images/0b7e79fd4db33b978cf6ee6d94889a76d1fc6f609f9eb4974dc929fedfb7024a.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/07-notebook-solving-puzzle"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ERA5-Land monthly averaged data from 1950 to present</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#focus-in-madagascar">Focus in Madagascar</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-to-baseline-1991-to-2023">Compare to baseline (1991 to 2023)</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Marina Caporlingua, Akis Karagiannis, George Begkas, Lucy Colley - Thanks to ECMWF mentors Jessica Keune, Christopher Barnard, Francesca Di Giuseppe
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
