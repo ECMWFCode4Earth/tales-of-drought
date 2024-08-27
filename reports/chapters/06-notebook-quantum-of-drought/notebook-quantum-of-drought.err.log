@@ -37,8 +37,10 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-# Load dataset
-spei_data = get_spei_dataset(acc_period=12, years=list(range(1940, 2025)))
-spei48_region = mask_invalid_values(spei_data, variable='SPEI12')
+# Get the result DataFrame
+result_df = classify_drought_severity(spei, classes, conditions)
+result_df = result_df.reset_index()
+# Output the result
+result_df
 -------------------
 
