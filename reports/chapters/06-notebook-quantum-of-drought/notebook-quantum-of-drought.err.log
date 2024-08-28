@@ -1,17 +1,4 @@
 Traceback (most recent call last):
-  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 782, in _async_poll_for_reply
-    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/jupyter_core/utils/__init__.py", line 198, in ensure_async
-    result = await obj
-             ^^^^^^^^^
-  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/jupyter_client/channels.py", line 230, in get_msg
-    raise Empty
-_queue.Empty
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
   File "/home/george/drought-311-venv/lib64/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
   File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 1314, in execute
@@ -25,22 +12,293 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^
   File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 709, in async_execute
     await self.async_execute_cell(
-  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 1005, in async_execute_cell
-    exec_reply = await self.task_poll_for_reply
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 806, in _async_poll_for_reply
-    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
-                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 856, in _async_handle_timeout
-    raise CellTimeoutError.error_from_timeout_and_cell(
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
-The message was: Cell execution timed out.
-Here is a preview of the cell contents:
--------------------
-# Get the result DataFrame
-result_df = classify_drought_severity(spei, classes, conditions)
-result_df = result_df.reset_index()
-# Output the result
-result_df
--------------------
+  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/george/drought-311-venv/lib64/python3.11/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import plotly.graph_objs as go
+import pandas as pd
+import numpy as np
+
+
+# Map classifications to colors
+class_color_map = {
+    'Extremely Dry': '#291700',  # Red
+    'Severely Dry': '#8F5100',   # Orange
+    'Moderately Dry': '#FF961F', # Yellow
+    'Mildly Dry': '#FFBF69',     # Light Green
+    'Mildly Wet': '#A1F7D5',           # Green
+    'Moderately Wet': '#43EFAA',   # Dark Green
+    'Severely Wet': '#0D965F',
+    'Extremely Wet': '#074B30',
+    'No Data': '#cccccc'  # Gray
+}
+
+# Map the classifications to colors
+result_df['Color'] = result_df['Final Classification'].map(class_color_map)
+
+result_df['Label'] = result_df['time'].dt.strftime('%Y-%m')
+
+# Create the plot
+fig = go.Figure()
+
+# Add bars
+fig.add_trace(go.Bar(
+    x=result_df['Label'],
+    y=[1] * len(result_df),  # All bars have height 1
+    marker=dict(color=result_df['Color'], line=result_df['Color']),
+    # width=1,  # Adjust width for better visual appearance
+    name='Drought Classification',
+    opacity=1  # Adjust opacity to improve visibility
+))
+
+# Update x-axis and y-axis
+fig.update_xaxes(
+    title_text='Time',
+    tickangle=90,  # Rotate x-axis labels
+    type='category',
+    categoryorder='category ascending',  # Ensure labels are in the order of the data
+    showgrid=False  # Hide grid lines to reduce visual clutter
+)
+
+fig.update_yaxes(
+    visible=False  # Hide y-axis
+)
+
+# Update layout for transparent background and legend
+fig.update_layout(
+    title='Drought Classification Over Time',
+    legend_title='Drought Classification',
+    legend=dict(
+        x=1.05,  # Positioning the legend to the right of the plot
+        y=1,
+        orientation='v',
+        traceorder='normal'  # Ensure legend entries are in the order they appear in the plot
+    ),
+    bargap=0,
+    margin=dict(l=50, r=200, t=50, b=50),
+    template='plotly',  # Adjust margins for better fit
+    paper_bgcolor='white',  # Transparent background for the entire paper
+        plot_bgcolor='white',    # Transparent background for the plot area,  
+)
+
+# Show the plot
+fig.show()
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+Cell [0;32mIn[12], line 28[0m
+[1;32m     25[0m fig [38;5;241m=[39m go[38;5;241m.[39mFigure()
+[1;32m     27[0m [38;5;66;03m# Add bars[39;00m
+[0;32m---> 28[0m fig[38;5;241m.[39madd_trace([43mgo[49m[38;5;241;43m.[39;49m[43mBar[49m[43m([49m
+[1;32m     29[0m [43m    [49m[43mx[49m[38;5;241;43m=[39;49m[43mresult_df[49m[43m[[49m[38;5;124;43m'[39;49m[38;5;124;43mLabel[39;49m[38;5;124;43m'[39;49m[43m][49m[43m,[49m
+[1;32m     30[0m [43m    [49m[43my[49m[38;5;241;43m=[39;49m[43m[[49m[38;5;241;43m1[39;49m[43m][49m[43m [49m[38;5;241;43m*[39;49m[43m [49m[38;5;28;43mlen[39;49m[43m([49m[43mresult_df[49m[43m)[49m[43m,[49m[43m  [49m[38;5;66;43;03m# All bars have height 1[39;49;00m
+[1;32m     31[0m [43m    [49m[43mmarker[49m[38;5;241;43m=[39;49m[38;5;28;43mdict[39;49m[43m([49m[43mcolor[49m[38;5;241;43m=[39;49m[43mresult_df[49m[43m[[49m[38;5;124;43m'[39;49m[38;5;124;43mColor[39;49m[38;5;124;43m'[39;49m[43m][49m[43m,[49m[43m [49m[43mline[49m[38;5;241;43m=[39;49m[43mresult_df[49m[43m[[49m[38;5;124;43m'[39;49m[38;5;124;43mColor[39;49m[38;5;124;43m'[39;49m[43m][49m[43m)[49m[43m,[49m
+[1;32m     32[0m [43m    [49m[38;5;66;43;03m# width=1,  # Adjust width for better visual appearance[39;49;00m
+[1;32m     33[0m [43m    [49m[43mname[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mDrought Classification[39;49m[38;5;124;43m'[39;49m[43m,[49m
+[1;32m     34[0m [43m    [49m[43mopacity[49m[38;5;241;43m=[39;49m[38;5;241;43m1[39;49m[43m  [49m[38;5;66;43;03m# Adjust opacity to improve visibility[39;49;00m
+[1;32m     35[0m [43m)[49m)
+[1;32m     37[0m [38;5;66;03m# Update x-axis and y-axis[39;00m
+[1;32m     38[0m fig[38;5;241m.[39mupdate_xaxes(
+[1;32m     39[0m     title_text[38;5;241m=[39m[38;5;124m'[39m[38;5;124mTime[39m[38;5;124m'[39m,
+[1;32m     40[0m     tickangle[38;5;241m=[39m[38;5;241m90[39m,  [38;5;66;03m# Rotate x-axis labels[39;00m
+[0;32m   (...)[0m
+[1;32m     43[0m     showgrid[38;5;241m=[39m[38;5;28;01mFalse[39;00m  [38;5;66;03m# Hide grid lines to reduce visual clutter[39;00m
+[1;32m     44[0m )
+
+File [0;32m~/drought-311-venv/lib64/python3.11/site-packages/plotly/graph_objs/_bar.py:3313[0m, in [0;36mBar.__init__[0;34m(self, arg, alignmentgroup, base, basesrc, cliponaxis, constraintext, customdata, customdatasrc, dx, dy, error_x, error_y, hoverinfo, hoverinfosrc, hoverlabel, hovertemplate, hovertemplatesrc, hovertext, hovertextsrc, ids, idssrc, insidetextanchor, insidetextfont, legend, legendgroup, legendgrouptitle, legendrank, legendwidth, marker, meta, metasrc, name, offset, offsetgroup, offsetsrc, opacity, orientation, outsidetextfont, selected, selectedpoints, showlegend, stream, text, textangle, textfont, textposition, textpositionsrc, textsrc, texttemplate, texttemplatesrc, uid, uirevision, unselected, visible, width, widthsrc, x, x0, xaxis, xcalendar, xhoverformat, xperiod, xperiod0, xperiodalignment, xsrc, y, y0, yaxis, ycalendar, yhoverformat, yperiod, yperiod0, yperiodalignment, ysrc, zorder, **kwargs)[0m
+[1;32m   3311[0m _v [38;5;241m=[39m marker [38;5;28;01mif[39;00m marker [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m _v
+[1;32m   3312[0m [38;5;28;01mif[39;00m _v [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[0;32m-> 3313[0m     [38;5;28;43mself[39;49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mmarker[39;49m[38;5;124;43m"[39;49m[43m][49m [38;5;241m=[39m _v
+[1;32m   3314[0m _v [38;5;241m=[39m arg[38;5;241m.[39mpop([38;5;124m"[39m[38;5;124mmeta[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m)
+[1;32m   3315[0m _v [38;5;241m=[39m meta [38;5;28;01mif[39;00m meta [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m _v
+
+File [0;32m~/drought-311-venv/lib64/python3.11/site-packages/plotly/basedatatypes.py:4860[0m, in [0;36mBasePlotlyType.__setitem__[0;34m(self, prop, value)[0m
+[1;32m   4858[0m [38;5;66;03m# ### Handle compound property ###[39;00m
+[1;32m   4859[0m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(validator, CompoundValidator):
+[0;32m-> 4860[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_set_compound_prop[49m[43m([49m[43mprop[49m[43m,[49m[43m [49m[43mvalue[49m[43m)[49m
+[1;32m   4862[0m [38;5;66;03m# ### Handle compound array property ###[39;00m
+[1;32m   4863[0m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(validator, (CompoundArrayValidator, BaseDataValidator)):
+
+File [0;32m~/drought-311-venv/lib64/python3.11/site-packages/plotly/basedatatypes.py:5271[0m, in [0;36mBasePlotlyType._set_compound_prop[0;34m(self, prop, val)[0m
+[1;32m   5268[0m [38;5;66;03m# Import value[39;00m
+[1;32m   5269[0m [38;5;66;03m# ------------[39;00m
+[1;32m   5270[0m validator [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_get_validator(prop)
+[0;32m-> 5271[0m val [38;5;241m=[39m [43mvalidator[49m[38;5;241;43m.[39;49m[43mvalidate_coerce[49m[43m([49m[43mval[49m[43m,[49m[43m [49m[43mskip_invalid[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_skip_invalid[49m[43m)[49m
+[1;32m   5273[0m [38;5;66;03m# Save deep copies of current and new states[39;00m
+[1;32m   5274[0m [38;5;66;03m# ------------------------------------------[39;00m
+[1;32m   5275[0m curr_val [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_compound_props[38;5;241m.[39mget(prop, [38;5;28;01mNone[39;00m)
+
+File [0;32m~/drought-311-venv/lib64/python3.11/site-packages/_plotly_utils/basevalidators.py:2511[0m, in [0;36mCompoundValidator.validate_coerce[0;34m(self, v, skip_invalid, _validate)[0m
+[1;32m   2508[0m     v [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mdata_class()
+[1;32m   2510[0m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(v, [38;5;28mdict[39m):
+[0;32m-> 2511[0m     v [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mdata_class[49m[43m([49m[43mv[49m[43m,[49m[43m [49m[43mskip_invalid[49m[38;5;241;43m=[39;49m[43mskip_invalid[49m[43m,[49m[43m [49m[43m_validate[49m[38;5;241;43m=[39;49m[43m_validate[49m[43m)[49m
+[1;32m   2513[0m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(v, [38;5;28mself[39m[38;5;241m.[39mdata_class):
+[1;32m   2514[0m     [38;5;66;03m# Copy object[39;00m
+[1;32m   2515[0m     v [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mdata_class(v)
+
+File [0;32m~/drought-311-venv/lib64/python3.11/site-packages/plotly/graph_objs/bar/_marker.py:1218[0m, in [0;36mMarker.__init__[0;34m(self, arg, autocolorscale, cauto, cmax, cmid, cmin, color, coloraxis, colorbar, colorscale, colorsrc, cornerradius, line, opacity, opacitysrc, pattern, reversescale, showscale, **kwargs)[0m
+[1;32m   1216[0m _v [38;5;241m=[39m line [38;5;28;01mif[39;00m line [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m _v
+[1;32m   1217[0m [38;5;28;01mif[39;00m _v [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[0;32m-> 1218[0m     [38;5;28;43mself[39;49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mline[39;49m[38;5;124;43m"[39;49m[43m][49m [38;5;241m=[39m _v
+[1;32m   1219[0m _v [38;5;241m=[39m arg[38;5;241m.[39mpop([38;5;124m"[39m[38;5;124mopacity[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m)
+[1;32m   1220[0m _v [38;5;241m=[39m opacity [38;5;28;01mif[39;00m opacity [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m _v
+
+File [0;32m~/drought-311-venv/lib64/python3.11/site-packages/plotly/basedatatypes.py:4860[0m, in [0;36mBasePlotlyType.__setitem__[0;34m(self, prop, value)[0m
+[1;32m   4858[0m [38;5;66;03m# ### Handle compound property ###[39;00m
+[1;32m   4859[0m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(validator, CompoundValidator):
+[0;32m-> 4860[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_set_compound_prop[49m[43m([49m[43mprop[49m[43m,[49m[43m [49m[43mvalue[49m[43m)[49m
+[1;32m   4862[0m [38;5;66;03m# ### Handle compound array property ###[39;00m
+[1;32m   4863[0m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(validator, (CompoundArrayValidator, BaseDataValidator)):
+
+File [0;32m~/drought-311-venv/lib64/python3.11/site-packages/plotly/basedatatypes.py:5271[0m, in [0;36mBasePlotlyType._set_compound_prop[0;34m(self, prop, val)[0m
+[1;32m   5268[0m [38;5;66;03m# Import value[39;00m
+[1;32m   5269[0m [38;5;66;03m# ------------[39;00m
+[1;32m   5270[0m validator [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_get_validator(prop)
+[0;32m-> 5271[0m val [38;5;241m=[39m [43mvalidator[49m[38;5;241;43m.[39;49m[43mvalidate_coerce[49m[43m([49m[43mval[49m[43m,[49m[43m [49m[43mskip_invalid[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_skip_invalid[49m[43m)[49m
+[1;32m   5273[0m [38;5;66;03m# Save deep copies of current and new states[39;00m
+[1;32m   5274[0m [38;5;66;03m# ------------------------------------------[39;00m
+[1;32m   5275[0m curr_val [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_compound_props[38;5;241m.[39mget(prop, [38;5;28;01mNone[39;00m)
+
+File [0;32m~/drought-311-venv/lib64/python3.11/site-packages/_plotly_utils/basevalidators.py:2520[0m, in [0;36mCompoundValidator.validate_coerce[0;34m(self, v, skip_invalid, _validate)[0m
+[1;32m   2518[0m         v [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mdata_class()
+[1;32m   2519[0m     [38;5;28;01melse[39;00m:
+[0;32m-> 2520[0m         [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mraise_invalid_val[49m[43m([49m[43mv[49m[43m)[49m
+[1;32m   2522[0m v[38;5;241m.[39m_plotly_name [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mplotly_name
+[1;32m   2523[0m [38;5;28;01mreturn[39;00m v
+
+File [0;32m~/drought-311-venv/lib64/python3.11/site-packages/_plotly_utils/basevalidators.py:296[0m, in [0;36mBaseValidator.raise_invalid_val[0;34m(self, v, inds)[0m
+[1;32m    293[0m             [38;5;28;01mfor[39;00m i [38;5;129;01min[39;00m inds:
+[1;32m    294[0m                 name [38;5;241m+[39m[38;5;241m=[39m [38;5;124m"[39m[38;5;124m[[39m[38;5;124m"[39m [38;5;241m+[39m [38;5;28mstr[39m(i) [38;5;241m+[39m [38;5;124m"[39m[38;5;124m][39m[38;5;124m"[39m
+[0;32m--> 296[0m         [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
+[1;32m    297[0m [38;5;250m            [39m[38;5;124;03m"""[39;00m
+[1;32m    298[0m [38;5;124;03m    Invalid value of type {typ} received for the '{name}' property of {pname}[39;00m
+[1;32m    299[0m [38;5;124;03m        Received value: {v}[39;00m
+[1;32m    300[0m 
+[1;32m    301[0m [38;5;124;03m{valid_clr_desc}"""[39;00m[38;5;241m.[39mformat(
+[1;32m    302[0m                 name[38;5;241m=[39mname,
+[1;32m    303[0m                 pname[38;5;241m=[39m[38;5;28mself[39m[38;5;241m.[39mparent_name,
+[1;32m    304[0m                 typ[38;5;241m=[39mtype_str(v),
+[1;32m    305[0m                 v[38;5;241m=[39m[38;5;28mrepr[39m(v),
+[1;32m    306[0m                 valid_clr_desc[38;5;241m=[39m[38;5;28mself[39m[38;5;241m.[39mdescription(),
+[1;32m    307[0m             )
+[1;32m    308[0m         )
+
+[0;31mValueError[0m: 
+    Invalid value of type 'pandas.core.series.Series' received for the 'line' property of bar.marker
+        Received value: 0       #cccccc
+1       #cccccc
+2       #cccccc
+3       #cccccc
+4       #cccccc
+         ...   
+1004    #291700
+1005    #291700
+1006    #291700
+1007    #291700
+1008    #291700
+Name: Color, Length: 1009, dtype: object
+
+    The 'line' property is an instance of Line
+    that may be specified as:
+      - An instance of :class:`plotly.graph_objs.bar.marker.Line`
+      - A dict of string/value properties that will be passed
+        to the Line constructor
+
+        Supported dict properties:
+            
+            autocolorscale
+                Determines whether the colorscale is a default
+                palette (`autocolorscale: true`) or the palette
+                determined by `marker.line.colorscale`. Has an
+                effect only if in `marker.line.color` is set to
+                a numerical array. In case `colorscale` is
+                unspecified or `autocolorscale` is true, the
+                default palette will be chosen according to
+                whether numbers in the `color` array are all
+                positive, all negative or mixed.
+            cauto
+                Determines whether or not the color domain is
+                computed with respect to the input data (here
+                in `marker.line.color`) or the bounds set in
+                `marker.line.cmin` and `marker.line.cmax` Has
+                an effect only if in `marker.line.color` is set
+                to a numerical array. Defaults to `false` when
+                `marker.line.cmin` and `marker.line.cmax` are
+                set by the user.
+            cmax
+                Sets the upper bound of the color domain. Has
+                an effect only if in `marker.line.color` is set
+                to a numerical array. Value should have the
+                same units as in `marker.line.color` and if
+                set, `marker.line.cmin` must be set as well.
+            cmid
+                Sets the mid-point of the color domain by
+                scaling `marker.line.cmin` and/or
+                `marker.line.cmax` to be equidistant to this
+                point. Has an effect only if in
+                `marker.line.color` is set to a numerical
+                array. Value should have the same units as in
+                `marker.line.color`. Has no effect when
+                `marker.line.cauto` is `false`.
+            cmin
+                Sets the lower bound of the color domain. Has
+                an effect only if in `marker.line.color` is set
+                to a numerical array. Value should have the
+                same units as in `marker.line.color` and if
+                set, `marker.line.cmax` must be set as well.
+            color
+                Sets the marker.line color. It accepts either a
+                specific color or an array of numbers that are
+                mapped to the colorscale relative to the max
+                and min values of the array or relative to
+                `marker.line.cmin` and `marker.line.cmax` if
+                set.
+            coloraxis
+                Sets a reference to a shared color axis.
+                References to these shared color axes are
+                "coloraxis", "coloraxis2", "coloraxis3", etc.
+                Settings for these shared color axes are set in
+                the layout, under `layout.coloraxis`,
+                `layout.coloraxis2`, etc. Note that multiple
+                color scales can be linked to the same color
+                axis.
+            colorscale
+                Sets the colorscale. Has an effect only if in
+                `marker.line.color` is set to a numerical
+                array. The colorscale must be an array
+                containing arrays mapping a normalized value to
+                an rgb, rgba, hex, hsl, hsv, or named color
+                string. At minimum, a mapping for the lowest
+                (0) and highest (1) values are required. For
+                example, `[[0, 'rgb(0,0,255)'], [1,
+                'rgb(255,0,0)']]`. To control the bounds of the
+                colorscale in color space, use
+                `marker.line.cmin` and `marker.line.cmax`.
+                Alternatively, `colorscale` may be a palette
+                name string of the following list: Blackbody,Bl
+                uered,Blues,Cividis,Earth,Electric,Greens,Greys
+                ,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viri
+                dis,YlGnBu,YlOrRd.
+            colorsrc
+                Sets the source reference on Chart Studio Cloud
+                for `color`.
+            reversescale
+                Reverses the color mapping if true. Has an
+                effect only if in `marker.line.color` is set to
+                a numerical array. If true, `marker.line.cmin`
+                will correspond to the last color in the array
+                and `marker.line.cmax` will correspond to the
+                first color.
+            width
+                Sets the width (in px) of the lines bounding
+                the marker points.
+            widthsrc
+                Sets the source reference on Chart Studio Cloud
+                for `width`.
+
 
