@@ -22,7 +22,8 @@ For our analysis we will focus on two indices: **SPI** and **SPEI**.
 
 The **Standardized Precipitation Index** (**SPI**) is an index used to measure drought intensity. It works by comparing the amount of rainfall in a specific period to the historical average for that same period. This helps determine how much more, or less, it has rained compared to usual conditions. 
 
-This global **SPI** is calculated using data from the era5-dataset. This **SPI** can examine rainfall over various timescales, including 1, 3, 6, 12, 24, 36 and 48 months, allowing for a detailed analysis of short-term fluctuations and long-term trends in precipitation.
+This global **SPI** is calculated using data from the era5-dataset. This **SPI** can examine rainfall over various timescales (accumulation windows), including 1, 3, 6, 12, 24, 36 and 48 months, allowing for a detailed analysis of short-term fluctuations and long-term trends in precipitation. The appropriate choice of time scale depends on the specific drought impact: values for 1 and 3 months are useful for the basic drought monitoring, 6 months or less are suitable for assessing agricultural impacts, and 12 months or longer are relevant for monitoring hydrological impacts.
+
 
 
 ```{tip} 
@@ -33,25 +34,32 @@ If you're interested in learning more about the **SPI** index, you can download 
 ## SPEI index
 
 
-The **Standardized Precipitation Evapotranspiration Index** (**SPEI**) is a widely used meteorological index for measuring drought conditions. The **SPEI** quantifies the deficit of water on the land's surface over various time periods, typically spanning months. It is designed to take into account both precipitation and potential PET in determining drought.
+The **Standardized Precipitation Evapotranspiration Index** (**SPEI**) is a widely used meteorological index for measuring drought conditions. The **SPEI** quantifies the deficit of water on the land's surface over various time periods, typically spanning months. It is designed to take into account both precipitation and potential evapotranspiration (PET) in determining drought.
 
 In simpler terms, the **SPEI** scores indicate how wet or dry a period is compared to normal conditions, using standard-deviation from the mean: negative values indicate drier than usual periods while positive values correspond to wetter than usual periods. The magnitude of the SPEI is an indicator of the severity of event.  
-**SPEI** values ranging from -1 to 1 are generally viewed as normal. 
 
+
+The **SPEI** is typically computed over a range of time windows from 1 over 3 and 6 to 12 months or more (24, 36, 48 months). Similar to the SPI index, the chosen time window helps identify and monitor conditions associated with various drought impacts.
+
+**SPI** and **SPEI** values are in units of standard deviation from the standardised mean. The magnitude of these indices indicates the severity of drought events: values between -1 and 1 are generally considered normal, while values outside this range indicate either drier-than-usual or wetter-than-usual conditions.
+
+**SPI** and **SPEI** values ranging from -1 to 1 are generally viewed as normal. 
 
 Here's what the scores typically represent:
 
-- SPEI > 2.0: extremely wet  
-- 1.5 < SPEI <= 2.0: severely wet  
-- 1.0 < SPEI <= 1.5: moderately wet  
-- 0 < SPEI <= 1.0: near-normal / mildly wet  
-- –1.0 < SPEI <= 0: near-normal / mildly dry  
-- –1.5 < SPEI <= –1.0: moderately dry  
-- –2.0 < SPEI <= –1.5: severely dry  
-- SPEI < –2.0: extremely dry
+- SPI/SPEI > 2.0: extremely wet  
+- 1.5 < SPI/SPEI <= 2.0: severely wet  
+- 1.0 < SPI/SPEI <= 1.5: moderately wet  
+- 0 < SPI/SPEI <= 1.0: near-normal / mildly wet  
+- –1.0 < SPI/SPEI <= 0: near-normal / mildly dry  
+- –1.5 < SPI/SPEI <= –1.0: moderately dry  
+- –2.0 < SPI/SPEI <= –1.5: severely dry  
+- SPI/SPEI < –2.0: extremely dry
 
+There are significant differences in the sensitivity of SPI and SPEI values at different time scales: the smaller the time scale, the more the wet and dry changes.
 
-The **SPEI** is typically computed over a range of time windows from 1 over 3 and 6 to 12 months or more. The time window considered is indicative of the potential impact of meteorological drought, which is often the primary driver of drought.
+Being standardized indices makes them unitless measures, which facilitates comparative analysis across diverse time series
+datasets.
 
 
 ```{tip} 

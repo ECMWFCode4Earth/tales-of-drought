@@ -23,5 +23,7 @@ In urban areas, water shortages can disrupt industries, compromise sanitation, a
 </div>
 
 ```{tip} 
-You can learn more about drought's impacts in the "[Atlas of Mortality and Economic Losses from Weather and Climate Extremes (1970-2012)](https://wmo.int/about-us/world-meteorological-day/wmd-2020/drought)" by the World Meteorological Organization (WMO).
+You can learn more about drought's impacts in these two reports:
+- "[Atlas of Mortality and Economic Losses from Weather and Climate Extremes (1970-2012)](https://wmo.int/about-us/world-meteorological-day/wmd-2020/drought)" by the World Meteorological Organization (WMO).
+- "[Global Drought Snapshot 2023](https://www.unccd.int/sites/default/files/2023-12/Global%20drought%20snapshot%202023.pdf)" by the United Nations Convention to Combat Desertification (UNCCD). On page 12, you can find the list of countries declaring drought emergencies in 2022-2023.
 ```

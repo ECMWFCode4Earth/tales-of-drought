@@ -29,7 +29,7 @@ These models don't predict specific events at particular times or locations, but
 
 Even if the computing power has increased, it is however impossible to compute the climate state of every possible points on the planet. What the models do is to compute the climate state of regularly spaced points, creating *de facto* a grid with each point at the center of its cell. The value is considered to be an average of the grid cell.
 
-When dealing with climate data, we have to consider that climate is related not only to the Earth surface (that we have already seen how it can be represented through a system of coordinates), but also to atmospheric conditions. So we have to add a third dimension to our system, named ‘height’ or ‘pressure’ and also divided into cells.
+When dealing with climate data, we have to consider that climate is related not only to the Earth surface (that we have already seen how it can be represented through [a system of coordinates](https://ecmwfcode4earth.github.io/tales-of-drought/chapters/01-climate-toolkit-for-beginners/coordinate-system.html)), but also to atmospheric conditions. So we have to add a third dimension to our system, named ‘height’ or ‘pressure’ and also divided into cells.
 
 However, climate evolves over time, so we must consider it as a fourth dimension.
 
@@ -49,13 +49,23 @@ ERA5 is the latest climate reanalysis produced by ECMWF. It is available from 19
 <p class="credits">Three stages of reanalysis - <a href="https://climate.copernicus.eu/copernicus-regional-reanalysis-europe-cerra" target="_blank">Copernicus Climate Change Service</a></p>
 
 
- # TODO: add information about drought data.
+ ## The drought dataset
+The dataset we'll be using is [**ERA5-DROUGHT**](https://cds.climate.copernicus.eu/cdsapp#!/dataset/dderived-drought-historical?tab=overview), which is derived from the ERA5 reanalysis provided by the European Centre for Medium-Range Weather Forecasts (ECMWF). This dataset includes two primary standardized drought indicators:
+
+- The Standardized Precipitation Index (SPI)
+- The Standardized Precipitation-Evapotranspiration Index (SPEI)
+
+The [next chapter](https://ecmwfcode4earth.github.io/tales-of-drought/chapters/02-drought-focus/indices.html) takes an in-depth look at these two indices.
+
 
 ```{tip} 
 If you are interested to learn more about climate data sources, you can watch the three ECMWF's course:
 - [Data Resources - Observations](https://learning.ecmwf.int/course/view.php?id=64)
 - [Data Resources - Reanalyses](https://learning.ecmwf.int/course/view.php?id=63)
 - [Data Resources - Climate Models](https://learning.ecmwf.int/course/view.php?id=62)
+
+Read this slides:
+- [Data Resources - Climate Models](https://climate.copernicus.eu/sites/default/files/2021-12/10-c3s-uls-data-resources-climate-models.pdf)
 
 Or you can visit the webpages:
 - [Observation components of the Global Observing System](https://community.wmo.int/en/observation-components-global-observing-system) of the World Meteorological Organization (WMO).

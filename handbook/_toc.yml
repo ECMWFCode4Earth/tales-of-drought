@@ -13,7 +13,7 @@ parts:
     title: "Earth's coordinate system"
   - file: chapters/01-climate-toolkit-for-beginners/data-sources
     title: "Data sources"
-  - file: chapters/01-climate-toolkit-for-beginners/netCDF-file
+  - file: chapters/01-climate-toolkit-for-beginners/netCDF-files
     title: "netCDF files"
 
 - caption: "Droughts focus"
@@ -25,44 +25,79 @@ parts:
   - file: chapters/02-drought-focus/indices
     title: "Drought indices"
 
-- caption: "Get the data"
-  chapters:
-  - file: chapters/03-get-data/index
-    title: "Copernicus Data Store"
 
 - caption: "Setting up the environment"
   chapters:
-  - file: "chapters/04-set-up-env/set-up-environment"
+  - file: chapters/04-set-up-env/set-up-environment
     title: "Libraries, variables and widgets"
-  - file: "chapters/04-set-up-env/storyboard"
+  - file: chapters/04-set-up-env/storyboard
     title: "Storyboard (to be deleted)"
 
 - caption: "First exploration"
   chapters:
   - file: chapters/05-notebook-time-machine/notebook-time-machine
     title: "The Time Machine"
-  - file: chapters/05-notebook-time-machine/under-the-hood
-    title: "Under the hood"
+  - file: chapters/05-notebook-time-machine/notebook-focus-madagascar
+    title: "Focus on Madagascar"
   - file: chapters/05-notebook-time-machine/storyboard
     title: "Storyboard (to be deleted)"
 
 - caption: "Second exploration"
   chapters:
-  - file: chapters/06-notebook-quantum-of-drought/index
+  - file: chapters/06-notebook-quantum-of-drought/notebook-quantum-of-drought
     title: "Quantum of Drought"
-
+  - file: chapters/06-notebook-quantum-of-drought/storyboard
+    title: "Storyboard (to be deleted)"
 
 
 - caption: "Third exploration"
   chapters:
-  - file: chapters/07-notebook-solving-puzzle/index
-    title: "Solving the puzzle"
-
-
-- caption: "Focus"
-  chapters:
-  - file: chapters/08-focus-madagascar/index
-    title: "Drought in Madagascar"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-01_2m_temperature
+    title: "Drought drivers - 2m temperature"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-02_skin_temperature
+    title: "Drought drivers - skin temperature"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-03_soil_temperature_level_1
+    title: "Drought drivers - soil temperature #1"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-04_soil_temperature_level_2
+    title: "Drought drivers - soil temperature #2"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-05_soil_temperature_level_3
+    title: "Drought drivers - soil temperature #3"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-06_soil_temperature_level_4
+    title: "Drought drivers - soil temperature #4"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-07_volumetric_soil_water_layer_1
+    title: "Drought drivers - volumetric soil water #1"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-08_volumetric_soil_water_layer_2
+    title: "Drought drivers - volumetric soil water #2"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-09_volumetric_soil_water_layer_3
+    title: "Drought drivers - volumetric soil water #3"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-10_volumetric_soil_water_layer_4
+    title: "Drought drivers - volumetric soil water #4"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-11_potential_evaporation
+    title: "Drought drivers - potential evaporation"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-12_runoff
+    title: "Drought drivers - runoff"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-13_sub_surface_runoff
+    title: "Drought drivers - sub surface runoff"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-14_surface_runoff
+    title: "Drought drivers - surface runoff"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-15_total_evaporation
+    title: "Drought drivers - total evaporation"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-16_10m_u_component_of_wind
+    title: "Drought drivers - 10m u component of wind"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-17_10m_v_component_of_wind
+    title: "Drought drivers - 10m v component_of_wind"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-18_total_precipitation
+    title: "Drought drivers - total precipitation"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-19_leaf_area_index_high_vegetation
+    title: "Drought drivers - leaf area index high vegetation"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers-20_leaf_area_index_low_vegetation
+    title: "Drought drivers - leaf area index low vegetation"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers
+    title: "Drought drivers"
+  - file: chapters/07-notebook-solving-puzzle/notebook-solving-puzzle
+    title: "Drought drivers - notebook solving puzzle"
+  - file: chapters/07-notebook-solving-puzzle/storyboard
+    title: "Storyboard (to be deleted)"
 
 
 - caption: "Appendix"
