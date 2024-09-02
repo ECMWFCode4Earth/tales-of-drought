@@ -24,7 +24,7 @@ data_preprocess.display_data_details(active_btn, selected, subset_data[index])
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[9], line 1[0m
+Cell [0;32mIn[8], line 1[0m
 [0;32m----> 1[0m data_preprocess[38;5;241m.[39mdisplay_data_details(active_btn, selected, [43msubset_data[49m[index])
 
 [0;31mNameError[0m: name 'subset_data' is not defined
