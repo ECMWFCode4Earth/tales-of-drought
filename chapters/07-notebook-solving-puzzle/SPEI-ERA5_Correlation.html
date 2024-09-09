@@ -204,25 +204,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">First exploration</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-mapping-current-global-drought-events.html">Mapping current global drought events using SPI and SPEI</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-time-machine.html">The Time Machine</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-focus-madagascar.html">Drought in Madagascar</a></li>
-
-
-
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-mapping-current-global-drought-events.html">Mapping current global drought events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-focus-madagascar.html">Focus on Madagascar</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Second exploration</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../06-notebook-quantum-of-drought/notebook-quantum-of-drought.html">Find and analyse drought events</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="../06-notebook-quantum-of-drought/notebook-quantum-of-drought.html">Quantum of Drought</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Third exploration</span></p>
 <ul class="nav bd-sidenav">
@@ -233,9 +221,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../credits-license.html">Credits</a></li>
-
-
+<li class="toctree-l1"><a class="reference internal" href="../credits-license.html">Credits and license</a></li>
 </ul>
 
     </div>
@@ -919,7 +905,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_path</span> <span class="o">=</span> <span class="n">get_era5_data_at_country_level</span><span class="p">(</span><span class="n">country_name</span><span class="o">=</span><span class="s1">&#39;Argentina&#39;</span><span class="p">,</span> <span class="n">years</span><span class="o">=</span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2024</span><span class="p">)])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_path</span> <span class="o">=</span> <span class="n">get_era5_data_at_country_level</span><span class="p">(</span><span class="n">country_name</span><span class="o">=</span><span class="s1">&#39;Argentina&#39;</span><span class="p">,</span> <span class="n">years</span><span class="o">=</span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1991</span><span class="p">,</span> <span class="mi">2024</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
@@ -936,7 +922,7 @@ document.write(`
 
 <span class="ne">DriverError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="nn">----&gt; 1 file_path = get_era5_data_at_country_level(country_name=&#39;Argentina&#39;, years=[x for x</span> in <span class="ni">range</span><span class="nt">(2015, 2024)])</span>
+<span class="nn">----&gt; 1 file_path = get_era5_data_at_country_level(country_name=&#39;Argentina&#39;, years=[x for x</span> in <span class="ni">range</span><span class="nt">(1991, 2024)])</span>
 
 <span class="nn">Cell In[4], line 23,</span> in <span class="ni">get_era5_data_at_country_level</span><span class="nt">(country_name, years)</span>
 <span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="k">def</span> <span class="nf">get_era5_data_at_country_level</span><span class="p">(</span><span class="n">country_name</span><span class="o">=</span><span class="s1">&#39;Argentina&#39;</span><span class="p">,</span> <span class="n">years</span><span class="o">=</span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2024</span><span class="p">)]):</span>

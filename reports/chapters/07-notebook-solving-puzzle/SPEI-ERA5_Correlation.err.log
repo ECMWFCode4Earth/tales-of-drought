@@ -18,7 +18,7 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-file_path = get_era5_data_at_country_level(country_name='Argentina', years=[x for x in range(2015, 2024)])
+file_path = get_era5_data_at_country_level(country_name='Argentina', years=[x for x in range(1991, 2024)])
 ------------------
 
 
@@ -34,7 +34,7 @@ During handling of the above exception, another exception occurred:
 
 [0;31mDriverError[0m                               Traceback (most recent call last)
 Cell [0;32mIn[5], line 1[0m
-[0;32m----> 1[0m file_path [38;5;241m=[39m [43mget_era5_data_at_country_level[49m[43m([49m[43mcountry_name[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mArgentina[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43myears[49m[38;5;241;43m=[39;49m[43m[[49m[43mx[49m[43m [49m[38;5;28;43;01mfor[39;49;00m[43m [49m[43mx[49m[43m [49m[38;5;129;43;01min[39;49;00m[43m [49m[38;5;28;43mrange[39;49m[43m([49m[38;5;241;43m2015[39;49m[43m,[49m[43m [49m[38;5;241;43m2024[39;49m[43m)[49m[43m][49m[43m)[49m
+[0;32m----> 1[0m file_path [38;5;241m=[39m [43mget_era5_data_at_country_level[49m[43m([49m[43mcountry_name[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mArgentina[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43myears[49m[38;5;241;43m=[39;49m[43m[[49m[43mx[49m[43m [49m[38;5;28;43;01mfor[39;49;00m[43m [49m[43mx[49m[43m [49m[38;5;129;43;01min[39;49;00m[43m [49m[38;5;28;43mrange[39;49m[43m([49m[38;5;241;43m1991[39;49m[43m,[49m[43m [49m[38;5;241;43m2024[39;49m[43m)[49m[43m][49m[43m)[49m
 
 Cell [0;32mIn[4], line 23[0m, in [0;36mget_era5_data_at_country_level[0;34m(country_name, years)[0m
 [1;32m     21[0m [38;5;28;01mdef[39;00m [38;5;21mget_era5_data_at_country_level[39m(country_name[38;5;241m=[39m[38;5;124m'[39m[38;5;124mArgentina[39m[38;5;124m'[39m, years[38;5;241m=[39m[x [38;5;28;01mfor[39;00m x [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m2015[39m, [38;5;241m2024[39m)]):
