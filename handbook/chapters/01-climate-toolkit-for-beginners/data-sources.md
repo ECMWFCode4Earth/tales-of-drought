@@ -4,7 +4,7 @@ Working with climate data, we will encounter the following definitions: observat
 These represent three major categories of data sources, and the choice of which one to use depends on the time period we are interested in.
 
 ![](../../images/data-sources.svg)
-
+<p class="credits">CC BY-NC-SA</p>
 
 ## Observations
 
@@ -34,6 +34,7 @@ When dealing with climate data, we have to consider that climate is related not 
 However, climate evolves over time, so we must consider it as a fourth dimension.
 
 ![](../../images/grid.svg)
+<p class="credits">CC BY-NC-SA</p>
 
 
 The effectiveness of a climate model is influenced by its resolution, which includes both spatial and temporal aspects. **Spatial resolution** determines the dimensions of the grid cells within the model, measurable in degrees of latitude and longitude or kilometers. **Temporal resolution**, on the other hand, defines the frequency of computations for various quantities within the model. Frequently, a single model can operate at varying resolutions, and the selection of resolution depends on the particular issue being investigated.

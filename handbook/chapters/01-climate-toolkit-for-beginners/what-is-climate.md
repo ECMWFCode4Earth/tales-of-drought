@@ -9,6 +9,7 @@ In contrast, **climate** refers to the average behavior of the atmosphere over m
 Between the scales of weather and climate change lies the concept of **climate variability**, also known as climate **anomaly**. This measures the deviations of a particular season's or year's condition from the climatological average for that period.
 
 ![](../../images/climate-vs-weather.svg)
+<p class="credits">CC BY-NC-SA</p>
 
 The choice of data — whether focusing on weather, climate or climate variability — depends on the specific research question being addressed. For our drought analysis, we will consider only climate and climate variability data.
 
@@ -25,6 +26,7 @@ All these variables are constantly monitored to capture a detailed picture of Ea
 
 
 ![Essential Climate Variables](../../images/essential-climate-variables.png)
+<p class="credits"><a href="https://gcos.wmo.int/en/essential-climate-variables/table" target="_blank">Global Climate Observing System</a></p>
 
 In addition to the essential variables, there are **Climate Indicators**, that show the long-term evolution of several key variables and are used to evaluate the global and regional trends of the climate. They are updated at least once a year.
 
@@ -35,3 +37,4 @@ In addition to the essential variables, there are **Climate Indicators**, that s
 ```
 
 ![Climate Indicators](../../images/Climate-Indicators-Copernicus.png)
+<p class="credits"><a href="https://climate.copernicus.eu/climate-indicators" target="_blank">ECMWF - Copernicus Programme</a>a></p>  

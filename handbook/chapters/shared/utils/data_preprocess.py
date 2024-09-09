@@ -333,7 +333,7 @@ def process_datarray(data_array: xr.DataArray) -> (xr.DataArray, dict):
 
 def compute_stats(data: xr.DataArray, full_stats: bool = True) -> dict:
     """
-    Computes the statistics needed to create a boxplot from the SPEI data over latitude and longitude.
+    Computes the basic statistics from the SPEI data over latitude and longitude.
     These statistics include the median, lower and upper quantiles (25th and 75th percentiles), minimum, and maximum values.
 
     Parameters:
@@ -350,36 +350,31 @@ def compute_stats(data: xr.DataArray, full_stats: bool = True) -> dict:
         - mins (np.ndarray): The array of minimum values (only if full_stats is True).
         - maxs (np.ndarray): The array of maximum values (only if full_stats is True).
     """
+    # Chunk the data along latitude and longitude to spped up the calculation
+    data = data.chunk({'lat': 'auto', 'lon': 'auto'})
+    
     # Remove NaN values across lat and lon dimensions for more robust stats
     valid_data = data.dropna(dim='lat', how='all').dropna(dim='lon', how='all')
     
-    # Compute the median
+    # Initialize the result dictionary
+    result = {}
+
+    # Compute the median and mean together to avoid recomputation
     median = valid_data.median(dim=['lat', 'lon'], skipna=True)
-
-    # Compute the values
-    median_computed = median.compute()
-
-    # Initialize the result dictionary with median
-    result = {
-        'times': median_computed['time'].values if 'time' in median_computed.dims else None,
-        'medians': median_computed.values
-    }
+    mean = valid_data.mean(dim=['lat', 'lon'], skipna=True)
 
     # Compute additional statistics if full_stats is True
     if full_stats:
-        mean = valid_data.mean(dim=['lat', 'lon'], skipna=True)
         q1 = valid_data.quantile(0.25, dim=['lat', 'lon'], skipna=True)
         q3 = valid_data.quantile(0.75, dim=['lat', 'lon'], skipna=True)
         min_val = valid_data.min(dim=['lat', 'lon'], skipna=True)
         max_val = valid_data.max(dim=['lat', 'lon'], skipna=True)
         
-        mean_computed = mean.compute()
-        q1_computed = q1.compute()
-        q3_computed = q3.compute()
-        min_computed = min_val.compute()
-        max_computed = max_val.compute()
+        # Compute all stats at once, parallelized
+        median_computed, mean_computed, q1_computed, q3_computed, min_computed, max_computed = dask.compute(
+            median, mean, q1, q3, min_val, max_val
+        )
         
-        # Update the result dictionary with additional statistics
         result.update({
             'means': mean_computed.values,
             'q1s': q1_computed.values,
@@ -387,6 +382,14 @@ def compute_stats(data: xr.DataArray, full_stats: bool = True) -> dict:
             'mins': min_computed.values,
             'maxs': max_computed.values,
         })
+    else:
+        median_computed, mean_computed = dask.compute(median, mean)
+
+    # Update the result dictionary with median and time values
+    result.update({
+        'times': median_computed['time'].values if 'time' in median_computed.dims else None,
+        'medians': median_computed.values,
+    })
 
     return result
 

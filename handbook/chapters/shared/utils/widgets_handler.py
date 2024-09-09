@@ -5,7 +5,6 @@ import os
 import time
 
 
-
 def get_file_path(file_name):
     """
     Get the file path for the given file name.
@@ -31,7 +30,7 @@ def save_selection(selection):
     file_path = get_file_path('selection.json')
     with open(file_path, 'w') as file:
         json.dump(selection, file)
-        
+
 
         
 def read_json_to_dict(file_name):

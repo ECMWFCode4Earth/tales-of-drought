@@ -2,7 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: Tales of Dry Lands
-author: Marina Caporlingua, Akis Karagiannis, George Begkas, Lucy Colley - Thanks to ECMWF mentors Jessica Keune, Christopher Barnard, Francesca Di Giuseppe
+author: George Begkas, Marina Caporlingua, Lucy Colley, Akis Karagiannis - Thanks to ECMWF mentors Christopher Barnard, Francesca Di Giuseppe and Jessica Keune
 logo: ../images/logo-no-bg.png
 
 # Force re-execution of notebooks on each build.
@@ -42,4 +42,4 @@ sphinx:
     suppress_warnings: ["mystnb.unknown_mime_type"]
     
 execute:
-  timeout: -1
+  timeout: 500

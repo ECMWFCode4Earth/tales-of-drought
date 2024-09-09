@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" x="0px" y="0px" width="352.90067" height="310.15091" viewBox="0 0 332 310" id="svg350" lang="mul" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
-  <g id="g348" style="font-family:'Liberation Sans', Dyuthi, 'VL PGothic', sans-serif" transform="matrix(1, 0, 0, 1, -23.833431, -10.624966)">
+<svg version="1.1" x="0px" y="0px" width="1515.606" height="580.758" viewBox="0 0 1515.6 580.8" id="svg350" lang="mul" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <rect x="-1.063" y="-6.138" width="1515.606" height="580.758" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255); stroke-width: 0px; pointer-events: none;">
+    <title>bg white</title>
+  </rect>
+  <g id="g348" style="font-family: 'Liberation Sans', Dyuthi, 'VL PGothic', sans-serif;" transform="matrix(1.936074, 0, 0, 1.936074, 408.818176, -31.459848)">
     <path stroke-miterlimit="22.9256" d="m 162.1,41.566 c 69.218,0 125.351,55.633 125.351,124.233 0,68.6 -56.133,124.234 -125.351,124.234 -69.217,0 -125.35,-55.634 -125.35,-124.234 0,-68.6 56.133,-124.233 125.35,-124.233 z" id="path10" style="fill:none;stroke:#000000;stroke-width:0.56690001;stroke-miterlimit:22.92560005"/>
     <path stroke-miterlimit="22.9256" d="m 281.839,195.922 c -85.182,3.785 -165.542,3.028 -241.082,-2.271" id="path42" style="fill:none;stroke:#000000;stroke-width:1.00010002;stroke-miterlimit:22.92560005"/>
     <path stroke-miterlimit="22.9256" d="m 271.988,223.745 c -62.776,9.843 -137.337,10.6 -217.271,2.271" id="path44" style="fill:none;stroke:#000000;stroke-width:1.00010002;stroke-miterlimit:22.92560005"/>
@@ -16,12 +19,11 @@
       <path d="m 57.508,60.361 -5.227,14.269 -0.148,-0.388 -0.156,-0.38 -0.164,-0.371 -0.172,-0.363 -0.18,-0.354 -0.188,-0.346 -0.196,-0.337 -0.204,-0.329 -0.212,-0.321 -0.22,-0.312 -0.228,-0.303 -0.236,-0.295 -0.244,-0.286 -0.252,-0.278 -0.26,-0.269 L 48.953,69.437 48.677,69.185 48.392,68.941 48.1,68.706 47.8,68.479 47.491,68.261 47.175,68.051 46.85,67.85 46.517,67.657 46.177,67.472 45.828,67.296 45.472,67.129 45.107,66.97 44.735,66.82 44.355,66.678 43.966,66.545 43.57,66.42 Z m -5.542,4.423 1.453,1.367 -1.149,1.239 -1.14,1.267 -1.122,1.292 -1.109,1.319 -1.1,1.346 -1.083,1.372 -1.073,1.399 -1.06,1.425 -1.047,1.452 -1.033,1.478 -1.02,1.505 -1.007,1.532 -0.994,1.558 -0.98,1.584 -0.967,1.611 -0.958,1.637 -0.941,1.665 -0.927,1.69 -0.918,1.721 -0.901,1.744 -0.892,1.77 -0.878,1.797 -0.865,1.827 -0.847,1.85 -0.839,1.88 -0.825,1.903 -0.813,1.929 -0.798,1.959 -0.785,1.983 -0.772,2.013 -0.759,2.04 -0.745,2.062 -1.883,-0.664 0.753,-2.086 0.767,-2.055 0.78,-2.029 0.793,-2.005 0.806,-1.976 0.82,-1.953 0.833,-1.926 0.846,-1.896 0.864,-1.874 0.873,-1.843 0.886,-1.82 0.899,-1.794 0.917,-1.767 0.926,-1.737 0.943,-1.714 0.956,-1.688 0.966,-1.661 0.983,-1.634 0.996,-1.608 1.009,-1.582 1.022,-1.555 1.036,-1.528 1.049,-1.502 1.063,-1.475 1.076,-1.449 1.088,-1.422 1.106,-1.396 1.115,-1.369 1.133,-1.343 1.146,-1.316 1.155,-1.29 z" id="path212"/>
     </g>
   </g>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 13.9px; font-weight: 700; white-space: pre;" x="292.83" y="-35.784">NORTH POLE</text>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 13.9px; font-weight: 700; white-space: pre;" x="172.984" y="296.158">SOUTH POLE</text>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 13.9px; font-weight: 700; white-space: pre;" x="189.102" y="25.13">NORTH POLE</text>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 13.9px; font-weight: 700; white-space: pre;" x="140.802" y="145.23">0°</text>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 13.9px; font-weight: 700; white-space: pre;" x="137.845" y="24.02">90°</text>
-  <path d="M 353.282 166.62 H 435.495 L 435.495 161.12 L 457.495 169.62 L 435.495 178.12 L 435.495 172.62 H 353.282 V 166.62 Z" style="stroke: rgb(0, 0, 0); fill: rgba(216, 216, 216, 0);" transform="matrix(0, -1, 1, 0, 115.297134, 498.881805)" bx:shape="arrow 353.282 161.12 104.213 17 6 22 0 1@b45c300e"/>
-  <path d="M -353.282 -155.62 H -271.069 L -271.069 -161.12 L -249.069 -152.62 L -271.069 -144.12 L -271.069 -149.62 H -353.282 V -155.62 Z" style="stroke: rgb(0, 0, 0); fill: rgba(216, 216, 216, 0);" transform="matrix(0, 1, 1, 0, 438.275522, 510.706395)" bx:shape="arrow -353.282 -161.12 104.213 17 6 22 0 1@c107cc26"/>
-  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 13.9px; font-weight: 700; white-space: pre;" x="128.135" y="295.633">-90°</text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.9px; font-weight: 700; white-space: pre;" x="789.871" y="562.494">SOUTH POLE</text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.9px; font-weight: 700; white-space: pre;" x="821.077" y="37.765">NORTH POLE</text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.9px; font-weight: 700; white-space: pre;" x="727.565" y="270.287">0°</text>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.9px; font-weight: 700; white-space: pre;" x="721.839" y="35.615">90°</text>
+  <path d="M 683.98 322.589 H 843.151 L 843.151 311.94 L 885.744 328.397 L 843.151 344.854 L 843.151 334.206 H 683.98 V 322.589 Z" style="stroke: rgb(0, 0, 0); fill: rgba(216, 216, 216, 0);" transform="matrix(0, -1, 1, 0, 678.18512, 954.982666)" bx:shape="arrow 683.98 311.94 201.764 32.914 11.617 42.593 0 1@4e713c5b"/>
+  <path d="M -683.98 -301.291 H -524.809 L -524.809 -311.94 L -482.216 -295.483 L -524.809 -279.026 L -524.809 -289.674 H -683.98 V -301.291 Z" style="stroke: rgb(0, 0, 0); fill: rgba(216, 216, 216, 0);" transform="matrix(0, 1, 1, 0, 1303.494624, 977.876229)" bx:shape="arrow -683.98 -311.94 201.764 32.914 11.617 42.593 0 1@2ab39df0"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.9px; font-weight: 700; white-space: pre;" x="703.041" y="561.478">-90°</text>
 </svg>
