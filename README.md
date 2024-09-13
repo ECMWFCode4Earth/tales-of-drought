@@ -21,29 +21,28 @@
 
 ## Project structure
 
-tales-of-drought/
-│
-├── handbook/                                   # Jupyter book with notebooks for analysis
-|   |── chapters
-│        ├── 01-climate-toolkit-for-beginners
-│        ├── 02-drought-focus
-│        ├── 03-get-data
-│        ├── 04-set-up-env
-│        ├── 05-notebook-time-machine
-|               ├── notebook-time-machine.ipynb
-|               ├── notebook-mapping-current-global-drought-events.ipynb
-|               └── notebook-focus-madagascar.ipynb
-│        ├── 06-notebook-quantum-of-drought
-|               └── notebook-quantum-of-drought.ipynb
-│        ├── 07-notebook-solving-puzzle
-|               └── notebook-solving-puzzle.ipynb
-│        └── shared
-|   |── images                                   # images relate to the handbook
-|   |── credits-license.md
-├── images/                                     # images relate to the project
-├── requirements.txt                            # Required Python packages
-├── README.md                                   # Project overview and instructions
-└── LICENSE                                     # Project license
+tales-of-drought/  
+│ ├── handbook/ # Jupyter book with notebooks for analysis  
+│ ├── chapters  
+│ │ ├── 01-climate-toolkit-for-beginners  
+│ │ ├── 02-drought-focus  
+│ │ ├── 03-get-data  
+│ │ ├── 04-set-up-env  
+│ │ ├── 05-notebook-time-machine  
+│ │ │ ├── notebook-time-machine.ipynb  
+│ │ │ ├── notebook-mapping-current-global-drought-events.ipynb  
+│ │ │ └── notebook-focus-madagascar.ipynb  
+│ │ ├── 06-notebook-quantum-of-drought  
+│ │ │ └── notebook-quantum-of-drought.ipynb  
+│ │ ├── 07-notebook-solving-puzzle  
+│ │ │ └── notebook-solving-puzzle.ipynb  
+│ │ └── shared  
+│ ├── images # images related to the handbook  
+│ └── credits-license.md  
+├── images/ # images related to the project  
+├── requirements.txt # Required Python packages  
+├── README.md # Project overview and instructions  
+└── LICENSE # Project license  
 
 
 ## The key notebooks include:
