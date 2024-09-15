@@ -623,6 +623,15 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cdsapi</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">cdsapi</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://cds-beta.climate.copernicus.eu/api&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;6db1903d-4754-4084-a35e-fd1d44e2f457&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
 <span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
 <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
@@ -786,9 +795,11 @@ document.write(`
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_era5_data</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_era5_data</span><span class="p">(</span><span class="n">folder_path</span><span class="p">):</span>
+    <span class="n">file_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder_path</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;.nc&#39;</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+    
     <span class="c1"># Load the data into an xarray dataset</span>
-    <span class="n">data_era5</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;valid_time&#39;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">},</span> <span class="n">concat_dim</span><span class="o">=</span><span class="s2">&quot;valid_time&quot;</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;nested&#39;</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">data_era5</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="n">file_paths</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;valid_time&#39;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">},</span> <span class="n">concat_dim</span><span class="o">=</span><span class="s2">&quot;valid_time&quot;</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;nested&#39;</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">data_era5</span> <span class="o">=</span> <span class="n">data_era5</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s1">&#39;valid_time&#39;</span><span class="p">:</span><span class="s1">&#39;time&#39;</span><span class="p">})</span>
     
     <span class="c1"># Resample the data to monthly averages (make all timestamps pointing to the first day of each month: Year-Month-01)</span>
@@ -838,9 +849,9 @@ document.write(`
     <span class="p">}</span>
     
     <span class="c1"># Retrieve the dataset from CDS API and download it as a NetCDF file</span>
-    <span class="n">client</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">country</span><span class="si">}</span><span class="s1">.nc&#39;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">country_name</span><span class="si">}</span><span class="s1">.nc&#39;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">country</span><span class="si">}</span><span class="s1">.nc&#39;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">country_name</span><span class="si">}</span><span class="s1">.nc&#39;</span>
 
 <span class="k">def</span> <span class="nf">get_drought_dataset_by_country</span><span class="p">(</span><span class="n">data_root_folder</span><span class="p">,</span> <span class="n">country_name</span> <span class="o">=</span> <span class="s1">&#39;Argentina&#39;</span><span class="p">,</span> <span class="n">years</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2017</span><span class="p">,</span> <span class="mi">2018</span><span class="p">,</span> <span class="mi">2019</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="mi">2022</span><span class="p">,</span> <span class="mi">2023</span><span class="p">]):</span>
     <span class="n">drought_dataset</span> <span class="o">=</span> <span class="n">create_drought_dataset</span><span class="p">(</span><span class="n">years</span><span class="o">=</span><span class="n">years</span><span class="p">,</span> <span class="n">data_root_folder</span><span class="o">=</span><span class="n">data_root_folder</span><span class="p">)</span>
@@ -910,97 +921,111 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-09-15 09:46:55,670 INFO Request ID is a0792621-3c20-4047-bbad-397553ab4828
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-09-15 09:46:55,700 INFO status has been updated to accepted
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-09-15 09:46:57,225 INFO status has been updated to running
+</pre></div>
+</div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">CPLE_OpenFailedError</span><span class="g g-Whitespace">                      </span>Traceback (most recent call last)
-<span class="nn">File fiona/ogrext.pyx:136,</span> in <span class="ni">fiona.ogrext.gdal_open_vector</span><span class="nt">()</span>
-
-<span class="nn">File fiona/_err.pyx:291,</span> in <span class="ni">fiona._err.exc_wrap_pointer</span><span class="nt">()</span>
-
-<span class="ne">CPLE_OpenFailedError</span>: ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp: No such file or directory
-
-<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
-
-<span class="ne">DriverError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="nn">----&gt; 1 file_path = get_era5_data_at_country_level(country_name=&#39;Argentina&#39;, years=[x for x</span> in <span class="ni">range</span><span class="nt">(1991, 2024)])</span>
 
-<span class="nn">Cell In[4], line 23,</span> in <span class="ni">get_era5_data_at_country_level</span><span class="nt">(country_name, years)</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="k">def</span> <span class="nf">get_era5_data_at_country_level</span><span class="p">(</span><span class="n">country_name</span><span class="o">=</span><span class="s1">&#39;Argentina&#39;</span><span class="p">,</span> <span class="n">years</span><span class="o">=</span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2024</span><span class="p">)]):</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="c1"># Define the dataset and variables of interest from ERA5-Land monthly averaged data</span>
-<span class="ne">---&gt; </span><span class="mi">23</span>     <span class="n">world</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span>     <span class="n">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="n">epsg</span><span class="o">=</span><span class="mi">4326</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="n">country_shape</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;SOVEREIGNT&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">country_name</span><span class="p">]</span>
-
-<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/geopandas/io/file.py:289,</span> in <span class="ni">_read_file</span><span class="nt">(filename, bbox, mask, rows, engine, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">286</span>     <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">287</span>         <span class="n">path_or_bytes</span> <span class="o">=</span> <span class="n">filename</span>
-<span class="ne">--&gt; </span><span class="mi">289</span>     <span class="k">return</span> <span class="n">_read_file_fiona</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">290</span>         <span class="n">path_or_bytes</span><span class="p">,</span> <span class="n">from_bytes</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="n">bbox</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="n">rows</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
-<span class="g g-Whitespace">    </span><span class="mi">291</span>     <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">293</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">294</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown engine &#39;</span><span class="si">{</span><span class="n">engine</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-
-<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/geopandas/io/file.py:315,</span> in <span class="ni">_read_file_fiona</span><span class="nt">(path_or_bytes, from_bytes, bbox, mask, rows, where, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">312</span>     <span class="n">reader</span> <span class="o">=</span> <span class="n">fiona</span><span class="o">.</span><span class="n">open</span>
-<span class="g g-Whitespace">    </span><span class="mi">314</span> <span class="k">with</span> <span class="n">fiona_env</span><span class="p">():</span>
-<span class="ne">--&gt; </span><span class="mi">315</span>     <span class="k">with</span> <span class="n">reader</span><span class="p">(</span><span class="n">path_or_bytes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">features</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">316</span>         <span class="n">crs</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">crs_wkt</span>
-<span class="g g-Whitespace">    </span><span class="mi">317</span>         <span class="c1"># attempt to get EPSG code</span>
-
-<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/fiona/env.py:457,</span> in <span class="ni">ensure_env_with_credentials.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">454</span>     <span class="n">session</span> <span class="o">=</span> <span class="n">DummySession</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">456</span> <span class="k">with</span> <span class="n">env_ctor</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">457</span>     <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-
-<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/fiona/__init__.py:292,</span> in <span class="ni">open</span><span class="nt">(fp, mode, driver, schema, crs, encoding, layer, vfs, enabled_drivers, crs_wkt, allow_unsupported_drivers, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">289</span>     <span class="n">path</span> <span class="o">=</span> <span class="n">parse_path</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">291</span> <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">292</span>     <span class="n">colxn</span> <span class="o">=</span> <span class="n">Collection</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">293</span>         <span class="n">path</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">294</span>         <span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">295</span>         <span class="n">driver</span><span class="o">=</span><span class="n">driver</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">296</span>         <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">297</span>         <span class="n">layer</span><span class="o">=</span><span class="n">layer</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">298</span>         <span class="n">enabled_drivers</span><span class="o">=</span><span class="n">enabled_drivers</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">299</span>         <span class="n">allow_unsupported_drivers</span><span class="o">=</span><span class="n">allow_unsupported_drivers</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">300</span>         <span class="o">**</span><span class="n">kwargs</span>
-<span class="g g-Whitespace">    </span><span class="mi">301</span>     <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">302</span> <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;w&quot;</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">303</span>     <span class="n">colxn</span> <span class="o">=</span> <span class="n">Collection</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">304</span>         <span class="n">path</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">305</span>         <span class="n">mode</span><span class="p">,</span>
+<span class="nn">Cell In[5], line 55,</span> in <span class="ni">get_era5_data_at_country_level</span><span class="nt">(country_name, years)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="n">request</span> <span class="o">=</span> <span class="p">{</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span>     <span class="s1">&#39;product_type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;monthly_averaged_reanalysis&#39;</span><span class="p">],</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span>     <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="p">[</span>
    <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">314</span>         <span class="o">**</span><span class="n">kwargs</span>
-<span class="g g-Whitespace">    </span><span class="mi">315</span>     <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">51</span>     <span class="s1">&#39;area&#39;</span><span class="p">:</span> <span class="n">bounding_box</span>  <span class="c1"># Approximate bounding box for Madagascar</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span> <span class="p">}</span>
+<span class="g g-Whitespace">     </span><span class="mi">54</span> <span class="c1"># Retrieve the dataset from CDS API and download it as a NetCDF file</span>
+<span class="ne">---&gt; </span><span class="mi">55</span> <span class="n">client</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">country_name</span><span class="si">}</span><span class="s1">.nc&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">country_name</span><span class="si">}</span><span class="s1">.nc&#39;</span>
 
-<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/fiona/collection.py:243,</span> in <span class="ni">Collection.__init__</span><span class="nt">(self, path, mode, driver, schema, crs, encoding, layer, vsi, archive, enabled_drivers, crs_wkt, ignore_fields, ignore_geometry, include_fields, wkt_version, allow_unsupported_drivers, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">241</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">242</span>     <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">243</span>     <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">244</span> <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">245</span>     <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">WritingSession</span><span class="p">()</span>
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cads_api_client/legacy_api_client.py:149,</span> in <span class="ni">LegacyApiClient.retrieve</span><span class="nt">(self, name, request, target)</span>
+<span class="g g-Whitespace">    </span><span class="mi">146</span> <span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">147</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">148</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">processing</span><span class="o">.</span><span class="n">Results</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">149</span>     <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logging_decorator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">submit_and_wait_on_result</span><span class="p">)(</span>
+<span class="g g-Whitespace">    </span><span class="mi">150</span>         <span class="n">collection_id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">151</span>         <span class="n">retry_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">retry_options</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">152</span>         <span class="o">**</span><span class="n">request</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">153</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">154</span>     <span class="n">partial_download</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">155</span>         <span class="n">result</span><span class="o">.</span><span class="n">download</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">156</span>         <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">157</span>         <span class="n">retry_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">retry_options</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">158</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">159</span>     <span class="n">result</span><span class="o">.</span><span class="n">download</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logging_decorator</span><span class="p">(</span><span class="n">partial_download</span><span class="p">)</span>  <span class="c1"># type: ignore[method-assign]</span>
 
-<span class="nn">File fiona/ogrext.pyx:588,</span> in <span class="ni">fiona.ogrext.Session.start</span><span class="nt">()</span>
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cads_api_client/legacy_api_client.py:134,</span> in <span class="ni">LegacyApiClient.logging_decorator.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">129</span> <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">130</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">131</span>     <span class="k">with</span> <span class="n">LoggingContext</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">132</span>         <span class="n">logger</span><span class="o">=</span><span class="n">processing</span><span class="o">.</span><span class="n">logger</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">quiet</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_debug</span>
+<span class="g g-Whitespace">    </span><span class="mi">133</span>     <span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">134</span>         <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="nn">File fiona/ogrext.pyx:143,</span> in <span class="ni">fiona.ogrext.gdal_open_vector</span><span class="nt">()</span>
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cads_api_client/api_client.py:77,</span> in <span class="ni">ApiClient.submit_and_wait_on_result</span><span class="nt">(self, collection_id, retry_options, **request)</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span> <span class="k">def</span> <span class="nf">submit_and_wait_on_result</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">75</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">collection_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">retry_options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">**</span><span class="n">request</span><span class="p">:</span> <span class="n">Any</span>
+<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">processing</span><span class="o">.</span><span class="n">Results</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">77</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">retrieve_api</span><span class="o">.</span><span class="n">submit_and_wait_on_result</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">78</span>         <span class="n">collection_id</span><span class="p">,</span> <span class="n">retry_options</span><span class="o">=</span><span class="n">retry_options</span><span class="p">,</span> <span class="o">**</span><span class="n">request</span>
+<span class="g g-Whitespace">     </span><span class="mi">79</span>     <span class="p">)</span>
 
-<span class="ne">DriverError</span>: ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp: No such file or directory
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cads_api_client/processing.py:454,</span> in <span class="ni">Processing.submit_and_wait_on_result</span><span class="nt">(self, collection_id, retry_options, **request)</span>
+<span class="g g-Whitespace">    </span><span class="mi">450</span> <span class="k">def</span> <span class="nf">submit_and_wait_on_result</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">451</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">collection_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">retry_options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">**</span><span class="n">request</span><span class="p">:</span> <span class="n">Any</span>
+<span class="g g-Whitespace">    </span><span class="mi">452</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Results</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">453</span>     <span class="n">remote</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">collection_id</span><span class="p">,</span> <span class="n">retry_options</span><span class="o">=</span><span class="n">retry_options</span><span class="p">,</span> <span class="o">**</span><span class="n">request</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">454</span>     <span class="n">remote</span><span class="o">.</span><span class="n">wait_on_result</span><span class="p">(</span><span class="n">retry_options</span><span class="o">=</span><span class="n">retry_options</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">455</span>     <span class="k">return</span> <span class="n">remote</span><span class="o">.</span><span class="n">make_results</span><span class="p">()</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cads_api_client/processing.py:248,</span> in <span class="ni">Remote.wait_on_result</span><span class="nt">(self, retry_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">246</span>     <span class="k">raise</span> <span class="n">ProcessingFailedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown API state </span><span class="si">{</span><span class="n">status</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">247</span> <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;result not ready, waiting for </span><span class="si">{</span><span class="n">sleep</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">248</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drought_dataset_country</span> <span class="o">=</span> <span class="n">get_drought_dataset_by_country</span><span class="p">(</span><span class="n">data_root_folder</span><span class="o">=</span><span class="s1">&#39;/home/ubuntu/Data/drought_datasets/spei&#39;</span><span class="p">,</span><span class="n">country_name</span> <span class="o">=</span> <span class="s1">&#39;Argentina&#39;</span><span class="p">,</span> <span class="n">years</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">,</span> <span class="mi">2017</span><span class="p">,</span> <span class="mi">2018</span><span class="p">,</span> <span class="mi">2019</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="mi">2022</span><span class="p">,</span> <span class="mi">2023</span><span class="p">])</span>
-<span class="n">data_era5</span> <span class="o">=</span> <span class="n">load_era5_data</span><span class="p">(</span><span class="s1">&#39;Argentina.nc&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drought_dataset_country</span> <span class="o">=</span> <span class="n">get_drought_dataset_by_country</span><span class="p">(</span><span class="n">data_root_folder</span><span class="o">=</span><span class="s1">&#39;/data1/drought_dataset/spei&#39;</span><span class="p">,</span><span class="n">country_name</span> <span class="o">=</span> <span class="s1">&#39;Argentina&#39;</span><span class="p">,</span> <span class="n">years</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">,</span> <span class="mi">2017</span><span class="p">,</span> <span class="mi">2018</span><span class="p">,</span> <span class="mi">2019</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="mi">2022</span><span class="p">,</span> <span class="mi">2023</span><span class="p">])</span>
+<span class="n">data_era5</span> <span class="o">=</span> <span class="n">load_era5_data</span><span class="p">(</span><span class="s1">&#39;Argentina/&#39;</span><span class="p">)</span>
 <span class="c1"># data_era5 = load_era5_data(file_path)</span>
 <span class="n">data_era5_interp</span> <span class="o">=</span> <span class="n">data_era5</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">latitude</span><span class="o">=</span><span class="n">drought_dataset_country</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="n">drought_dataset_country</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/ubuntu/Data/drought_datasets/spei/spei6
-/home/ubuntu/Data/drought_datasets/spei/spei12
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">baseline</span> <span class="o">=</span> <span class="n">data_era5_interp</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;1991-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2020-12-31&#39;</span><span class="p">))</span>
+<span class="n">baseline</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">baseline_mean</span> <span class="o">=</span> <span class="n">baseline</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">baseline_std</span> <span class="o">=</span> <span class="n">baseline</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">era5_anomalies</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_era5_interp</span> <span class="o">-</span> <span class="n">baseline_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">baseline_std</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">era5_anomalies</span>
 </pre></div>
 </div>
 </div>
@@ -1009,12 +1034,12 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drought_date</span> <span class="o">=</span> <span class="s1">&#39;2019-08-01&#39;</span>
 <span class="n">variable_date</span> <span class="o">=</span> <span class="s1">&#39;2019-02-01&#39;</span>
-<span class="n">compute_pearsonr</span><span class="p">(</span><span class="n">drought_date</span><span class="p">,</span> <span class="n">variable_date</span><span class="p">,</span> <span class="n">drought_dataset_country</span><span class="p">,</span> <span class="n">data_era5_interp</span><span class="p">,</span> <span class="s1">&#39;2m_temperature&#39;</span><span class="p">)</span>
+<span class="n">compute_pearsonr</span><span class="p">(</span><span class="n">drought_date</span><span class="p">,</span> <span class="n">variable_date</span><span class="p">,</span> <span class="n">drought_dataset_country</span><span class="p">,</span> <span class="n">era5_anomalies</span><span class="p">,</span> <span class="s1">&#39;2m_temperature&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(0.08082078450832929), np.float64(0.27944379135165276))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.30643791979690854, 2.722443277164401e-05)
 </pre></div>
 </div>
 </div>
@@ -1040,8 +1065,8 @@ document.write(`
     <span class="s1">&#39;2022-01-01&#39;</span><span class="p">,</span><span class="s1">&#39;2022-02-01&#39;</span><span class="p">,</span><span class="s1">&#39;2022-03-01&#39;</span><span class="p">,</span><span class="s1">&#39;2022-04-01&#39;</span><span class="p">,</span><span class="s1">&#39;2022-05-01&#39;</span><span class="p">,</span><span class="s1">&#39;2022-06-01&#39;</span><span class="p">,</span><span class="s1">&#39;2022-07-01&#39;</span><span class="p">,</span><span class="s1">&#39;2022-08-01&#39;</span><span class="p">,</span><span class="s1">&#39;2022-09-01&#39;</span><span class="p">,</span><span class="s1">&#39;2022-10-01&#39;</span><span class="p">,</span><span class="s1">&#39;2022-11-01&#39;</span><span class="p">,</span><span class="s1">&#39;2022-12-01&#39;</span><span class="p">,</span>
     <span class="s1">&#39;2023-01-01&#39;</span><span class="p">,</span><span class="s1">&#39;2023-02-01&#39;</span><span class="p">,</span><span class="s1">&#39;2023-03-01&#39;</span><span class="p">,</span><span class="s1">&#39;2023-04-01&#39;</span><span class="p">,</span><span class="s1">&#39;2023-05-01&#39;</span><span class="p">,</span><span class="s1">&#39;2023-06-01&#39;</span><span class="p">,</span><span class="s1">&#39;2023-07-01&#39;</span><span class="p">,</span><span class="s1">&#39;2023-08-01&#39;</span><span class="p">,</span><span class="s1">&#39;2023-09-01&#39;</span><span class="p">,</span><span class="s1">&#39;2023-10-01&#39;</span><span class="p">,</span><span class="s1">&#39;2023-11-01&#39;</span><span class="p">,</span><span class="s1">&#39;2023-12-01&#39;</span>
 <span class="p">]</span>
-<span class="n">drought_thresh</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.</span>
-<span class="n">drought_index</span> <span class="o">=</span> <span class="s1">&#39;SPEI12&#39;</span>
+<span class="n">drought_thresh</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
+<span class="n">drought_index</span> <span class="o">=</span> <span class="s1">&#39;SPEI6&#39;</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">drought_date</span> <span class="ow">in</span> <span class="n">drought_dates</span><span class="p">:</span>
@@ -1073,1110 +1098,21 @@ document.write(`
             <span class="n">variable_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">variable_date</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
 
             <span class="n">date_diff</span> <span class="o">=</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">drought_datetime</span><span class="p">,</span> <span class="n">variable_datetime</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">drought_datetime</span> <span class="o">&gt;=</span> <span class="n">variable_datetime</span> <span class="ow">and</span> <span class="n">date_diff</span><span class="o">.</span><span class="n">years</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">date_diff</span><span class="o">.</span><span class="n">months</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">drought_datetime</span> <span class="o">&gt;</span> <span class="n">variable_datetime</span> <span class="ow">and</span> <span class="n">date_diff</span><span class="o">.</span><span class="n">years</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">date_diff</span><span class="o">.</span><span class="n">months</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">variable_date</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="n">plot_params</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                     <span class="n">correlation</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">compute_pearsonr</span><span class="p">(</span><span class="n">drought_date</span><span class="p">,</span> 
                                                             <span class="n">variable_date</span><span class="p">,</span> 
                                                             <span class="n">drought_dataset_country</span><span class="p">,</span> 
-                                                            <span class="n">data_era5_interp</span><span class="p">,</span> 
+                                                            <span class="n">era5_anomalies</span><span class="p">,</span> 
                                                             <span class="n">variable</span><span class="p">,</span> 
                                                             <span class="n">drought_index</span><span class="o">=</span><span class="n">drought_index</span><span class="p">,</span>
                                                             <span class="n">drought_thresh</span><span class="o">=</span><span class="n">drought_thresh</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">.5</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">.6</span><span class="p">:</span>
                         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Variable: </span><span class="si">{</span><span class="n">variable</span><span class="si">}</span><span class="s1">, Drought date: </span><span class="si">{</span><span class="n">drought_date</span><span class="si">}</span><span class="s1">, ERA5 data: </span><span class="si">{</span><span class="n">variable_date</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
                         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Correlation: </span><span class="si">{</span><span class="n">correlation</span><span class="si">}</span><span class="s2">, p-value: </span><span class="si">{</span><span class="n">p_value</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2019-01-01
-2019-02-01
-2019-03-01
-2019-04-01
-2019-05-01
-2019-06-01
-2019-07-01
-2019-08-01
-2019-09-01
-2019-10-01
-2019-11-01
-2019-12-01
-</pre></div>
-</div>
-<img alt="../../_images/c03dad8f76587c2bb80f9ea1267bfc241cb1828af01d454bc37096b4a28da893.png" src="../../_images/c03dad8f76587c2bb80f9ea1267bfc241cb1828af01d454bc37096b4a28da893.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2019-03-01
-2019-04-01
-2019-05-01
-2019-06-01
-2019-07-01
-2019-08-01
-2019-09-01
-2019-10-01
-2019-11-01
-2019-12-01
-
-Variable: skin_temperature, Drought date: 2019-12-01, ERA5 data: 2019-12-01
-Correlation: -0.508275267304444, p-value: 5.427017593169729e-05
-
-2020-01-01
-</pre></div>
-</div>
-<img alt="../../_images/7d887b803cadfa55822a33652bb58ad91836279c60af85dd21c7db2125f12598.png" src="../../_images/7d887b803cadfa55822a33652bb58ad91836279c60af85dd21c7db2125f12598.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2019-04-01
-2019-05-01
-2019-06-01
-
-Variable: surface_runoff, Drought date: 2020-01-01, ERA5 data: 2019-06-01
-Correlation: -0.633147640623071, p-value: 2.4213468355330554e-14
-
-2019-07-01
-2019-08-01
-2019-09-01
-2019-10-01
-
-Variable: total_precipitation, Drought date: 2020-01-01, ERA5 data: 2019-10-01
-Correlation: -0.5535807652833419, p-value: 1.1551187573844137e-10
-
-2019-11-01
-2019-12-01
-2020-01-01
-
-Variable: total_evaporation, Drought date: 2020-01-01, ERA5 data: 2020-01-01
-Correlation: 0.5324959165853428, p-value: 7.633927895230021e-10
-
-2020-02-01
-</pre></div>
-</div>
-<img alt="../../_images/a00e8f57ca963559edabbbd1d0f7be1db43ca3d356c455127437526bfe9e02fa.png" src="../../_images/a00e8f57ca963559edabbbd1d0f7be1db43ca3d356c455127437526bfe9e02fa.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2019-05-01
-2019-06-01
-2019-07-01
-2019-08-01
-2019-09-01
-2019-10-01
-2019-11-01
-2019-12-01
-2020-01-01
-2020-02-01
-2020-03-01
-</pre></div>
-</div>
-<img alt="../../_images/172893347f8e64ca49893c5e42a753fe9c0c54dbf2e706bcf684f6919849a497.png" src="../../_images/172893347f8e64ca49893c5e42a753fe9c0c54dbf2e706bcf684f6919849a497.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2019-06-01
-2019-07-01
-2019-08-01
-2019-09-01
-2019-10-01
-2019-11-01
-2019-12-01
-2020-01-01
-2020-02-01
-2020-03-01
-2020-04-01
-</pre></div>
-</div>
-<img alt="../../_images/ea0fe1861d167f217bd61e5a96360c8a9c55504534589fe960ae2125d6656041.png" src="../../_images/ea0fe1861d167f217bd61e5a96360c8a9c55504534589fe960ae2125d6656041.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2019-07-01
-2019-08-01
-2019-09-01
-2019-10-01
-2019-11-01
-2019-12-01
-2020-01-01
-2020-02-01
-2020-03-01
-2020-04-01
-2020-05-01
-</pre></div>
-</div>
-<img alt="../../_images/8b29d569988b6f47e8a8d69921af0821a08a5cec2d7c4f5362dc21b0d45ba341.png" src="../../_images/8b29d569988b6f47e8a8d69921af0821a08a5cec2d7c4f5362dc21b0d45ba341.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2019-08-01
-2019-09-01
-2019-10-01
-2019-11-01
-2019-12-01
-2020-01-01
-2020-02-01
-2020-03-01
-2020-04-01
-2020-05-01
-2020-06-01
-</pre></div>
-</div>
-<img alt="../../_images/2aa9e9cf4ea1229442e2cda4bac6b675aa6f90cb9d7893bb53f92c57508df22f.png" src="../../_images/2aa9e9cf4ea1229442e2cda4bac6b675aa6f90cb9d7893bb53f92c57508df22f.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2019-09-01
-2019-10-01
-2019-11-01
-2019-12-01
-2020-01-01
-2020-02-01
-2020-03-01
-2020-04-01
-2020-05-01
-2020-06-01
-2020-07-01
-</pre></div>
-</div>
-<img alt="../../_images/69e3b2e80e47fd5d1b3ba51cd4a89a152c1aae040491a47c93c7d429b91e1b45.png" src="../../_images/69e3b2e80e47fd5d1b3ba51cd4a89a152c1aae040491a47c93c7d429b91e1b45.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2019-10-01
-2019-11-01
-2019-12-01
-2020-01-01
-2020-02-01
-2020-03-01
-2020-04-01
-2020-05-01
-2020-06-01
-2020-07-01
-2020-08-01
-</pre></div>
-</div>
-<img alt="../../_images/60be8fcb80fc66f18388e7c841c78fa307cbfb3d2087f110dfde8a3dca8e882e.png" src="../../_images/60be8fcb80fc66f18388e7c841c78fa307cbfb3d2087f110dfde8a3dca8e882e.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2019-11-01
-2019-12-01
-2020-01-01
-2020-02-01
-2020-03-01
-2020-04-01
-2020-05-01
-2020-06-01
-2020-07-01
-2020-08-01
-2020-09-01
-</pre></div>
-</div>
-<img alt="../../_images/07703c8bb9a36f0371850ae421bcacf9e808f9cf1ac3501a4c25abf7fb10691e.png" src="../../_images/07703c8bb9a36f0371850ae421bcacf9e808f9cf1ac3501a4c25abf7fb10691e.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2019-12-01
-2020-01-01
-2020-02-01
-2020-03-01
-2020-04-01
-2020-05-01
-2020-06-01
-2020-07-01
-2020-08-01
-2020-09-01
-2020-10-01
-</pre></div>
-</div>
-<img alt="../../_images/c6d82fab2a6d7c8dfd40085aca52d1e8111d0168860cc65ed342422b29302817.png" src="../../_images/c6d82fab2a6d7c8dfd40085aca52d1e8111d0168860cc65ed342422b29302817.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-01-01
-2020-02-01
-2020-03-01
-2020-04-01
-2020-05-01
-2020-06-01
-2020-07-01
-2020-08-01
-
-Variable: total_precipitation, Drought date: 2020-10-01, ERA5 data: 2020-08-01
-Correlation: -0.55955753386174, p-value: 3.485019624496628e-33
-
-2020-09-01
-2020-10-01
-2020-11-01
-</pre></div>
-</div>
-<img alt="../../_images/fe7f95d408ffacc2df9816557bb38b36700ca0be41d62cfebd6d3a34e59aa9f0.png" src="../../_images/fe7f95d408ffacc2df9816557bb38b36700ca0be41d62cfebd6d3a34e59aa9f0.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-02-01
-2020-03-01
-2020-04-01
-2020-05-01
-2020-06-01
-2020-07-01
-
-Variable: total_precipitation, Drought date: 2020-11-01, ERA5 data: 2020-07-01
-Correlation: -0.5984405836973512, p-value: 1.6772425990260015e-58
-
-2020-08-01
-
-Variable: runoff, Drought date: 2020-11-01, ERA5 data: 2020-08-01
-Correlation: -0.5071573479241072, p-value: 8.121176853325903e-40
-
-
-Variable: sub_surface_runoff, Drought date: 2020-11-01, ERA5 data: 2020-08-01
-Correlation: -0.5140182425031127, p-value: 4.96441865289219e-41
-
-
-Variable: total_precipitation, Drought date: 2020-11-01, ERA5 data: 2020-08-01
-Correlation: -0.5977528255467538, p-value: 2.445457515852488e-58
-
-2020-09-01
-
-Variable: runoff, Drought date: 2020-11-01, ERA5 data: 2020-09-01
-Correlation: -0.504476153259622, p-value: 2.3795662228907153e-39
-
-
-Variable: sub_surface_runoff, Drought date: 2020-11-01, ERA5 data: 2020-09-01
-Correlation: -0.6397223730222903, p-value: 4.154529330864613e-69
-
-2020-10-01
-
-Variable: runoff, Drought date: 2020-11-01, ERA5 data: 2020-10-01
-Correlation: -0.8159199516560359, p-value: 8.506929095362638e-142
-
-
-Variable: sub_surface_runoff, Drought date: 2020-11-01, ERA5 data: 2020-10-01
-Correlation: -0.8082487184280059, p-value: 3.9669436699498655e-137
-
-2020-11-01
-
-Variable: runoff, Drought date: 2020-11-01, ERA5 data: 2020-11-01
-Correlation: -0.7467275577300831, p-value: 4.895969306353079e-106
-
-
-Variable: sub_surface_runoff, Drought date: 2020-11-01, ERA5 data: 2020-11-01
-Correlation: -0.7888124885792712, p-value: 3.4507712368305456e-126
-
-2020-12-01
-</pre></div>
-</div>
-<img alt="../../_images/14ddcfc288f5fef22eacd6c9348d41339b428a683380dbd616c58c95d6f5f959.png" src="../../_images/14ddcfc288f5fef22eacd6c9348d41339b428a683380dbd616c58c95d6f5f959.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-03-01
-2020-04-01
-2020-05-01
-2020-06-01
-2020-07-01
-2020-08-01
-2020-09-01
-2020-10-01
-2020-11-01
-2020-12-01
-2021-01-01
-</pre></div>
-</div>
-<img alt="../../_images/9c7e86f0d845e80f5abeed4668750f198b5cd48b353201481ebcf246ca8d5030.png" src="../../_images/9c7e86f0d845e80f5abeed4668750f198b5cd48b353201481ebcf246ca8d5030.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-04-01
-2020-05-01
-2020-06-01
-2020-07-01
-2020-08-01
-2020-09-01
-2020-10-01
-2020-11-01
-2020-12-01
-2021-01-01
-2021-02-01
-</pre></div>
-</div>
-<img alt="../../_images/79462dc7a1cd96d2908633662eba964cee3350ca8640280d8af32fb696c14a4f.png" src="../../_images/79462dc7a1cd96d2908633662eba964cee3350ca8640280d8af32fb696c14a4f.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-05-01
-2020-06-01
-2020-07-01
-2020-08-01
-2020-09-01
-2020-10-01
-2020-11-01
-2020-12-01
-2021-01-01
-2021-02-01
-2021-03-01
-</pre></div>
-</div>
-<img alt="../../_images/0897febf76774fc1aba01e38564e956524ee0adee59f480c06b87586d300dbcf.png" src="../../_images/0897febf76774fc1aba01e38564e956524ee0adee59f480c06b87586d300dbcf.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-06-01
-2020-07-01
-2020-08-01
-2020-09-01
-2020-10-01
-2020-11-01
-2020-12-01
-2021-01-01
-2021-02-01
-2021-03-01
-2021-04-01
-</pre></div>
-</div>
-<img alt="../../_images/51bc33c3cb6f855afdf26bb66aa556d87e9d2efd3d8f8eef6f474e3dd2e185c4.png" src="../../_images/51bc33c3cb6f855afdf26bb66aa556d87e9d2efd3d8f8eef6f474e3dd2e185c4.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-07-01
-2020-08-01
-2020-09-01
-2020-10-01
-2020-11-01
-2020-12-01
-2021-01-01
-2021-02-01
-2021-03-01
-2021-04-01
-2021-05-01
-</pre></div>
-</div>
-<img alt="../../_images/6792241e9667f6a5cc97b3e4e9eaed857706a34d1ce6fd0cb622083bf086bc13.png" src="../../_images/6792241e9667f6a5cc97b3e4e9eaed857706a34d1ce6fd0cb622083bf086bc13.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-08-01
-2020-09-01
-2020-10-01
-2020-11-01
-2020-12-01
-2021-01-01
-2021-02-01
-2021-03-01
-2021-04-01
-2021-05-01
-2021-06-01
-</pre></div>
-</div>
-<img alt="../../_images/af4b3d2a96c0c2a36ce5d48762fa62c60fe6e00c5e39d32f13ee6ae4087ab85b.png" src="../../_images/af4b3d2a96c0c2a36ce5d48762fa62c60fe6e00c5e39d32f13ee6ae4087ab85b.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-09-01
-2020-10-01
-2020-11-01
-2020-12-01
-2021-01-01
-2021-02-01
-2021-03-01
-2021-04-01
-2021-05-01
-2021-06-01
-2021-07-01
-</pre></div>
-</div>
-<img alt="../../_images/196e8b708894dae38530304aef00d138fe2d24c14c1c5f5194f9baf228135e6d.png" src="../../_images/196e8b708894dae38530304aef00d138fe2d24c14c1c5f5194f9baf228135e6d.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-10-01
-2020-11-01
-2020-12-01
-2021-01-01
-2021-02-01
-2021-03-01
-2021-04-01
-2021-05-01
-2021-06-01
-2021-07-01
-2021-08-01
-</pre></div>
-</div>
-<img alt="../../_images/463d8710c2e66ff9231c60d1c009c77eb021b09265f2d8ed8505ade10363a9a5.png" src="../../_images/463d8710c2e66ff9231c60d1c009c77eb021b09265f2d8ed8505ade10363a9a5.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-11-01
-2020-12-01
-2021-01-01
-2021-02-01
-2021-03-01
-2021-04-01
-2021-05-01
-2021-06-01
-2021-07-01
-2021-08-01
-2021-09-01
-</pre></div>
-</div>
-<img alt="../../_images/6fa829ac129855c1e3c05fbe9f23bb3e53bdaa83510dd479cfd062ab0553a19d.png" src="../../_images/6fa829ac129855c1e3c05fbe9f23bb3e53bdaa83510dd479cfd062ab0553a19d.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-12-01
-2021-01-01
-2021-02-01
-2021-03-01
-2021-04-01
-2021-05-01
-2021-06-01
-2021-07-01
-2021-08-01
-2021-09-01
-2021-10-01
-</pre></div>
-</div>
-<img alt="../../_images/35febe2fe81dbbaf0e27240ef7a0ffa9d2a0b76d8cb5b0573fccdf9c668e3f7a.png" src="../../_images/35febe2fe81dbbaf0e27240ef7a0ffa9d2a0b76d8cb5b0573fccdf9c668e3f7a.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-01-01
-
-Variable: total_evaporation, Drought date: 2021-10-01, ERA5 data: 2021-01-01
-Correlation: 0.5275998212564186, p-value: 2.491685960224381e-25
-
-
-Variable: leaf_area_index_low_vegetation, Drought date: 2021-10-01, ERA5 data: 2021-01-01
-Correlation: -0.5425937824798526, p-value: 5.799770362969005e-27
-
-2021-02-01
-
-Variable: total_evaporation, Drought date: 2021-10-01, ERA5 data: 2021-02-01
-Correlation: 0.5851607926201, p-value: 4.482536877570044e-32
-
-
-Variable: leaf_area_index_low_vegetation, Drought date: 2021-10-01, ERA5 data: 2021-02-01
-Correlation: -0.5461663571894416, p-value: 2.301942670297595e-27
-
-2021-03-01
-
-Variable: leaf_area_index_low_vegetation, Drought date: 2021-10-01, ERA5 data: 2021-03-01
-Correlation: -0.514711790217404, p-value: 5.453577460206634e-24
-
-2021-04-01
-
-Variable: 2m_temperature, Drought date: 2021-10-01, ERA5 data: 2021-04-01
-Correlation: -0.5447940300977153, p-value: 3.287150762249055e-27
-
-
-Variable: skin_temperature, Drought date: 2021-10-01, ERA5 data: 2021-04-01
-Correlation: -0.5290505365248884, p-value: 1.7459162555807615e-25
-
-
-Variable: soil_temperature_level_1, Drought date: 2021-10-01, ERA5 data: 2021-04-01
-Correlation: -0.5295796268682169, p-value: 1.5328557350608863e-25
-
-
-Variable: soil_temperature_level_2, Drought date: 2021-10-01, ERA5 data: 2021-04-01
-Correlation: -0.5199945063568189, p-value: 1.5640475775108864e-24
-
-
-Variable: volumetric_soil_water_layer_1, Drought date: 2021-10-01, ERA5 data: 2021-04-01
-Correlation: -0.5087944869975051, p-value: 2.1535073237244747e-23
-
-
-Variable: volumetric_soil_water_layer_2, Drought date: 2021-10-01, ERA5 data: 2021-04-01
-Correlation: -0.5402662577414663, p-value: 1.0526858660869514e-26
-
-
-Variable: surface_runoff, Drought date: 2021-10-01, ERA5 data: 2021-04-01
-Correlation: -0.6009760568354866, p-value: 3.577882225289548e-34
-
-
-Variable: total_evaporation, Drought date: 2021-10-01, ERA5 data: 2021-04-01
-Correlation: 0.6106860602902936, p-value: 1.6094154494452693e-35
-
-
-Variable: 10m_u_component_of_wind, Drought date: 2021-10-01, ERA5 data: 2021-04-01
-Correlation: 0.5731040498826018, p-value: 1.497564359582611e-30
-
-2021-05-01
-
-Variable: 2m_temperature, Drought date: 2021-10-01, ERA5 data: 2021-05-01
-Correlation: -0.5168195270385845, p-value: 3.3219466949043424e-24
-
-
-Variable: skin_temperature, Drought date: 2021-10-01, ERA5 data: 2021-05-01
-Correlation: -0.5191092239926396, p-value: 1.9311363927189066e-24
-
-
-Variable: soil_temperature_level_1, Drought date: 2021-10-01, ERA5 data: 2021-05-01
-Correlation: -0.5471069551225266, p-value: 1.801496942781036e-27
-
-
-Variable: soil_temperature_level_2, Drought date: 2021-10-01, ERA5 data: 2021-05-01
-Correlation: -0.538615298107716, p-value: 1.602199899636597e-26
-
-
-Variable: soil_temperature_level_3, Drought date: 2021-10-01, ERA5 data: 2021-05-01
-Correlation: -0.5162880026579865, p-value: 3.765521244881677e-24
-
-
-Variable: total_evaporation, Drought date: 2021-10-01, ERA5 data: 2021-05-01
-Correlation: 0.5368730285880517, p-value: 2.489641572194688e-26
-
-2021-06-01
-
-Variable: 2m_temperature, Drought date: 2021-10-01, ERA5 data: 2021-06-01
-Correlation: -0.535741043644754, p-value: 3.310635981341687e-26
-
-
-Variable: skin_temperature, Drought date: 2021-10-01, ERA5 data: 2021-06-01
-Correlation: -0.519478419790798, p-value: 1.768725127095738e-24
-
-
-Variable: soil_temperature_level_1, Drought date: 2021-10-01, ERA5 data: 2021-06-01
-Correlation: -0.6009903445052378, p-value: 3.5618679796500456e-34
-
-
-Variable: soil_temperature_level_2, Drought date: 2021-10-01, ERA5 data: 2021-06-01
-Correlation: -0.5861666074345337, p-value: 3.322864148526095e-32
-
-
-Variable: soil_temperature_level_3, Drought date: 2021-10-01, ERA5 data: 2021-06-01
-Correlation: -0.5411891800857646, p-value: 8.31541757913847e-27
-
-
-Variable: surface_runoff, Drought date: 2021-10-01, ERA5 data: 2021-06-01
-Correlation: -0.5469440585884872, p-value: 1.8797276018332813e-27
-
-2021-07-01
-
-Variable: soil_temperature_level_1, Drought date: 2021-10-01, ERA5 data: 2021-07-01
-Correlation: -0.5594297887576613, p-value: 6.750371215129331e-29
-
-
-Variable: soil_temperature_level_2, Drought date: 2021-10-01, ERA5 data: 2021-07-01
-Correlation: -0.5640404117076006, p-value: 1.906460666957641e-29
-
-
-Variable: soil_temperature_level_3, Drought date: 2021-10-01, ERA5 data: 2021-07-01
-Correlation: -0.5649879226292313, p-value: 1.466617783877775e-29
-
-
-Variable: soil_temperature_level_4, Drought date: 2021-10-01, ERA5 data: 2021-07-01
-Correlation: -0.5114672994907916, p-value: 1.1618963781160411e-23
-
-
-Variable: total_evaporation, Drought date: 2021-10-01, ERA5 data: 2021-07-01
-Correlation: 0.55045550046622, p-value: 7.479821862203322e-28
-
-2021-08-01
-
-Variable: 2m_temperature, Drought date: 2021-10-01, ERA5 data: 2021-08-01
-Correlation: -0.5003654972284796, p-value: 1.4553309496578283e-22
-
-
-Variable: soil_temperature_level_1, Drought date: 2021-10-01, ERA5 data: 2021-08-01
-Correlation: -0.5327177086134043, p-value: 7.050393040519639e-26
-
-
-Variable: soil_temperature_level_2, Drought date: 2021-10-01, ERA5 data: 2021-08-01
-Correlation: -0.5353519510010326, p-value: 3.6504656984722095e-26
-
-
-Variable: soil_temperature_level_3, Drought date: 2021-10-01, ERA5 data: 2021-08-01
-Correlation: -0.5369968467037705, p-value: 2.413069489076012e-26
-
-
-Variable: soil_temperature_level_4, Drought date: 2021-10-01, ERA5 data: 2021-08-01
-Correlation: -0.5239653807958035, p-value: 6.02885081392571e-25
-
-
-Variable: total_evaporation, Drought date: 2021-10-01, ERA5 data: 2021-08-01
-Correlation: 0.5946553085255089, p-value: 2.546778780602807e-33
-
-
-Variable: 10m_u_component_of_wind, Drought date: 2021-10-01, ERA5 data: 2021-08-01
-Correlation: 0.5734494858294032, p-value: 1.3570557847960973e-30
-
-2021-09-01
-
-Variable: soil_temperature_level_3, Drought date: 2021-10-01, ERA5 data: 2021-09-01
-Correlation: -0.5047811271389763, p-value: 5.384237964056358e-23
-
-
-Variable: soil_temperature_level_4, Drought date: 2021-10-01, ERA5 data: 2021-09-01
-Correlation: -0.5288152430279652, p-value: 1.849812303781573e-25
-
-
-Variable: 10m_u_component_of_wind, Drought date: 2021-10-01, ERA5 data: 2021-09-01
-Correlation: 0.5572456671456119, p-value: 1.2203045369604123e-28
-
-
-Variable: total_precipitation, Drought date: 2021-10-01, ERA5 data: 2021-09-01
-Correlation: -0.6987910603708681, p-value: 3.094876785764101e-50
-
-2021-10-01
-
-Variable: soil_temperature_level_4, Drought date: 2021-10-01, ERA5 data: 2021-10-01
-Correlation: -0.5147297112792147, p-value: 5.430718578609564e-24
-
-
-Variable: total_evaporation, Drought date: 2021-10-01, ERA5 data: 2021-10-01
-Correlation: 0.5253156899850971, p-value: 4.347124946133128e-25
-
-2021-11-01
-</pre></div>
-</div>
-<img alt="../../_images/aeb16e5ab3b9874ebde629080d358e395d7b605e81fd6be775e9200d4fc95469.png" src="../../_images/aeb16e5ab3b9874ebde629080d358e395d7b605e81fd6be775e9200d4fc95469.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-02-01
-2021-03-01
-2021-04-01
-2021-05-01
-
-Variable: surface_runoff, Drought date: 2021-11-01, ERA5 data: 2021-05-01
-Correlation: -0.6497334676646292, p-value: 5.239377319207411e-37
-
-
-Variable: total_precipitation, Drought date: 2021-11-01, ERA5 data: 2021-05-01
-Correlation: -0.612258482715816, p-value: 6.08029507861542e-32
-
-2021-06-01
-
-Variable: runoff, Drought date: 2021-11-01, ERA5 data: 2021-06-01
-Correlation: -0.5077336883210866, p-value: 7.232910017304112e-21
-
-
-Variable: surface_runoff, Drought date: 2021-11-01, ERA5 data: 2021-06-01
-Correlation: -0.7687966684326973, p-value: 3.1729516173568626e-59
-
-
-Variable: total_precipitation, Drought date: 2021-11-01, ERA5 data: 2021-06-01
-Correlation: -0.5618175469102381, p-value: 4.15460297374894e-26
-
-2021-07-01
-
-Variable: runoff, Drought date: 2021-11-01, ERA5 data: 2021-07-01
-Correlation: -0.5519112117070247, p-value: 4.4728029144132005e-25
-
-
-Variable: sub_surface_runoff, Drought date: 2021-11-01, ERA5 data: 2021-07-01
-Correlation: -0.5365967657095361, p-value: 1.5136220496930897e-23
-
-2021-08-01
-
-Variable: runoff, Drought date: 2021-11-01, ERA5 data: 2021-08-01
-Correlation: -0.6735650854498676, p-value: 1.2847586140655732e-40
-
-
-Variable: sub_surface_runoff, Drought date: 2021-11-01, ERA5 data: 2021-08-01
-Correlation: -0.71398716792442, p-value: 1.3949399409746486e-47
-
-
-Variable: total_precipitation, Drought date: 2021-11-01, ERA5 data: 2021-08-01
-Correlation: -0.6148224373354104, p-value: 2.8769769570027707e-32
-
-2021-09-01
-
-Variable: runoff, Drought date: 2021-11-01, ERA5 data: 2021-09-01
-Correlation: -0.7546061441380923, p-value: 6.445151592994951e-56
-
-
-Variable: sub_surface_runoff, Drought date: 2021-11-01, ERA5 data: 2021-09-01
-Correlation: -0.8004456078751162, p-value: 1.5491884570177313e-67
-
-
-Variable: total_precipitation, Drought date: 2021-11-01, ERA5 data: 2021-09-01
-Correlation: -0.5425380205114094, p-value: 3.944100335188099e-24
-
-2021-10-01
-
-Variable: runoff, Drought date: 2021-11-01, ERA5 data: 2021-10-01
-Correlation: -0.711444009348273, p-value: 4.1499380737924077e-47
-
-
-Variable: sub_surface_runoff, Drought date: 2021-11-01, ERA5 data: 2021-10-01
-Correlation: -0.7179059759642948, p-value: 2.5394367719425228e-48
-
-
-Variable: surface_runoff, Drought date: 2021-11-01, ERA5 data: 2021-10-01
-Correlation: -0.5102441036988281, p-value: 4.327919927373609e-21
-
-2021-11-01
-
-Variable: runoff, Drought date: 2021-11-01, ERA5 data: 2021-11-01
-Correlation: -0.589412277647373, p-value: 3.575269887751026e-29
-
-
-Variable: sub_surface_runoff, Drought date: 2021-11-01, ERA5 data: 2021-11-01
-Correlation: -0.6032145332358553, p-value: 8.070682466240388e-31
-
-2021-12-01
-</pre></div>
-</div>
-<img alt="../../_images/3d3b95c81177281f3414f6f62a7a95a71d587dbf6efcb013c2c59ced330fec62.png" src="../../_images/3d3b95c81177281f3414f6f62a7a95a71d587dbf6efcb013c2c59ced330fec62.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-03-01
-2021-04-01
-2021-05-01
-2021-06-01
-2021-07-01
-2021-08-01
-2021-09-01
-2021-10-01
-2021-11-01
-2021-12-01
-2022-01-01
-</pre></div>
-</div>
-<img alt="../../_images/4a80aa87c35aac68b92498799f013f0a85f71c132d6a838f7bf0d43156bcd8ac.png" src="../../_images/4a80aa87c35aac68b92498799f013f0a85f71c132d6a838f7bf0d43156bcd8ac.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-04-01
-2021-05-01
-2021-06-01
-2021-07-01
-2021-08-01
-2021-09-01
-2021-10-01
-2021-11-01
-2021-12-01
-2022-01-01
-2022-02-01
-</pre></div>
-</div>
-<img alt="../../_images/a8b8c6a2d9a5d9a5eab520cee773dc7a2326284cc7dd54459e0240111d91b49f.png" src="../../_images/a8b8c6a2d9a5d9a5eab520cee773dc7a2326284cc7dd54459e0240111d91b49f.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-05-01
-2021-06-01
-2021-07-01
-2021-08-01
-2021-09-01
-2021-10-01
-2021-11-01
-2021-12-01
-2022-01-01
-2022-02-01
-2022-03-01
-</pre></div>
-</div>
-<img alt="../../_images/a262cf638f8d4736e2c7ef214e69ec497c454a096cf35982a4ccc53b2130d0bb.png" src="../../_images/a262cf638f8d4736e2c7ef214e69ec497c454a096cf35982a4ccc53b2130d0bb.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-06-01
-2021-07-01
-2021-08-01
-2021-09-01
-2021-10-01
-2021-11-01
-2021-12-01
-2022-01-01
-2022-02-01
-2022-03-01
-2022-04-01
-</pre></div>
-</div>
-<img alt="../../_images/049bfc79f161c1dbdffcea3e6c4c49a30304cde42f214c950493c3c86e8c4e23.png" src="../../_images/049bfc79f161c1dbdffcea3e6c4c49a30304cde42f214c950493c3c86e8c4e23.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-07-01
-2021-08-01
-2021-09-01
-2021-10-01
-2021-11-01
-2021-12-01
-2022-01-01
-2022-02-01
-2022-03-01
-2022-04-01
-2022-05-01
-</pre></div>
-</div>
-<img alt="../../_images/74c85c0e28a3962f0b4d175241e5322cfb3d029fd259d2d59555e25f7e59864b.png" src="../../_images/74c85c0e28a3962f0b4d175241e5322cfb3d029fd259d2d59555e25f7e59864b.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-08-01
-2021-09-01
-2021-10-01
-2021-11-01
-2021-12-01
-2022-01-01
-2022-02-01
-2022-03-01
-2022-04-01
-2022-05-01
-2022-06-01
-</pre></div>
-</div>
-<img alt="../../_images/867cccce58e1116a4e4331737dd0ee01260cc2d0789365b00e409abf5ddf5c2b.png" src="../../_images/867cccce58e1116a4e4331737dd0ee01260cc2d0789365b00e409abf5ddf5c2b.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-09-01
-2021-10-01
-2021-11-01
-2021-12-01
-2022-01-01
-2022-02-01
-2022-03-01
-2022-04-01
-2022-05-01
-2022-06-01
-2022-07-01
-</pre></div>
-</div>
-<img alt="../../_images/c761e7921072370463ead822bc39b597d0d1238517d8c1023c9c6bd2838cfee3.png" src="../../_images/c761e7921072370463ead822bc39b597d0d1238517d8c1023c9c6bd2838cfee3.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-10-01
-2021-11-01
-2021-12-01
-2022-01-01
-2022-02-01
-2022-03-01
-2022-04-01
-2022-05-01
-2022-06-01
-2022-07-01
-2022-08-01
-</pre></div>
-</div>
-<img alt="../../_images/08c429bc736fa4614be8d0c46059409f81566d88ac7f9c0e2cdf201fb89be984.png" src="../../_images/08c429bc736fa4614be8d0c46059409f81566d88ac7f9c0e2cdf201fb89be984.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-11-01
-2021-12-01
-2022-01-01
-2022-02-01
-2022-03-01
-2022-04-01
-2022-05-01
-2022-06-01
-2022-07-01
-2022-08-01
-2022-09-01
-</pre></div>
-</div>
-<img alt="../../_images/91c328e0e8b24345590f1544aee651f53745c9f13d58a8337264b21cbcb76bed.png" src="../../_images/91c328e0e8b24345590f1544aee651f53745c9f13d58a8337264b21cbcb76bed.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-12-01
-2022-01-01
-2022-02-01
-2022-03-01
-2022-04-01
-2022-05-01
-2022-06-01
-2022-07-01
-2022-08-01
-2022-09-01
-2022-10-01
-</pre></div>
-</div>
-<img alt="../../_images/7245a1e273c4a46d90e05f4aad09deff4155df2c9dfb55754fbe74a4a103ba2d.png" src="../../_images/7245a1e273c4a46d90e05f4aad09deff4155df2c9dfb55754fbe74a4a103ba2d.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-01-01
-2022-02-01
-2022-03-01
-2022-04-01
-2022-05-01
-2022-06-01
-2022-07-01
-
-Variable: total_precipitation, Drought date: 2022-10-01, ERA5 data: 2022-07-01
-Correlation: -0.5081643498416156, p-value: 1.6486744333385292e-24
-
-2022-08-01
-
-Variable: surface_runoff, Drought date: 2022-10-01, ERA5 data: 2022-08-01
-Correlation: -0.5527304763004044, p-value: 1.4988687814111315e-29
-
-
-Variable: total_precipitation, Drought date: 2022-10-01, ERA5 data: 2022-08-01
-Correlation: -0.5523499863216389, p-value: 1.6674690992137567e-29
-
-2022-09-01
-2022-10-01
-2022-11-01
-</pre></div>
-</div>
-<img alt="../../_images/6b2d89095ed912c06dd339b8cf8be33b38fd15c846c673a13f89f7fc1111d46f.png" src="../../_images/6b2d89095ed912c06dd339b8cf8be33b38fd15c846c673a13f89f7fc1111d46f.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-02-01
-2022-03-01
-2022-04-01
-2022-05-01
-2022-06-01
-2022-07-01
-2022-08-01
-
-Variable: sub_surface_runoff, Drought date: 2022-11-01, ERA5 data: 2022-08-01
-Correlation: -0.536287185875588, p-value: 1.3098931603407816e-90
-
-2022-09-01
-
-Variable: runoff, Drought date: 2022-11-01, ERA5 data: 2022-09-01
-Correlation: -0.6003198846416664, p-value: 8.717710067855132e-119
-
-
-Variable: sub_surface_runoff, Drought date: 2022-11-01, ERA5 data: 2022-09-01
-Correlation: -0.6222823606491236, p-value: 5.38099380480019e-130
-
-2022-10-01
-
-Variable: runoff, Drought date: 2022-11-01, ERA5 data: 2022-10-01
-Correlation: -0.6726040340513634, p-value: 2.249299256049669e-159
-
-
-Variable: sub_surface_runoff, Drought date: 2022-11-01, ERA5 data: 2022-10-01
-Correlation: -0.6911695675450876, p-value: 9.642138717519216e-172
-
-2022-11-01
-
-Variable: runoff, Drought date: 2022-11-01, ERA5 data: 2022-11-01
-Correlation: -0.6484485110159647, p-value: 1.4164054536006815e-144
-
-
-Variable: sub_surface_runoff, Drought date: 2022-11-01, ERA5 data: 2022-11-01
-Correlation: -0.6640633325940464, p-value: 5.533699646039043e-154
-
-2022-12-01
-</pre></div>
-</div>
-<img alt="../../_images/4166e2a888b9e80c7638b8c6006007c38d749ec85968911a19d1845eec04c7f7.png" src="../../_images/4166e2a888b9e80c7638b8c6006007c38d749ec85968911a19d1845eec04c7f7.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-03-01
-2022-04-01
-2022-05-01
-2022-06-01
-2022-07-01
-2022-08-01
-2022-09-01
-2022-10-01
-2022-11-01
-2022-12-01
-2023-01-01
-</pre></div>
-</div>
-<img alt="../../_images/3caa4f5f109ccfa1da8320d1449e8c2ecc824c92e06d5cf6218b30303a42778d.png" src="../../_images/3caa4f5f109ccfa1da8320d1449e8c2ecc824c92e06d5cf6218b30303a42778d.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-04-01
-2022-05-01
-2022-06-01
-2022-07-01
-2022-08-01
-2022-09-01
-2022-10-01
-2022-11-01
-2022-12-01
-2023-01-01
-2023-02-01
-</pre></div>
-</div>
-<img alt="../../_images/3f18c54ecd851ca0ca3c526165e6a2502da5847709a318f6b0fe854406338a31.png" src="../../_images/3f18c54ecd851ca0ca3c526165e6a2502da5847709a318f6b0fe854406338a31.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-05-01
-2022-06-01
-2022-07-01
-2022-08-01
-2022-09-01
-2022-10-01
-2022-11-01
-2022-12-01
-2023-01-01
-2023-02-01
-2023-03-01
-</pre></div>
-</div>
-<img alt="../../_images/0815902a27aa2b654d1a1bf4d157fd1afb9e7c750d09d03b3f07203e50b3627d.png" src="../../_images/0815902a27aa2b654d1a1bf4d157fd1afb9e7c750d09d03b3f07203e50b3627d.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-06-01
-2022-07-01
-2022-08-01
-2022-09-01
-2022-10-01
-2022-11-01
-2022-12-01
-2023-01-01
-2023-02-01
-2023-03-01
-2023-04-01
-</pre></div>
-</div>
-<img alt="../../_images/ed66a1701ab6cece14883f8050c157940c81ee0f02738a5488d1ccb2d79b4c20.png" src="../../_images/ed66a1701ab6cece14883f8050c157940c81ee0f02738a5488d1ccb2d79b4c20.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-01
-2022-08-01
-2022-09-01
-2022-10-01
-2022-11-01
-2022-12-01
-2023-01-01
-2023-02-01
-2023-03-01
-2023-04-01
-2023-05-01
-</pre></div>
-</div>
-<img alt="../../_images/a82291d78bec36f955b6419d013dda2e7d9ac638b0b363508e91c157dab75354.png" src="../../_images/a82291d78bec36f955b6419d013dda2e7d9ac638b0b363508e91c157dab75354.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-08-01
-2022-09-01
-2022-10-01
-2022-11-01
-2022-12-01
-2023-01-01
-2023-02-01
-2023-03-01
-2023-04-01
-2023-05-01
-2023-06-01
-</pre></div>
-</div>
-<img alt="../../_images/e7636b036c354ac9836441af5c44da4098de11bb9b7dc8d17367a73d26548767.png" src="../../_images/e7636b036c354ac9836441af5c44da4098de11bb9b7dc8d17367a73d26548767.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-09-01
-2022-10-01
-2022-11-01
-2022-12-01
-2023-01-01
-2023-02-01
-2023-03-01
-2023-04-01
-2023-05-01
-2023-06-01
-2023-07-01
-</pre></div>
-</div>
-<img alt="../../_images/b241c75e095fc75be936586368ffb69f07591ba71e92a14d4e4bc3b3ccf6c1e7.png" src="../../_images/b241c75e095fc75be936586368ffb69f07591ba71e92a14d4e4bc3b3ccf6c1e7.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-10-01
-2022-11-01
-2022-12-01
-2023-01-01
-2023-02-01
-2023-03-01
-2023-04-01
-2023-05-01
-2023-06-01
-2023-07-01
-2023-08-01
-</pre></div>
-</div>
-<img alt="../../_images/845c8461728c99554969753925e36945a9a7b5142b99982b00b2b21d46b83dc5.png" src="../../_images/845c8461728c99554969753925e36945a9a7b5142b99982b00b2b21d46b83dc5.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-11-01
-2022-12-01
-2023-01-01
-2023-02-01
-2023-03-01
-2023-04-01
-2023-05-01
-2023-06-01
-2023-07-01
-2023-08-01
-2023-09-01
-</pre></div>
-</div>
-<img alt="../../_images/31524fa7ee5d23c0330222c5e7e0d2c9c4c101380f0dcd1f06351671198d76ae.png" src="../../_images/31524fa7ee5d23c0330222c5e7e0d2c9c4c101380f0dcd1f06351671198d76ae.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-12-01
-2023-01-01
-2023-02-01
-2023-03-01
-2023-04-01
-2023-05-01
-2023-06-01
-2023-07-01
-2023-08-01
-2023-09-01
-2023-10-01
-</pre></div>
-</div>
-<img alt="../../_images/71173f402271e31e0460064615ef3f402c777cf43a68efbe745d3981bf50aa91.png" src="../../_images/71173f402271e31e0460064615ef3f402c777cf43a68efbe745d3981bf50aa91.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-01-01
-2023-02-01
-2023-03-01
-2023-04-01
-2023-05-01
-2023-06-01
-2023-07-01
-2023-08-01
-2023-09-01
-2023-10-01
-2023-11-01
-</pre></div>
-</div>
-<img alt="../../_images/79e564ac9e6945e2dc94e7e9daeedaa54db174caeb700bf9e5ed9883351c58f8.png" src="../../_images/79e564ac9e6945e2dc94e7e9daeedaa54db174caeb700bf9e5ed9883351c58f8.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-02-01
-2023-03-01
-2023-04-01
-2023-05-01
-2023-06-01
-
-Variable: surface_runoff, Drought date: 2023-11-01, ERA5 data: 2023-06-01
-Correlation: -0.5105751810515065, p-value: 5.660878657152115e-81
-
-
-Variable: total_precipitation, Drought date: 2023-11-01, ERA5 data: 2023-06-01
-Correlation: -0.5449050792422305, p-value: 3.956637240330299e-94
-
-2023-07-01
-2023-08-01
-
-Variable: runoff, Drought date: 2023-11-01, ERA5 data: 2023-08-01
-Correlation: -0.5324988825471532, p-value: 3.364794085847393e-89
-
-
-Variable: sub_surface_runoff, Drought date: 2023-11-01, ERA5 data: 2023-08-01
-Correlation: -0.5587987025854811, p-value: 6.697327393703567e-100
-
-2023-09-01
-
-Variable: runoff, Drought date: 2023-11-01, ERA5 data: 2023-09-01
-Correlation: -0.5504922038971187, p-value: 2.037230719249121e-96
-
-
-Variable: sub_surface_runoff, Drought date: 2023-11-01, ERA5 data: 2023-09-01
-Correlation: -0.5713360865499083, p-value: 2.3892915640925553e-105
-
-2023-10-01
-
-Variable: runoff, Drought date: 2023-11-01, ERA5 data: 2023-10-01
-Correlation: -0.5176176828938766, p-value: 1.4990419100328093e-83
-
-
-Variable: sub_surface_runoff, Drought date: 2023-11-01, ERA5 data: 2023-10-01
-Correlation: -0.5475258110100263, p-value: 3.383367155200728e-95
-
-2023-11-01
-
-Variable: sub_surface_runoff, Drought date: 2023-11-01, ERA5 data: 2023-11-01
-Correlation: -0.5515276586587828, p-value: 7.588981516030463e-97
-
-2023-12-01
-</pre></div>
-</div>
-<img alt="../../_images/92b7314c8a9d7a298f7acd28136c8f6c22956bf52a57079d471e00a8110a9952.png" src="../../_images/92b7314c8a9d7a298f7acd28136c8f6c22956bf52a57079d471e00a8110a9952.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-03-01
-2023-04-01
-2023-05-01
-2023-06-01
-2023-07-01
-2023-08-01
-
-Variable: total_precipitation, Drought date: 2023-12-01, ERA5 data: 2023-08-01
-Correlation: -0.5447864678524169, p-value: 1.1111424119725976e-36
-
-2023-09-01
-2023-10-01
-2023-11-01
-2023-12-01
 </pre></div>
 </div>
 </div>
