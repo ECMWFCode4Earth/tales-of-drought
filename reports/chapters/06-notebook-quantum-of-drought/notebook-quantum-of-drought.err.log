@@ -18,271 +18,70 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-from plotly.subplots import make_subplots
+# Mask area outside of aoi shape
+nan_mask = np.isnan(data)
+result = xr.where(nan_mask, np.nan, occurrences_xr)
+result = result.rio.write_crs("EPSG:4326", inplace=True)
+result = result.rio.set_spatial_dims(x_dim='lon', y_dim='lat')
+result = result.rio.clip(country_shape.geometry, world.crs, drop=True)
+df = occurrences_xr.to_dataframe().reset_index()
+df = df.dropna(subset=['lat', 'lon', 'SPEI12'])
 
-conditions = [
-    (lambda x: x < -0.5, 'Mildly dry', 1, 1, True),
-    (lambda x: x < -1, 'Moderately dry', 1, 2, False), 
-    (lambda x: x < -1.5, 'Severely dry', 2, 1, False), 
-    (lambda x: x < -2, 'Extremely dry', 2, 2, False)
-]
+# Extract the latitude, longitude, and occurrence data
+lat = df['lat'].values
+lon = df['lon'].values
+occurrences = df['SPEI12'].values
 
-fig = make_subplots(
-    rows=3, cols=1,  # Adjust the number of rows and columns as needed
-    subplot_titles=('Mildly dry', 'Moderately dry',  'Severely dry', 'Extremely dry'),  # Titles for each subplot
-    specs=[{'type': 'scattergeo'}, {'type': 'scattergeo'}, {'type': 'scattergeo'}, {'type': 'scattergeo'}],
-    vertical_spacing=0.1,  # Reduce space between rows
-    horizontal_spacing=0.01
-)
-
-def categorize_occurrences(x):
-    if x <= 1:
-        return 'Up to 1 month'
-    elif x <= 3:
-        return 'Up to 3 months'
-    elif x <= 6:
-        return 'Up to 6 months'
-    else:
-        return 'More than 6 months'
-
-def add_traces_to_subplot(fig, df, row, col, show_legend):
-    lat = df['lat'].values
-    lon = df['lon'].values
-    category = df['category'].values
-
-    color_map = {
-        'Up to 1 month': 'blue',
-        'Up to 3 months': 'green',
-        'Up to 6 months': 'orange',
-        'More than 6 months': 'red'
-    }
-    
-    # Plot each category separately to apply different colors
-    for cat in color_map:
-        mask = df['category'] == cat
-        fig.add_trace(go.Scattergeo(
-            lon=lon[mask],
-            lat=lat[mask],
-            text=category[mask],
-            mode='markers',
-            marker=dict(
-                size=4,
-                color=color_map[cat],
-                opacity=1,
-                line=dict(width=1, color='black')
-            ),
-            name=cat,  # Label for the legend
-            showlegend=show_legend  # Control legend visibility
-        ), row=row, col=col)
-
-    
-
-for condition, description, row, col, show_legend in conditions:
-    result = condition(event_data).sum(dim='time')
-    df = result.to_dataframe().reset_index()
-    df['category'] = df['SPEI12'].apply(categorize_occurrences)
-    add_traces_to_subplot(fig, df, row, col, show_legend)
-
-# Update the layout: Increase the size and set the geographic scope
-fig.update_layout(
-        # width=1200,  # Increase plot width
-    # height=1200,  # Increase plot height
-    geo=dict(
-            scope='world',  # Adjust the scope if necessary, or use 'world' for a global view
-            projection_type='natural earth',
-            showcoastlines=True,
-            showcountries=True,
-            countrycolor="Black",
-            coastlinecolor="Black",
-            
-            # Define the region of interest by setting lat/lon bounds
-            lonaxis=dict(range=[lon.min() - 0.5, lon.max() + 0.5]),  # Longitude bounds
-            lataxis=dict(range=[lat.min() - 0.5, lat.max() + 0.5]),  # Latitude bounds
-            
-            # Optionally, you can specify the center of the map
-            center=dict(lon=lon.mean(), lat=lat.mean()),  # Center of the map
-        ),
-    geo2=dict(
-            scope='world',  # Adjust the scope if necessary, or use 'world' for a global view
-            projection_type='natural earth',
-            showcoastlines=True,
-            showcountries=True,
-            countrycolor="Black",
-            coastlinecolor="Black",
-            
-            # Define the region of interest by setting lat/lon bounds
-            lonaxis=dict(range=[lon.min() - 0.5, lon.max() + 0.5]),  # Longitude bounds
-            lataxis=dict(range=[lat.min() - 0.5, lat.max() + 0.5]),  # Latitude bounds
-            
-            # Optionally, you can specify the center of the map
-            center=dict(lon=lon.mean(), lat=lat.mean()),  # Center of the map
-        ),
-    geo3=dict(
-            scope='world',  # Adjust the scope if necessary, or use 'world' for a global view
-            projection_type='natural earth',
-            showcoastlines=True,
-            showcountries=True,
-            countrycolor="Black",
-            coastlinecolor="Black",
-            
-            # Define the region of interest by setting lat/lon bounds
-            lonaxis=dict(range=[lon.min() - 0.5, lon.max() + 0.5]),  # Longitude bounds
-            lataxis=dict(range=[lat.min() - 0.5, lat.max() + 0.5]),  # Latitude bounds
-            
-            # Optionally, you can specify the center of the map
-            center=dict(lon=lon.mean(), lat=lat.mean()),  # Center of the map
-        ),
-    geo4=dict(
-            scope='world',  # Adjust the scope if necessary, or use 'world' for a global view
-            projection_type='natural earth',
-            showcoastlines=True,
-            showcountries=True,
-            countrycolor="Black",
-            coastlinecolor="Black",
-            
-            # Define the region of interest by setting lat/lon bounds
-            lonaxis=dict(range=[lon.min() - 0.5, lon.max() + 0.5]),  # Longitude bounds
-            lataxis=dict(range=[lat.min() - 0.5, lat.max() + 0.5]),  # Latitude bounds
-            
-            # Optionally, you can specify the center of the map
-            center=dict(lon=lon.mean(), lat=lat.mean()),  # Center of the map
-        ),
-    title=f"Monthly Occurrences of:",
-    # annotations=[
-    #     dict(
-    #         x=0.25,  # Center the title horizontally
-    #         y=0.95,  # Position the title above the plot
-    #         xref='paper',
-    #         yref='paper',
-    #         text='Mildly dry',
-    #         showarrow=False,
-    #         font=dict(size=14, color='black'),
-    #         align='center'
-    #     ),
-    #     dict(
-    #         x=.75,  # Center the title horizontally
-    #         y=0.95,  # Position the title above the plot
-    #         xref='paper',
-    #         yref='paper',
-    #         text='Moderately dry',
-    #         showarrow=False,
-    #         font=dict(size=14, color='black'),
-    #         align='center'
-    #     ),
-    #     dict(
-    #         x=0.25,  # Center the title horizontally
-    #         y=0.4,  # Position the title above the plot
-    #         xref='paper',
-    #         yref='paper',
-    #         text='Severely dry',
-    #         showarrow=False,
-    #         font=dict(size=14, color='black'),
-    #         align='center'
-    #     ),
-    #     dict(
-    #         x=0.75,  # Center the title horizontally
-    #         y=0.4,  # Position the title above the plot
-    #         xref='paper',
-    #         yref='paper',
-    #         text='Extremely dry',
-    #         showarrow=False,
-    #         font=dict(size=14, color='black'),
-    #         align='center'
-    #     ),
-    # ],
-    margin=dict(l=10, r=10, t=40, b=10)
-    )    
-fig.update_layout(
-    legend=dict(
-        x=1.05,
-        y=0.5,
-        traceorder='normal',
-        orientation='v'
+# Create the base map with country borders
+fig = go.Figure(go.Scattergeo(
+    locationmode = 'country names',
+    lon = lon,
+    lat = lat,
+    text = occurrences,
+    marker = dict(
+        size = 7,
+        color = occurrences, # Use occurrences for color
+        colorscale = 'BrBG_r',
+        showscale = True,
+        colorbar=dict(title="Occurrences"),
+        line=dict(width=1, color='black')
     )
+))
+
+# Update the layout for better visibility
+fig.update_layout(
+    # width=1200,  # Increase plot width
+    # height=800,  # Increase plot height
+    geo=dict(
+        scope='world',
+        projection_type='natural earth',
+        showcoastlines=True,
+        showcountries=True,
+        countrycolor="Black",
+        coastlinecolor="Black",
+        
+        # Define the region of interest by setting lat/lon bounds
+        lonaxis=dict(range=[lon.min()-0.5, lon.max()+0.5]),  # Longitude bounds
+        lataxis=dict(range=[lat.min()-0.5, lat.max()+0.5]),  # Latitude bounds
+        
+        # Optionally, you can specify the center of the map
+        center=dict(lon=lon.mean(), lat=lat.mean()),  # Center of the map
+    ),
+    title="Monthly Occurrences",
 )
-    
+
 # Show the plot
 fig.show()
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mValueError[0m                                Traceback (most recent call last)
-Cell [0;32mIn[36], line 10[0m
-[1;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mplotly[39;00m[38;5;21;01m.[39;00m[38;5;21;01msubplots[39;00m [38;5;28;01mimport[39;00m make_subplots
-[1;32m      3[0m conditions [38;5;241m=[39m [
-[1;32m      4[0m     ([38;5;28;01mlambda[39;00m x: x [38;5;241m<[39m [38;5;241m-[39m[38;5;241m0.5[39m, [38;5;124m'[39m[38;5;124mMildly dry[39m[38;5;124m'[39m, [38;5;241m1[39m, [38;5;241m1[39m, [38;5;28;01mTrue[39;00m),
-[1;32m      5[0m     ([38;5;28;01mlambda[39;00m x: x [38;5;241m<[39m [38;5;241m-[39m[38;5;241m1[39m, [38;5;124m'[39m[38;5;124mModerately dry[39m[38;5;124m'[39m, [38;5;241m1[39m, [38;5;241m2[39m, [38;5;28;01mFalse[39;00m), 
-[1;32m      6[0m     ([38;5;28;01mlambda[39;00m x: x [38;5;241m<[39m [38;5;241m-[39m[38;5;241m1.5[39m, [38;5;124m'[39m[38;5;124mSeverely dry[39m[38;5;124m'[39m, [38;5;241m2[39m, [38;5;241m1[39m, [38;5;28;01mFalse[39;00m), 
-[1;32m      7[0m     ([38;5;28;01mlambda[39;00m x: x [38;5;241m<[39m [38;5;241m-[39m[38;5;241m2[39m, [38;5;124m'[39m[38;5;124mExtremely dry[39m[38;5;124m'[39m, [38;5;241m2[39m, [38;5;241m2[39m, [38;5;28;01mFalse[39;00m)
-[1;32m      8[0m ]
-[0;32m---> 10[0m fig [38;5;241m=[39m [43mmake_subplots[49m[43m([49m
-[1;32m     11[0m [43m    [49m[43mrows[49m[38;5;241;43m=[39;49m[38;5;241;43m3[39;49m[43m,[49m[43m [49m[43mcols[49m[38;5;241;43m=[39;49m[38;5;241;43m1[39;49m[43m,[49m[43m  [49m[38;5;66;43;03m# Adjust the number of rows and columns as needed[39;49;00m
-[1;32m     12[0m [43m    [49m[43msubplot_titles[49m[38;5;241;43m=[39;49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mMildly dry[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mModerately dry[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m  [49m[38;5;124;43m'[39;49m[38;5;124;43mSeverely dry[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mExtremely dry[39;49m[38;5;124;43m'[39;49m[43m)[49m[43m,[49m[43m  [49m[38;5;66;43;03m# Titles for each subplot[39;49;00m
-[1;32m     13[0m [43m    [49m[43mspecs[49m[38;5;241;43m=[39;49m[43m[[49m[43m{[49m[38;5;124;43m'[39;49m[38;5;124;43mtype[39;49m[38;5;124;43m'[39;49m[43m:[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mscattergeo[39;49m[38;5;124;43m'[39;49m[43m}[49m[43m,[49m[43m [49m[43m{[49m[38;5;124;43m'[39;49m[38;5;124;43mtype[39;49m[38;5;124;43m'[39;49m[43m:[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mscattergeo[39;49m[38;5;124;43m'[39;49m[43m}[49m[43m,[49m[43m [49m[43m{[49m[38;5;124;43m'[39;49m[38;5;124;43mtype[39;49m[38;5;124;43m'[39;49m[43m:[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mscattergeo[39;49m[38;5;124;43m'[39;49m[43m}[49m[43m,[49m[43m [49m[43m{[49m[38;5;124;43m'[39;49m[38;5;124;43mtype[39;49m[38;5;124;43m'[39;49m[43m:[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mscattergeo[39;49m[38;5;124;43m'[39;49m[43m}[49m[43m][49m[43m,[49m
-[1;32m     14[0m [43m    [49m[43mvertical_spacing[49m[38;5;241;43m=[39;49m[38;5;241;43m0.1[39;49m[43m,[49m[43m  [49m[38;5;66;43;03m# Reduce space between rows[39;49;00m
-[1;32m     15[0m [43m    [49m[43mhorizontal_spacing[49m[38;5;241;43m=[39;49m[38;5;241;43m0.01[39;49m
-[1;32m     16[0m [43m)[49m
-[1;32m     18[0m [38;5;28;01mdef[39;00m [38;5;21mcategorize_occurrences[39m(x):
-[1;32m     19[0m     [38;5;28;01mif[39;00m x [38;5;241m<[39m[38;5;241m=[39m [38;5;241m1[39m:
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[29], line 2[0m
+[1;32m      1[0m [38;5;66;03m# Mask area outside of aoi shape[39;00m
+[0;32m----> 2[0m nan_mask [38;5;241m=[39m np[38;5;241m.[39misnan([43mdata[49m)
+[1;32m      3[0m result [38;5;241m=[39m xr[38;5;241m.[39mwhere(nan_mask, np[38;5;241m.[39mnan, occurrences_xr)
+[1;32m      4[0m result [38;5;241m=[39m result[38;5;241m.[39mrio[38;5;241m.[39mwrite_crs([38;5;124m"[39m[38;5;124mEPSG:4326[39m[38;5;124m"[39m, inplace[38;5;241m=[39m[38;5;28;01mTrue[39;00m)
 
-File [0;32m~/drought-311-venv/lib64/python3.11/site-packages/plotly/subplots.py:304[0m, in [0;36mmake_subplots[0;34m(rows, cols, shared_xaxes, shared_yaxes, start_cell, print_grid, horizontal_spacing, vertical_spacing, subplot_titles, column_widths, row_heights, specs, insets, column_titles, row_titles, x_title, y_title, figure, **kwargs)[0m
-[1;32m      6[0m [38;5;28;01mdef[39;00m [38;5;21mmake_subplots[39m(
-[1;32m      7[0m     rows[38;5;241m=[39m[38;5;241m1[39m,
-[1;32m      8[0m     cols[38;5;241m=[39m[38;5;241m1[39m,
-[0;32m   (...)[0m
-[1;32m     25[0m     [38;5;241m*[39m[38;5;241m*[39mkwargs,
-[1;32m     26[0m ) [38;5;241m-[39m[38;5;241m>[39m go[38;5;241m.[39mFigure:
-[1;32m     27[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
-[1;32m     28[0m [38;5;124;03m    Return an instance of plotly.graph_objs.Figure with predefined subplots[39;00m
-[1;32m     29[0m [38;5;124;03m    configured in 'layout'.[39;00m
-[0;32m   (...)[0m
-[1;32m    301[0m [38;5;124;03m    Figure(...)[39;00m
-[1;32m    302[0m [38;5;124;03m    """[39;00m
-[0;32m--> 304[0m     [38;5;28;01mreturn[39;00m [43m_sub[49m[38;5;241;43m.[39;49m[43mmake_subplots[49m[43m([49m
-[1;32m    305[0m [43m        [49m[43mrows[49m[43m,[49m
-[1;32m    306[0m [43m        [49m[43mcols[49m[43m,[49m
-[1;32m    307[0m [43m        [49m[43mshared_xaxes[49m[43m,[49m
-[1;32m    308[0m [43m        [49m[43mshared_yaxes[49m[43m,[49m
-[1;32m    309[0m [43m        [49m[43mstart_cell[49m[43m,[49m
-[1;32m    310[0m [43m        [49m[43mprint_grid[49m[43m,[49m
-[1;32m    311[0m [43m        [49m[43mhorizontal_spacing[49m[43m,[49m
-[1;32m    312[0m [43m        [49m[43mvertical_spacing[49m[43m,[49m
-[1;32m    313[0m [43m        [49m[43msubplot_titles[49m[43m,[49m
-[1;32m    314[0m [43m        [49m[43mcolumn_widths[49m[43m,[49m
-[1;32m    315[0m [43m        [49m[43mrow_heights[49m[43m,[49m
-[1;32m    316[0m [43m        [49m[43mspecs[49m[43m,[49m
-[1;32m    317[0m [43m        [49m[43minsets[49m[43m,[49m
-[1;32m    318[0m [43m        [49m[43mcolumn_titles[49m[43m,[49m
-[1;32m    319[0m [43m        [49m[43mrow_titles[49m[43m,[49m
-[1;32m    320[0m [43m        [49m[43mx_title[49m[43m,[49m
-[1;32m    321[0m [43m        [49m[43my_title[49m[43m,[49m
-[1;32m    322[0m [43m        [49m[43mfigure[49m[43m,[49m
-[1;32m    323[0m [43m        [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m,[49m
-[1;32m    324[0m [43m    [49m[43m)[49m
-
-File [0;32m~/drought-311-venv/lib64/python3.11/site-packages/plotly/_subplots.py:442[0m, in [0;36mmake_subplots[0;34m(rows, cols, shared_xaxes, shared_yaxes, start_cell, print_grid, horizontal_spacing, vertical_spacing, subplot_titles, column_widths, row_heights, specs, insets, column_titles, row_titles, x_title, y_title, figure, **kwargs)[0m
-[1;32m    433[0m         specs [38;5;241m=[39m [[{} [38;5;28;01mfor[39;00m c [38;5;129;01min[39;00m [38;5;28mrange[39m(cols)] [38;5;28;01mfor[39;00m r [38;5;129;01min[39;00m [38;5;28mrange[39m(rows)]
-[1;32m    434[0m     [38;5;28;01melif[39;00m [38;5;129;01mnot[39;00m (
-[1;32m    435[0m         [38;5;28misinstance[39m(specs, ([38;5;28mlist[39m, [38;5;28mtuple[39m))
-[1;32m    436[0m         [38;5;129;01mand[39;00m specs
-[0;32m   (...)[0m
-[1;32m    440[0m         [38;5;129;01mand[39;00m [38;5;28mall[39m([38;5;28mall[39m(v [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m [38;5;129;01mor[39;00m [38;5;28misinstance[39m(v, [38;5;28mdict[39m) [38;5;28;01mfor[39;00m v [38;5;129;01min[39;00m row) [38;5;28;01mfor[39;00m row [38;5;129;01min[39;00m specs)
-[1;32m    441[0m     ):
-[0;32m--> 442[0m         [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
-[1;32m    443[0m [38;5;250m            [39m[38;5;124;03m"""[39;00m
-[1;32m    444[0m [38;5;124;03mThe 'specs' argument to make_subplots must be a 2D list of dictionaries with \[39;00m
-[1;32m    445[0m [38;5;124;03mdimensions ({rows} x {cols}).[39;00m
-[1;32m    446[0m [38;5;124;03m    Received value of type {typ}: {val}"""[39;00m[38;5;241m.[39mformat(
-[1;32m    447[0m                 rows[38;5;241m=[39mrows, cols[38;5;241m=[39mcols, typ[38;5;241m=[39m[38;5;28mtype[39m(specs), val[38;5;241m=[39m[38;5;28mrepr[39m(specs)
-[1;32m    448[0m             )
-[1;32m    449[0m         )
-[1;32m    451[0m     [38;5;28;01mfor[39;00m row [38;5;129;01min[39;00m specs:
-[1;32m    452[0m         [38;5;28;01mfor[39;00m spec [38;5;129;01min[39;00m row:
-[1;32m    453[0m             [38;5;66;03m# For backward compatibility,[39;00m
-[1;32m    454[0m             [38;5;66;03m# convert is_3d flag to type='scene' kwarg[39;00m
-
-[0;31mValueError[0m: 
-The 'specs' argument to make_subplots must be a 2D list of dictionaries with dimensions (3 x 1).
-    Received value of type <class 'list'>: [{'type': 'scattergeo'}, {'type': 'scattergeo'}, {'type': 'scattergeo'}, {'type': 'scattergeo'}]
+[0;31mNameError[0m: name 'data' is not defined
 
