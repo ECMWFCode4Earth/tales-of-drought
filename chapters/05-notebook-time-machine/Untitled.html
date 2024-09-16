@@ -666,6 +666,190 @@ document.write(`
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1998
 </pre></div>
 </div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1999
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">18</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="c1"># Plot the classified SPEI data using the custom colormap and levels</span>
+<span class="ne">---&gt; </span><span class="mi">18</span> <span class="n">im</span> <span class="o">=</span> <span class="n">classified_spei</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> 
+<span class="g g-Whitespace">     </span><span class="mi">19</span>                      <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;neither&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span>                      <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="s1">&#39;Drought Category&#39;</span><span class="p">,</span> 
+<span class="g g-Whitespace">     </span><span class="mi">21</span>                                   <span class="s1">&#39;ticks&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>                                   <span class="c1"># &#39;tick_labels&#39;: [&#39;Wet Conditions&#39;, &#39;Normal&#39;, &#39;Mild Drought&#39;, &#39;Moderate Drought&#39;, &#39;Severe Drought&#39;, &#39;Extreme Drought&#39;],</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span>                                   <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span>                                   <span class="s1">&#39;shrink&#39;</span><span class="p">:</span> <span class="mf">0.5</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>                                  <span class="p">},</span> 
+<span class="g g-Whitespace">     </span><span class="mi">26</span>                      <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> <span class="c1"># Add coastlines, borders, and ocean masking</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/xarray/plot/accessor.py:48,</span> in <span class="ni">DataArrayPlotAccessor.__call__</span><span class="nt">(self, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">46</span> <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">dataarray_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">,</span> <span class="n">assigned</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;__doc__&quot;</span><span class="p">,</span> <span class="s2">&quot;__annotations__&quot;</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span> <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">48</span>     <span class="k">return</span> <span class="n">dataarray_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_da</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/xarray/plot/dataarray_plot.py:309,</span> in <span class="ni">plot</span><span class="nt">(darray, row, col, col_wrap, ax, hue, subplot_kws, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">305</span>     <span class="n">plotfunc</span> <span class="o">=</span> <span class="n">hist</span>
+<span class="g g-Whitespace">    </span><span class="mi">307</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;ax&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ax</span>
+<span class="ne">--&gt; </span><span class="mi">309</span> <span class="k">return</span> <span class="n">plotfunc</span><span class="p">(</span><span class="n">darray</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/xarray/plot/dataarray_plot.py:1601,</span> in <span class="ni">_plot2d.&lt;locals&gt;.newplotfunc</span><span class="nt">(***failed resolving arguments***)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1597</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;plt.imshow&#39;s `aspect` kwarg is not available in xarray&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1599</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">get_axis</span><span class="p">(</span><span class="n">figsize</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">subplot_kws</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1601</span> <span class="n">primitive</span> <span class="o">=</span> <span class="n">plotfunc</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1602</span>     <span class="n">xplt</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1603</span>     <span class="n">yplt</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1604</span>     <span class="n">zval</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1605</span>     <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1606</span>     <span class="n">cmap</span><span class="o">=</span><span class="n">cmap_params</span><span class="p">[</span><span class="s2">&quot;cmap&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">   </span><span class="mi">1607</span>     <span class="n">vmin</span><span class="o">=</span><span class="n">cmap_params</span><span class="p">[</span><span class="s2">&quot;vmin&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">   </span><span class="mi">1608</span>     <span class="n">vmax</span><span class="o">=</span><span class="n">cmap_params</span><span class="p">[</span><span class="s2">&quot;vmax&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">   </span><span class="mi">1609</span>     <span class="n">norm</span><span class="o">=</span><span class="n">cmap_params</span><span class="p">[</span><span class="s2">&quot;norm&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">   </span><span class="mi">1610</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1611</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1613</span> <span class="c1"># Label the plot with metadata</span>
+<span class="g g-Whitespace">   </span><span class="mi">1614</span> <span class="k">if</span> <span class="n">add_labels</span><span class="p">:</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/xarray/plot/dataarray_plot.py:2310,</span> in <span class="ni">pcolormesh</span><span class="nt">(x, y, z, ax, xscale, yscale, infer_intervals, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2307</span>         <span class="n">y</span> <span class="o">=</span> <span class="n">_infer_interval_breaks</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">yscale</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2309</span> <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">2310</span> <span class="n">primitive</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2312</span> <span class="c1"># by default, pcolormesh picks &quot;round&quot; values for bounds</span>
+<span class="g g-Whitespace">   </span><span class="mi">2313</span> <span class="c1"># this results in ugly looking plots with lots of surrounding whitespace</span>
+<span class="g g-Whitespace">   </span><span class="mi">2314</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">&quot;projection&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2315</span>     <span class="c1"># not a cartopy geoaxis</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cartopy/mpl/geoaxes.py:307,</span> in <span class="ni">_add_transform.&lt;locals&gt;.wrapper</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">302</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Invalid transform: Spherical </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1"> &#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">303</span>                      <span class="s1">&#39;is not supported - consider using &#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">304</span>                      <span class="s1">&#39;PlateCarree/RotatedPole.&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">306</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform</span>
+<span class="ne">--&gt; </span><span class="mi">307</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cartopy/mpl/geoaxes.py:1770,</span> in <span class="ni">GeoAxes.pcolormesh</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1768</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1769</span> <span class="c1"># Wrap the quadrilaterals if necessary</span>
+<span class="ne">-&gt; </span><span class="mi">1770</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrap_quadmesh</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1771</span> <span class="c1"># Re-cast the QuadMesh as a GeoQuadMesh to enable future wrapping</span>
+<span class="g g-Whitespace">   </span><span class="mi">1772</span> <span class="c1"># updates to the collection as well.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1773</span> <span class="n">result</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">cartopy</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">geocollection</span><span class="o">.</span><span class="n">GeoQuadMesh</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cartopy/mpl/geoaxes.py:1960,</span> in <span class="ni">GeoAxes._wrap_quadmesh</span><span class="nt">(self, collection, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1958</span>     <span class="n">pcolor_col</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span><span class="n">pcolor_data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+<span class="g g-Whitespace">   </span><span class="mi">1959</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1960</span>     <span class="n">pcolor_col</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="g g-Whitespace">   </span><span class="mi">1961</span>                              <span class="n">pcolor_data</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="n">zorder</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1962</span>                              <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1963</span>     <span class="c1"># Currently pcolor_col.get_array() will return a compressed array</span>
+<span class="g g-Whitespace">   </span><span class="mi">1964</span>     <span class="c1"># and warn unless we explicitly set the 2D array.  This should be</span>
+<span class="g g-Whitespace">   </span><span class="mi">1965</span>     <span class="c1"># unnecessary with future matplotlib versions.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1966</span>     <span class="n">pcolor_col</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span><span class="n">pcolor_data</span><span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cartopy/mpl/geoaxes.py:307,</span> in <span class="ni">_add_transform.&lt;locals&gt;.wrapper</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">302</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Invalid transform: Spherical </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1"> &#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">303</span>                      <span class="s1">&#39;is not supported - consider using &#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">304</span>                      <span class="s1">&#39;PlateCarree/RotatedPole.&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">306</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform</span>
+<span class="ne">--&gt; </span><span class="mi">307</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cartopy/mpl/geoaxes.py:1999,</span> in <span class="ni">GeoAxes.pcolor</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1996</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1998</span> <span class="c1"># Update the datalim for this pcolor.</span>
+<span class="ne">-&gt; </span><span class="mi">1999</span> <span class="n">limits</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_datalim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transData</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2000</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_datalim</span><span class="p">(</span><span class="n">limits</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2002</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale_view</span><span class="p">()</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/matplotlib/collections.py:270,</span> in <span class="ni">Collection.get_datalim</span><span class="nt">(self, transData)</span>
+<span class="g g-Whitespace">    </span><span class="mi">267</span>     <span class="k">return</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Bbox</span><span class="o">.</span><span class="n">null</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">269</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">transform</span><span class="o">.</span><span class="n">is_affine</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">270</span>     <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">transform</span><span class="o">.</span><span class="n">transform_path_non_affine</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">271</span>     <span class="c1"># Don&#39;t convert transform to transform.get_affine() here because</span>
+<span class="g g-Whitespace">    </span><span class="mi">272</span>     <span class="c1"># we may have transform.contains_branch(transData) but not</span>
+<span class="g g-Whitespace">    </span><span class="mi">273</span>     <span class="c1"># transforms.get_affine().contains_branch(transData).  But later,</span>
+<span class="g g-Whitespace">    </span><span class="mi">274</span>     <span class="c1"># be careful to only apply the affine part that remains.</span>
+<span class="g g-Whitespace">    </span><span class="mi">276</span> <span class="n">offsets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_offsets</span><span class="p">()</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/matplotlib/collections.py:270,</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">    </span><span class="mi">267</span>     <span class="k">return</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Bbox</span><span class="o">.</span><span class="n">null</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">269</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">transform</span><span class="o">.</span><span class="n">is_affine</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">270</span>     <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">transform</span><span class="o">.</span><span class="n">transform_path_non_affine</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">271</span>     <span class="c1"># Don&#39;t convert transform to transform.get_affine() here because</span>
+<span class="g g-Whitespace">    </span><span class="mi">272</span>     <span class="c1"># we may have transform.contains_branch(transData) but not</span>
+<span class="g g-Whitespace">    </span><span class="mi">273</span>     <span class="c1"># transforms.get_affine().contains_branch(transData).  But later,</span>
+<span class="g g-Whitespace">    </span><span class="mi">274</span>     <span class="c1"># be careful to only apply the affine part that remains.</span>
+<span class="g g-Whitespace">    </span><span class="mi">276</span> <span class="n">offsets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_offsets</span><span class="p">()</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/matplotlib/transforms.py:2445,</span> in <span class="ni">CompositeGenericTransform.transform_path_non_affine</span><span class="nt">(self, path)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2443</span>     <span class="k">return</span> <span class="n">path</span>
+<span class="g g-Whitespace">   </span><span class="mi">2444</span> <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="o">.</span><span class="n">is_affine</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b</span><span class="o">.</span><span class="n">is_affine</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2445</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="o">.</span><span class="n">transform_path_non_affine</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2446</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2447</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b</span><span class="o">.</span><span class="n">transform_path_non_affine</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">2448</span>                             <span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="o">.</span><span class="n">transform_path</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cartopy/mpl/geoaxes.py:178,</span> in <span class="ni">InterProjectionTransform.transform_path_non_affine</span><span class="nt">(self, src_path)</span>
+<span class="g g-Whitespace">    </span><span class="mi">175</span> <span class="n">geoms</span> <span class="o">=</span> <span class="n">cpatch</span><span class="o">.</span><span class="n">path_to_geos</span><span class="p">(</span><span class="n">src_path</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">177</span> <span class="k">for</span> <span class="n">geom</span> <span class="ow">in</span> <span class="n">geoms</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">178</span>     <span class="n">proj_geom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_projection</span><span class="o">.</span><span class="n">project_geometry</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">179</span>         <span class="n">geom</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_projection</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">180</span>     <span class="n">transformed_geoms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">proj_geom</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">182</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">transformed_geoms</span><span class="p">:</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cartopy/crs.py:824,</span> in <span class="ni">Projection.project_geometry</span><span class="nt">(self, geometry, src_crs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">822</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">method_name</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">823</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unsupported geometry type </span><span class="si">{</span><span class="n">geom_type</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">824</span> <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method_name</span><span class="p">)(</span><span class="n">geometry</span><span class="p">,</span> <span class="n">src_crs</span><span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cartopy/crs.py:975,</span> in <span class="ni">Projection._project_polygon</span><span class="nt">(self, polygon, src_crs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">973</span> <span class="c1"># Convert any lines to rings by attaching them to the boundary.</span>
+<span class="g g-Whitespace">    </span><span class="mi">974</span> <span class="k">if</span> <span class="n">multi_lines</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">975</span>     <span class="n">rings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attach_lines_to_boundary</span><span class="p">(</span><span class="n">multi_lines</span><span class="p">,</span> <span class="n">is_ccw</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">977</span> <span class="c1"># Resolve all the inside vs. outside rings, and convert to the</span>
+<span class="g g-Whitespace">    </span><span class="mi">978</span> <span class="c1"># final MultiPolygon.</span>
+<span class="g g-Whitespace">    </span><span class="mi">979</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rings_to_multi_polygon</span><span class="p">(</span><span class="n">rings</span><span class="p">,</span> <span class="n">is_ccw</span><span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/cartopy/crs.py:1022,</span> in <span class="ni">Projection._attach_lines_to_boundary</span><span class="nt">(self, multi_line_strings, is_ccw)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1019</span>     <span class="n">edge_things</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thing</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1021</span> <span class="c1"># Record the positions of all the boundary vertices</span>
+<span class="ne">-&gt; </span><span class="mi">1022</span> <span class="k">for</span> <span class="n">xy</span> <span class="ow">in</span> <span class="n">boundary</span><span class="o">.</span><span class="n">coords</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1023</span>     <span class="n">point</span> <span class="o">=</span> <span class="n">sgeom</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="o">*</span><span class="n">xy</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1024</span>     <span class="n">dist</span> <span class="o">=</span> <span class="n">boundary</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/shapely/geometry/base.py:223,</span> in <span class="ni">BaseGeometry.coords</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">220</span> <span class="nd">@property</span>
+<span class="g g-Whitespace">    </span><span class="mi">221</span> <span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">222</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Access to geometry&#39;s coordinates (CoordinateSequence)&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">223</span>     <span class="n">coords_array</span> <span class="o">=</span> <span class="n">shapely</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_z</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">has_z</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">224</span>     <span class="k">return</span> <span class="n">CoordinateSequence</span><span class="p">(</span><span class="n">coords_array</span><span class="p">)</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/shapely/geometry/base.py:624,</span> in <span class="ni">BaseGeometry.has_z</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">620</span> <span class="nd">@property</span>
+<span class="g g-Whitespace">    </span><span class="mi">621</span> <span class="k">def</span> <span class="nf">has_z</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">622</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;True if the geometry&#39;s coordinate sequence(s) have z values (are</span>
+<span class="g g-Whitespace">    </span><span class="mi">623</span><span class="sd">     3-dimensional)&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">624</span>     <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">shapely</span><span class="o">.</span><span class="n">has_z</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+<span class="nn">File ~/drought-311-venv/lib64/python3.11/site-packages/shapely/decorators.py:68,</span> in <span class="ni">multithreading_enabled.&lt;locals&gt;.wrapped</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span> <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">63</span> <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span>     <span class="n">array_args</span> <span class="o">=</span> <span class="p">[</span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span>         <span class="n">arg</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">arg</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">object</span>
+<span class="g g-Whitespace">     </span><span class="mi">66</span>     <span class="p">]</span> <span class="o">+</span> <span class="p">[</span>
+<span class="g g-Whitespace">     </span><span class="mi">67</span>         <span class="n">arg</span>
+<span class="nn">---&gt; 68         for name, arg</span> in <span class="ni">kwargs.items</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">69</span>         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;where&quot;</span><span class="p">,</span> <span class="s2">&quot;out&quot;</span><span class="p">}</span>
+<span class="g g-Whitespace">     </span><span class="mi">70</span>         <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">71</span>         <span class="ow">and</span> <span class="n">arg</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">object</span>
+<span class="g g-Whitespace">     </span><span class="mi">72</span>     <span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">73</span>     <span class="n">old_flags</span> <span class="o">=</span> <span class="p">[</span><span class="n">arr</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">writeable</span> <span class="k">for</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">array_args</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span>     <span class="k">try</span><span class="p">:</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
 </div>
 </div>
 <div class="cell docutils container">
@@ -717,6 +901,14 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 
 <span class="c1"># HTML(ani.to_jshtml())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Images loaded...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MovieWriter ffmpeg unavailable; using Pillow instead.
 </pre></div>
 </div>
 </div>
