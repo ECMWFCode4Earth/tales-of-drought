@@ -13,7 +13,7 @@ parts:
     title: "Earth's coordinate system"
   - file: chapters/01-climate-toolkit-for-beginners/data-sources
     title: "Data sources"
-  - file: chapters/01-climate-toolkit-for-beginners/netCDF-file
+  - file: chapters/01-climate-toolkit-for-beginners/netCDF-files
     title: "netCDF files"
 
 - caption: "Droughts focus"
@@ -25,42 +25,41 @@ parts:
   - file: chapters/02-drought-focus/indices
     title: "Drought indices"
 
+
 - caption: "Get the data"
   chapters:
   - file: chapters/03-get-data/index
-    title: "Copernicus Data Store"
+    title: "The Copernicus Data Store"
+    
 
 - caption: "Setting up the environment"
   chapters:
-  - file: chapters/04-set-up-env/index
-    title: "title xxx"
+  - file: chapters/04-set-up-env/set-up-environment
+    title: "What you need to install"
+
 
 - caption: "First exploration"
   chapters:
   - file: chapters/05-notebook-time-machine/notebook-time-machine
     title: "The Time Machine"
-  - file: chapters/05-notebook-time-machine/under-the-hood
-    title: "Under the hood"
-  - file: chapters/05-notebook-time-machine/storyboard
-    title: "Storyboard (to be deleted)"
+  - file: chapters/05-notebook-time-machine/notebook-mapping-current-global-drought-events
+    title: "Mapping current global drought events"    
+  - file: chapters/05-notebook-time-machine/notebook-focus-madagascar
+    title: "Focus on Madagascar"
+
 
 - caption: "Second exploration"
   chapters:
-  - file: chapters/06-notebook-quantum-of-drought/index
+  - file: chapters/06-notebook-quantum-of-drought/notebook-quantum-of-drought
     title: "Quantum of Drought"
 
 
 
 - caption: "Third exploration"
   chapters:
-  - file: chapters/07-notebook-solving-puzzle/index
-    title: "Solving the puzzle"
+  - file: chapters/07-notebook-solving-puzzle/drought-drivers
+    title: "Drought drivers"
 
-
-- caption: "Focus"
-  chapters:
-  - file: chapters/08-focus-madagascar/index
-    title: "Drought in Madagascar"
 
 
 - caption: "Appendix"

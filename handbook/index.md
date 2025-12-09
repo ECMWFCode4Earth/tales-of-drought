@@ -23,4 +23,4 @@ We hope to provide not just knowledge, but also inspiration as you delve into th
 ```
 
 
-> This project is part of the [Code for Climate 2024 Challanges](https://codeforearth.ecmwf.int/) run by the European Centre for Medium-Range Weather Forecasts (ECMWF).
+> This project is part of the [Code for Earth 2024 Challanges](https://codeforearth.ecmwf.int/) run by the European Centre for Medium-Range Weather Forecasts (ECMWF).

@@ -14,40 +14,40 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ee12de98" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -59,9 +59,10 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/03-get-data/index';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Setting up the environment" href="../04-set-up-env/index.html" />
+    <link rel="next" title="Setting up the environment" href="../04-set-up-env/set-up-environment.html" />
     <link rel="prev" title="Drought indicators and indices" href="../02-drought-focus/indices.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -72,27 +73,23 @@
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -114,8 +111,13 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -139,6 +141,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="../../index.html">
   
@@ -160,7 +164,7 @@
 
  <script>
  document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -181,9 +185,8 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/what-is-climate.html">What is climate?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/coordinate-system.html">Earth's coordinate system</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/data-sources.html">Climate data sources</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/netCDF-file.html">netCDF files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/data-sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/netCDF-files.html">netCDF files</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Droughts focus</span></p>
 <ul class="nav bd-sidenav">
@@ -193,33 +196,32 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Get the data</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Copernicus Data Store</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Copernicus Data Store</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Setting up the environment</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../04-set-up-env/index.html">title xxx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04-set-up-env/set-up-environment.html">What you need to install</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">First exploration</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/index.html">The Time Machine</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook.html">The notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-time-machine.html">The Time Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-mapping-current-global-drought-events.html">Mapping current global drought events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-focus-madagascar.html">Focus on Madagascar</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Second exploration</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../06-notebook-quantum-of-drought/index.html">Quantum of Drought</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06-notebook-quantum-of-drought/notebook-quantum-of-drought.html">Quantum of Drought</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Third exploration</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../07-notebook-solving-puzzle/index.html">Solving the puzzle</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Focus</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../08-focus-madagascar/index.html">Drought in Madagascar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07-notebook-solving-puzzle/drought-drivers.html">Access Temperature variable from ADS/CDS</a></li>
+
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../credits-license.html">Credits</a></li>
-
+<li class="toctree-l1"><a class="reference internal" href="../credits-license.html">Credits and license</a></li>
 </ul>
 
     </div>
@@ -235,7 +237,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -244,14 +246,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -376,10 +378,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -387,12 +389,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -408,6 +412,17 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-access">Data access</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variety-of-data">Variety of data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-tools">Data tools</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#support-and-documentation">Support and documentation</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -419,10 +434,52 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="the-climate-data-store-or-any-other-data-source">
 <h1>The Climate Data Store or any other data source<a class="headerlink" href="#the-climate-data-store-or-any-other-data-source" title="Link to this heading">#</a></h1>
-<ul class="simple">
-<li><p>What is CDS and how to download the data from it.</p></li>
-<li><p>Introduce the dataset: mention that it spans from 1940 to the present and is organized by year and month in .nc (NetCDF) files. Explain why this format is used frequently in climate data due to its ability to handle multi-dimensional data efficiently.</p></li>
-</ul>
+<p>In the previous chapters, we explored how data is generated and what types of data are related to drought events. Now, it is important to understand how we can access the data for our analyses.</p>
+<p>The primary source for our data is the <a class="reference external" href="https://cds-beta.climate.copernicus.eu/">Climate Data Store</a>, a comprehensive and free online platform provided by the European Centre for Medium-Range Weather Forecasts (ECMWF) on behalf of the Copernicus Climate Change Service (C3S).</p>
+<p>The CDS is designed to offer access to a wide range of climate data and tools, making it a valuable resource for anyone interested in climate-related information.</p>
+<p><img alt="" src="../../_images/CDS-homepage.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At the moment, the platform is undergoing updates, so some links might differ from those indicated here.</p>
+</div>
+<section id="data-access">
+<h2>Data access<a class="headerlink" href="#data-access" title="Link to this heading">#</a></h2>
+<p>The CDS provides access to a vast array of climate data, including historical weather observations, climate projections, reanalysis datasets, and seasonal forecasts. These datasets cover various temporal and spatial scales, from global to local levels. An account is required to access and interact with the platform.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Here is the <a class="reference external" href="https://accounts.ecmwf.int/auth/realms/ecmwf/login-actions/registration?client_id=cds&amp;amp;tab_id=5_5zEGvovR8">link to the registration page</a>.</p>
+</div>
+</section>
+<section id="variety-of-data">
+<h2>Variety of data<a class="headerlink" href="#variety-of-data" title="Link to this heading">#</a></h2>
+<p>The data available through CDS includes temperature, precipitation, wind, sea level pressure, and other essential climate variables. It also encompasses different types of data, such as satellite observations, in-situ measurements, and model outputs.</p>
+<p>In particular, our data is derived from the <strong>ERA5 reanalysis model</strong>. ERA5 is a state-of-the-art global climate reanalysis produced by the European Centre for Medium-Range Weather Forecasts (ECMWF). It provides hourly estimates of a wide range of atmospheric, land, and oceanic climate variables, spanning from 1940 to the present.</p>
+<p>All data and tools available on the CDS are free to use</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Here is the source to learn about and access our data: <a class="reference external" href="https://cds-beta.climate.copernicus.eu/datasets/derived-drought-historical?tab=overview">Drought indicators derived from ERA5 reanalysis</a>.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Here you can find more information about all the <a class="reference external" href="https://climate.copernicus.eu/climate-datasets">types of dataset available on CDS</a>.</p>
+</div>
+</section>
+<section id="data-tools">
+<h2>Data tools<a class="headerlink" href="#data-tools" title="Link to this heading">#</a></h2>
+<p>Besides data access, the CDS offers various tools for data processing and analysis. You can create custom data extractions, visualize trends, and generate tailored reports based on your specific needs. There are two main ways to obtain the data: downloading it through a web interface or accessing it programmatically via the API. In our case, we will access the data via API.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Here you can find a useful explanation on how to use them depending on the operating system you are using: <a class="reference external" href="https://cds-beta.climate.copernicus.eu/how-to-api">CDSAPI setup</a>.</p>
+</div>
+</section>
+<section id="support-and-documentation">
+<h2>Support and documentation<a class="headerlink" href="#support-and-documentation" title="Link to this heading">#</a></h2>
+<p>The CDS provides extensive documentation, tutorials, and user support to help you understand and effectively use the available data and tools.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can find more at this link: <a class="reference external" href="https://cds-beta.climate.copernicus.eu/training">Learning resources to facilitate use of datasets on the CDS</a>, and also at this one: <a class="reference external" href="https://cds-beta.climate.copernicus.eu/user-guide">User guide</a></p>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -452,7 +509,7 @@ document.write(`
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -465,7 +522,7 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../04-set-up-env/index.html"
+       href="../04-set-up-env/set-up-environment.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
@@ -480,7 +537,23 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-access">Data access</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variety-of-data">Variety of data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-tools">Data tools</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#support-and-documentation">Support and documentation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
@@ -491,7 +564,7 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By Marina Caporlingua, Akis Karagiannis, George Begkas, Lucy Colley - Thanks to ECMWF mentors Jessica Keune, Christopher Barnard, Francesca Di Giuseppe
+By George Begkas, Marina Caporlingua, Lucy Colley, Akis Karagiannis - Thanks to ECMWF mentors Christopher Barnard, Francesca Di Giuseppe and Jessica Keune
 </p>
 
   </div>
@@ -518,8 +591,8 @@ By Marina Caporlingua, Akis Karagiannis, George Begkas, Lucy Colley - Thanks to 
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

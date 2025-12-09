@@ -94,3 +94,104 @@ nav.bd-links .current>a {
     box-shadow: inset max(3px, .1875rem, .12em) 0 0 #AA6C43;
     color: #AA6C43;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+p {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h1 {
+    font-weight: 800;
+}
+
+div.iframe_ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+}
+
+
+p.message {
+    font-size: 1.6rem;
+    line-height: normal;
+}
+
+p.credits {
+    text-align: center;
+    font-size: .7rem;
+    color: rgb(194, 194, 194);
+}
+
+p.credits a:link {
+    text-decoration: underline;
+    color: rgb(194, 194, 194);
+}
+
+p.credits a:visited {
+    text-decoration: underline;
+    color: rgb(194, 194, 194);
+}
+
+p.sign {
+    width: 100%;
+    font-style: italic;
+    text-align: right;
+}
+
+.admonition.tip,
+div.admonition.tip {
+    border-color: #9eedff;
+}
+
+.admonition.tip>.admonition-title,
+div.admonition.tip>.admonition-title {
+    background-color: #40a2b7;
+}
+
+.admonition.tip>.admonition-title:after,
+div.admonition.tip>.admonition-title:after {
+    color: #9eedff;
+}
+
+.admonition.note,
+div.admonition.note {
+    border-color: #9eedff;
+}
+
+.admonition.note>.admonition-title,
+div.admonition.note>.admonition-title {
+    background-color: #40a2b7;
+}
+
+.admonition.note>.admonition-title:after,
+div.admonition.note>.admonition-title:after {
+    color: #9eedff;
+}
+
+article a,
+a:active,
+a:visited {
+    color: #AA6C43;
+    /* color: #c98520; */
+}
+
+.prev-next-area a:visited p.prev-next-title {
+    color: #AA6C43;
+}
+
+nav.bd-links .current>a {
+    box-shadow: inset max(3px, .1875rem, .12em) 0 0 #AA6C43;
+    color: #AA6C43;
+}
+
+.sd-col.left {
+    border-right: 1px solid #48566b;
+}

@@ -1,0 +1,812 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Setting up the environment &#8212; Tales of Dry Lands</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ee12de98" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/04-set-up-env/set-up-environment';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="The Time Machine, identify drought events" href="../05-notebook-time-machine/notebook-time-machine.html" />
+    <link rel="prev" title="The Climate Data Store or any other data source" href="../03-get-data/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo-no-bg.png" class="logo__image only-light" alt="Tales of Dry Lands - Home"/>
+    <script>document.write(`<img src="../../_static/logo-no-bg.png" class="logo__image only-dark" alt="Tales of Dry Lands - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Tales of Dry Lands: Chronicles of Drought
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Climate toolkit for beginners</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/what-is-climate.html">What is climate?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/coordinate-system.html">Earth's coordinate system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/data-sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-climate-toolkit-for-beginners/netCDF-files.html">netCDF files</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Droughts focus</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../02-drought-focus/index.html">Droughts and their impacts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-drought-focus/timeline.html">Historic droughts timeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-drought-focus/indices.html">Drought indices</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Get the data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../03-get-data/index.html">The Copernicus Data Store</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Setting up the environment</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">What you need to install</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">First exploration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-time-machine.html">The Time Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-mapping-current-global-drought-events.html">Mapping current global drought events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-notebook-time-machine/notebook-focus-madagascar.html">Focus on Madagascar</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Second exploration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../06-notebook-quantum-of-drought/notebook-quantum-of-drought.html">Quantum of Drought</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Third exploration</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../07-notebook-solving-puzzle/drought-drivers.html">Access Temperature variable from ADS/CDS</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../credits-license.html">Credits and license</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ECMWFCode4Earth/tales-of-drought/handbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ECMWFCode4Earth/tales-of-drought/handbook/issues/new?title=Issue%20on%20page%20%2Fchapters/04-set-up-env/set-up-environment.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/04-set-up-env/set-up-environment.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Setting up the environment</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need-to-install">What do you need to install?</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="setting-up-the-environment">
+<h1>Setting up the environment<a class="headerlink" href="#setting-up-the-environment" title="Link to this heading">#</a></h1>
+<p>Before we dive into the data analysis, we need to ensure our notebooks have all the necessary tools and libraries. This step involves installing various Python packages that will help us manipulate data, create visualizations, and interact with our notebook more effectively.</p>
+<section id="what-do-you-need-to-install">
+<h2>What do you need to install?<a class="headerlink" href="#what-do-you-need-to-install" title="Link to this heading">#</a></h2>
+<p>The installation of these packages and extensions may vary depending on the computing environment you are using. Whether it’s Jupyter Notebook, JupyterLab, Google Colab, or another tool like Binder, some steps or commands might be different or unnecessary. Always tailor these installation steps to suit the specific requirements of your chosen platform to ensure smooth operation.</p>
+<p>Here the list of the packages our notebook needs to works:</p>
+<p><strong>Numerical and Data Handling Libraries:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">numpy</span></code>: for numerical computations [<a class="reference external" href="https://numpy.org/">documentation</a>].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>: for data manipulation and analysis [<a class="reference external" href="https://pandas.pydata.org/docs/">documentation</a>].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geopandas</span></code>: a package to work with geospatial data [<a class="reference external" href="https://geopandas.org/en/stable/">documentation</a>].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xarray</span></code>: for working with multi-dimensional arrays of data [<a class="reference external" href="https://docs.xarray.dev/en/stable/">documentation</a>].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">netCDF4</span></code>: for handling and accessing data stored in .nc files (like our ERA5 data) [<a class="reference external" href="https://unidata.github.io/netcdf4-python/">documentation</a>].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dask</span></code>: enhances speed and scalability in data processing, useful for large datasets [<a class="reference external" href="https://www.dask.org/">documentation</a>].</p></li>
+</ul>
+<p><strong>Visualization Libraries:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>: for creating static graphs [<a class="reference external" href="https://matplotlib.org/">documentation</a>].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plotly</span></code>: for creating interactive graphs [<a class="reference external" href="https://plotly.com/python/">documentation</a>].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kaleido</span></code>: for exporting Plotly figures to static images (like PNG) [<a class="reference external" href="https://github.com/plotly/Kaleido">documentation</a>].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">folium</span></code>: for making interactive maps [<a class="reference external" href="https://python-visualization.github.io/folium/latest/">documentation</a>].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cartopy</span></code>: designed for geospatial data processing in order to produce maps [<a class="reference external" href="https://scitools.org.uk/cartopy/docs/latest/">documentation</a>].</p></li>
+</ul>
+<p><strong>Enhancing Interactivity:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ipywidgets</span></code>: allows us to create interactive elements in the notebook (like sliders, dropdown menus and buttons) [<a class="reference external" href="https://ipywidgets.readthedocs.io/en/stable/">documentation</a>].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jupyterlab_widgets</span></code>: These are necessary just for enabling and managing IPython widgets in JupyterLab [<a class="reference external" href="https://pypi.org/project/jupyterlab-widgets/">documentation</a>]. So, if you don’t use a JupyterLab environment, you do not need to install it.</p></li>
+</ul>
+<p><strong>Dynamic Path Management</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pyprojroot</span></code>: helps us locate the root of our project, enabling consistent referencing of data files and other resources regardless of the computing environment [<a class="reference external" href="https://pypi.org/project/pyprojroot/">documentation</a>].</p></li>
+</ul>
+<p><strong>Installing and Enabling Extensions</strong><br />
+We use <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">package-name</span></code> commands to download and install these packages from the Python Package Index (PyPI). The <code class="docutils literal notranslate"><span class="pre">!</span></code> at the beginning of each command tells our Jupyter Notebook to execute these as shell commands. If you want to suppress all output during installation use <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">package-name</span> <span class="pre">-q</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>numpy
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>pandas
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>geopandas<span class="w"> </span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>xarray
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>netCDF4
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;dask[complete]&quot;</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>matplotlib
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>plotly
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>kaleido
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>folium
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>cartopy
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>ipywidgets
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>pyprojroot
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>ipywidgets
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: numpy in /home/george/drought-311-venv/lib64/python3.11/site-packages (1.26.4)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pandas in /home/george/drought-311-venv/lib64/python3.11/site-packages (2.2.2)
+Requirement already satisfied: numpy&gt;=1.23.2 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas) (1.26.4)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas) (2024.1)
+Requirement already satisfied: tzdata&gt;=2022.7 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas) (2024.1)
+Requirement already satisfied: six&gt;=1.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.16.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: geopandas in /home/george/drought-311-venv/lib64/python3.11/site-packages (0.14.4)
+Requirement already satisfied: fiona&gt;=1.8.21 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from geopandas) (1.9.6)
+Requirement already satisfied: numpy&gt;=1.22 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from geopandas) (1.26.4)
+Requirement already satisfied: packaging in /home/george/drought-311-venv/lib64/python3.11/site-packages (from geopandas) (24.0)
+Requirement already satisfied: pandas&gt;=1.4.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from geopandas) (2.2.2)
+Requirement already satisfied: pyproj&gt;=3.3.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from geopandas) (3.6.1)
+Requirement already satisfied: shapely&gt;=1.8.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from geopandas) (2.0.4)
+Requirement already satisfied: attrs&gt;=19.2.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (23.2.0)
+Requirement already satisfied: certifi in /home/george/drought-311-venv/lib64/python3.11/site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (2024.2.2)
+Requirement already satisfied: click~=8.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (8.1.7)
+Requirement already satisfied: click-plugins&gt;=1.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (1.1.1)
+Requirement already satisfied: cligj&gt;=0.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (0.7.2)
+Requirement already satisfied: six in /home/george/drought-311-venv/lib64/python3.11/site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (1.16.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: python-dateutil&gt;=2.8.2 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas&gt;=1.4.0-&gt;geopandas) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas&gt;=1.4.0-&gt;geopandas) (2024.1)
+Requirement already satisfied: tzdata&gt;=2022.7 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas&gt;=1.4.0-&gt;geopandas) (2024.1)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: xarray in /home/george/drought-311-venv/lib64/python3.11/site-packages (2024.7.0)
+Requirement already satisfied: numpy&gt;=1.23 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from xarray) (1.26.4)
+Requirement already satisfied: packaging&gt;=23.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from xarray) (24.0)
+Requirement already satisfied: pandas&gt;=2.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from xarray) (2.2.2)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas&gt;=2.0-&gt;xarray) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas&gt;=2.0-&gt;xarray) (2024.1)
+Requirement already satisfied: tzdata&gt;=2022.7 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas&gt;=2.0-&gt;xarray) (2024.1)
+Requirement already satisfied: six&gt;=1.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas&gt;=2.0-&gt;xarray) (1.16.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: netCDF4 in /home/george/drought-311-venv/lib64/python3.11/site-packages (1.7.1.post2)
+Requirement already satisfied: cftime in /home/george/drought-311-venv/lib64/python3.11/site-packages (from netCDF4) (1.6.3)
+Requirement already satisfied: certifi in /home/george/drought-311-venv/lib64/python3.11/site-packages (from netCDF4) (2024.2.2)
+Requirement already satisfied: numpy in /home/george/drought-311-venv/lib64/python3.11/site-packages (from netCDF4) (1.26.4)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: dask[complete] in /home/george/drought-311-venv/lib64/python3.11/site-packages (2024.5.1)
+Requirement already satisfied: click&gt;=8.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (8.1.7)
+Requirement already satisfied: cloudpickle&gt;=1.5.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (3.0.0)
+Requirement already satisfied: fsspec&gt;=2021.09.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (2024.5.0)
+Requirement already satisfied: packaging&gt;=20.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (24.0)
+Requirement already satisfied: partd&gt;=1.2.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (1.4.2)
+Requirement already satisfied: pyyaml&gt;=5.3.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (6.0.1)
+Requirement already satisfied: toolz&gt;=0.10.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (0.12.1)
+Requirement already satisfied: importlib-metadata&gt;=4.13.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (7.1.0)
+Requirement already satisfied: pyarrow&gt;=7.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (16.1.0)
+Requirement already satisfied: pyarrow-hotfix in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (0.6)
+Requirement already satisfied: lz4&gt;=4.3.2 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (4.3.3)
+Requirement already satisfied: zipp&gt;=0.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from importlib-metadata&gt;=4.13.0-&gt;dask[complete]) (3.18.2)
+Requirement already satisfied: locket in /home/george/drought-311-venv/lib64/python3.11/site-packages (from partd&gt;=1.2.0-&gt;dask[complete]) (1.0.0)
+Requirement already satisfied: numpy&gt;=1.16.6 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pyarrow&gt;=7.0-&gt;dask[complete]) (1.26.4)
+Requirement already satisfied: pandas&gt;=1.3 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (2.2.2)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: dask-expr&lt;1.2,&gt;=1.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (1.1.1)
+Requirement already satisfied: bokeh&gt;=2.4.2 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (3.4.1)
+Requirement already satisfied: jinja2&gt;=2.10.3 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (3.1.4)
+Requirement already satisfied: distributed==2024.5.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from dask[complete]) (2024.5.1)
+Requirement already satisfied: msgpack&gt;=1.0.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from distributed==2024.5.1-&gt;dask[complete]) (1.0.8)
+Requirement already satisfied: psutil&gt;=5.7.2 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from distributed==2024.5.1-&gt;dask[complete]) (5.9.8)
+Requirement already satisfied: sortedcontainers&gt;=2.0.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from distributed==2024.5.1-&gt;dask[complete]) (2.4.0)
+Requirement already satisfied: tblib&gt;=1.6.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from distributed==2024.5.1-&gt;dask[complete]) (3.0.0)
+Requirement already satisfied: tornado&gt;=6.0.4 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from distributed==2024.5.1-&gt;dask[complete]) (6.4)
+Requirement already satisfied: urllib3&gt;=1.24.3 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from distributed==2024.5.1-&gt;dask[complete]) (2.2.1)
+Requirement already satisfied: zict&gt;=3.0.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from distributed==2024.5.1-&gt;dask[complete]) (3.0.0)
+Requirement already satisfied: contourpy&gt;=1.2 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from bokeh&gt;=2.4.2-&gt;dask[complete]) (1.2.1)
+Requirement already satisfied: pillow&gt;=7.1.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from bokeh&gt;=2.4.2-&gt;dask[complete]) (10.3.0)
+Requirement already satisfied: xyzservices&gt;=2021.09.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from bokeh&gt;=2.4.2-&gt;dask[complete]) (2024.4.0)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from jinja2&gt;=2.10.3-&gt;dask[complete]) (2.1.5)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas&gt;=1.3-&gt;dask[complete]) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas&gt;=1.3-&gt;dask[complete]) (2024.1)
+Requirement already satisfied: tzdata&gt;=2022.7 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pandas&gt;=1.3-&gt;dask[complete]) (2024.1)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: six&gt;=1.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas&gt;=1.3-&gt;dask[complete]) (1.16.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: matplotlib in /home/george/drought-311-venv/lib64/python3.11/site-packages (3.9.1)
+Requirement already satisfied: contourpy&gt;=1.0.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib) (1.2.1)
+Requirement already satisfied: cycler&gt;=0.10 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.22.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib) (4.51.0)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib) (1.4.5)
+Requirement already satisfied: numpy&gt;=1.23 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib) (1.26.4)
+Requirement already satisfied: packaging&gt;=20.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib) (24.0)
+Requirement already satisfied: pillow&gt;=8 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib) (10.3.0)
+Requirement already satisfied: pyparsing&gt;=2.3.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib) (3.1.2)
+Requirement already satisfied: python-dateutil&gt;=2.7 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib) (2.9.0.post0)
+Requirement already satisfied: six&gt;=1.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib) (1.16.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: plotly in /home/george/drought-311-venv/lib64/python3.11/site-packages (5.23.0)
+Requirement already satisfied: tenacity&gt;=6.2.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from plotly) (9.0.0)
+Requirement already satisfied: packaging in /home/george/drought-311-venv/lib64/python3.11/site-packages (from plotly) (24.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: kaleido in /home/george/drought-311-venv/lib64/python3.11/site-packages (0.2.1)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: folium in /home/george/drought-311-venv/lib64/python3.11/site-packages (0.17.0)
+Requirement already satisfied: branca&gt;=0.6.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from folium) (0.7.2)
+Requirement already satisfied: jinja2&gt;=2.9 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from folium) (3.1.4)
+Requirement already satisfied: numpy in /home/george/drought-311-venv/lib64/python3.11/site-packages (from folium) (1.26.4)
+Requirement already satisfied: requests in /home/george/drought-311-venv/lib64/python3.11/site-packages (from folium) (2.31.0)
+Requirement already satisfied: xyzservices in /home/george/drought-311-venv/lib64/python3.11/site-packages (from folium) (2024.4.0)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from jinja2&gt;=2.9-&gt;folium) (2.1.5)
+Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from requests-&gt;folium) (3.3.2)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from requests-&gt;folium) (3.7)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from requests-&gt;folium) (2.2.1)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from requests-&gt;folium) (2024.2.2)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: cartopy in /home/george/drought-311-venv/lib64/python3.11/site-packages (0.23.0)
+Requirement already satisfied: numpy&gt;=1.21 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from cartopy) (1.26.4)
+Requirement already satisfied: matplotlib&gt;=3.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from cartopy) (3.9.1)
+Requirement already satisfied: shapely&gt;=1.7 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from cartopy) (2.0.4)
+Requirement already satisfied: packaging&gt;=20 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from cartopy) (24.0)
+Requirement already satisfied: pyshp&gt;=2.3 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from cartopy) (2.3.1)
+Requirement already satisfied: pyproj&gt;=3.3.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from cartopy) (3.6.1)
+Requirement already satisfied: contourpy&gt;=1.0.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib&gt;=3.5-&gt;cartopy) (1.2.1)
+Requirement already satisfied: cycler&gt;=0.10 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib&gt;=3.5-&gt;cartopy) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.22.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib&gt;=3.5-&gt;cartopy) (4.51.0)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib&gt;=3.5-&gt;cartopy) (1.4.5)
+Requirement already satisfied: pillow&gt;=8 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib&gt;=3.5-&gt;cartopy) (10.3.0)
+Requirement already satisfied: pyparsing&gt;=2.3.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib&gt;=3.5-&gt;cartopy) (3.1.2)
+Requirement already satisfied: python-dateutil&gt;=2.7 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from matplotlib&gt;=3.5-&gt;cartopy) (2.9.0.post0)
+Requirement already satisfied: certifi in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pyproj&gt;=3.3.1-&gt;cartopy) (2024.2.2)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: six&gt;=1.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib&gt;=3.5-&gt;cartopy) (1.16.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: ipywidgets in /home/george/drought-311-venv/lib64/python3.11/site-packages (8.1.2)
+Requirement already satisfied: comm&gt;=0.1.3 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipywidgets) (0.2.2)
+Requirement already satisfied: ipython&gt;=6.1.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipywidgets) (8.18.1)
+Requirement already satisfied: traitlets&gt;=4.3.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipywidgets) (5.14.3)
+Requirement already satisfied: widgetsnbextension~=4.0.10 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipywidgets) (4.0.10)
+Requirement already satisfied: jupyterlab-widgets~=3.0.10 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipywidgets) (3.0.10)
+Requirement already satisfied: decorator in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (5.1.1)
+Requirement already satisfied: jedi&gt;=0.16 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (0.19.1)
+Requirement already satisfied: matplotlib-inline in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (0.1.7)
+Requirement already satisfied: prompt-toolkit&lt;3.1.0,&gt;=3.0.41 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (3.0.43)
+Requirement already satisfied: pygments&gt;=2.4.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (2.18.0)
+Requirement already satisfied: stack-data in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (0.6.3)
+Requirement already satisfied: pexpect&gt;4.3 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (4.9.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: parso&lt;0.9.0,&gt;=0.8.3 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from jedi&gt;=0.16-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (0.8.4)
+Requirement already satisfied: ptyprocess&gt;=0.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pexpect&gt;4.3-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (0.7.0)
+Requirement already satisfied: wcwidth in /home/george/drought-311-venv/lib64/python3.11/site-packages (from prompt-toolkit&lt;3.1.0,&gt;=3.0.41-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (0.2.13)
+Requirement already satisfied: executing&gt;=1.2.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from stack-data-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (2.0.1)
+Requirement already satisfied: asttokens&gt;=2.1.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from stack-data-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (2.4.1)
+Requirement already satisfied: pure-eval in /home/george/drought-311-venv/lib64/python3.11/site-packages (from stack-data-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (0.2.2)
+Requirement already satisfied: six&gt;=1.12.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from asttokens&gt;=2.1.0-&gt;stack-data-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (1.16.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pyprojroot in /home/george/drought-311-venv/lib64/python3.11/site-packages (0.3.0)
+Requirement already satisfied: typing-extensions in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pyprojroot) (4.11.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: ipywidgets in /home/george/drought-311-venv/lib64/python3.11/site-packages (8.1.2)
+Requirement already satisfied: comm&gt;=0.1.3 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipywidgets) (0.2.2)
+Requirement already satisfied: ipython&gt;=6.1.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipywidgets) (8.18.1)
+Requirement already satisfied: traitlets&gt;=4.3.1 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipywidgets) (5.14.3)
+Requirement already satisfied: widgetsnbextension~=4.0.10 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipywidgets) (4.0.10)
+Requirement already satisfied: jupyterlab-widgets~=3.0.10 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipywidgets) (3.0.10)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: decorator in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (5.1.1)
+Requirement already satisfied: jedi&gt;=0.16 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (0.19.1)
+Requirement already satisfied: matplotlib-inline in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (0.1.7)
+Requirement already satisfied: prompt-toolkit&lt;3.1.0,&gt;=3.0.41 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (3.0.43)
+Requirement already satisfied: pygments&gt;=2.4.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (2.18.0)
+Requirement already satisfied: stack-data in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (0.6.3)
+Requirement already satisfied: pexpect&gt;4.3 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from ipython&gt;=6.1.0-&gt;ipywidgets) (4.9.0)
+Requirement already satisfied: parso&lt;0.9.0,&gt;=0.8.3 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from jedi&gt;=0.16-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (0.8.4)
+Requirement already satisfied: ptyprocess&gt;=0.5 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from pexpect&gt;4.3-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (0.7.0)
+Requirement already satisfied: wcwidth in /home/george/drought-311-venv/lib64/python3.11/site-packages (from prompt-toolkit&lt;3.1.0,&gt;=3.0.41-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (0.2.13)
+Requirement already satisfied: executing&gt;=1.2.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from stack-data-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (2.0.1)
+Requirement already satisfied: asttokens&gt;=2.1.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from stack-data-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (2.4.1)
+Requirement already satisfied: pure-eval in /home/george/drought-311-venv/lib64/python3.11/site-packages (from stack-data-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (0.2.2)
+Requirement already satisfied: six&gt;=1.12.0 in /home/george/drought-311-venv/lib64/python3.11/site-packages (from asttokens&gt;=2.1.0-&gt;stack-data-&gt;ipython&gt;=6.1.0-&gt;ipywidgets) (1.16.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># only for JupyterLab environment</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>jupyterlab_widgets<span class="w">   </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: jupyterlab_widgets in /home/george/drought-311-venv/lib64/python3.11/site-packages (3.0.10)
+</pre></div>
+</div>
+</div>
+</div>
+<p>By executing these commands, we are setting up a robust environment tailored for analyzing and visualizing our data. Now our toolkit is ready so we can proceed without any hitches!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/04-set-up-env"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../03-get-data/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">The Climate Data Store or any other data source</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../05-notebook-time-machine/notebook-time-machine.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The Time Machine, identify drought events</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need-to-install">What do you need to install?</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By George Begkas, Marina Caporlingua, Lucy Colley, Akis Karagiannis - Thanks to ECMWF mentors Christopher Barnard, Francesca Di Giuseppe and Jessica Keune
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

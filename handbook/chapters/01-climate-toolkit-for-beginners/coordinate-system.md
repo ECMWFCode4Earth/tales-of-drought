@@ -9,6 +9,7 @@ By convention, the Prime Meridian runs through the [Royal Observatory in Greenwi
 Longitude values decrease westward up to -180° and increase eastward up to 180°. 
 
 ![](../../images/longitude-BW.svg)
+<p class="credits">CC BY-NC-SA</p>
 
 ## Parallels and latitude
 
@@ -17,6 +18,7 @@ Now we have to imagine drawing a line around the Earth that is equidistant from 
 The position of these parallels is determined by their angle relative to the horizontal plane passing through the Equator. This angle is referred to as **latitude**, which is also measured in degrees. Latitude values increase from the Equator northward up to 90° and decrease southward down to -90°.
 
 ![](../../images/latitude-BW.svg)
+<p class="credits">CC BY-NC-SA</p>
 
 This system allows us to specify any location on Earth using a universally understood method.
 
