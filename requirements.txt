@@ -36,7 +36,7 @@ keyring @ file:///home/task_176363713576885/conda-bld/keyring_1763637184857/work
 libmambapy @ file:///home/task_176311149180614/conda-bld/mamba-split_1763111570862/work/libmambapy
 m3u8==6.0.0
 markdown-it-py @ file:///croot/markdown-it-py_1756299186942/work
-marshmallow==3.26.1
+marshmallow==3.26.2
 mdurl @ file:///home/task_175855216352428/conda-bld/mdurl_1758552176751/work
 menuinst @ file:///home/task_176538230483207/conda-bld/menuinst_1765382366331/work
 more-itertools @ file:///home/task_176112148319406/conda-bld/more-itertools_1761121494880/work
