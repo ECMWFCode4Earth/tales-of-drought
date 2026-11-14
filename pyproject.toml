@@ -2,7 +2,7 @@
 name = "tales-of-drought"
 version = "0.1.0"
 description = "Add your description here"
-requires-python = ">=3.11"
+requires-python = ">=3.11.5"
 dependencies = [
     "accessible-pygments==0.0.5",
     "affine==2.4.0",
