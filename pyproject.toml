@@ -154,7 +154,7 @@ dependencies = [
     "partd==1.4.2",
     "pathspec==0.12.1",
     "pexpect==4.9.0",
-    "pillow==11.3.0",
+    "pillow==13.0.0",
     "platformdirs==4.4.0",
     "plotly==5.23.0",
     "pluggy==1.6.0",
